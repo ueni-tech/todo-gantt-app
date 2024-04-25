@@ -31,4 +31,6 @@ RUN usermod -u 1000 www-data
 # WorkDir Path setting
 WORKDIR /var/www/html
 
+EXPOSE 5173
+
 USER www-data
