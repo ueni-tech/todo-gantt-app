@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-sidebar />
-    <div>
+    <div class="ml-16">
       メインコンテンツです
     </div>
 </x-app-layout>
