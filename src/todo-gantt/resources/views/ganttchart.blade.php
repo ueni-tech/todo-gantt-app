@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-sidebar />
     <div class="ml-16">
-      todoです
+      ガントチャート 鋭意制作中
     </div>
 </x-app-layout>
