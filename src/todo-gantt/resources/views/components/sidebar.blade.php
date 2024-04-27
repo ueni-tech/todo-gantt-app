@@ -7,7 +7,7 @@
       <img src="{{ asset('img/team_icon_02.jpg') }}" alt="">
     </a>
     <a href="" class="w-3/4 aspect-square bg-gray-500 rounded-lg overflow-hidden border-2 border-gray-500">
-      <span class="text-white text-4xl flex justify-center items-center w-full h-full">
+      <span class="text-white text-3xl flex justify-center items-center w-full h-full">
         <i class="fa-solid fa-plus"></i>
       </span>
     </a>
