@@ -20,61 +20,6 @@
               </span>
             </button>
           </li>
-          <li>
-            <button class="w-full p-2 bg-neutral-100 rounded flex items-center gap-1">
-              <span class="opacity-30 hover:opacity-100">
-                <i class="fa-regular fa-square-check"></i>
-              </span>
-              <span class="text-sm text-neutral-600 truncate">タスク名タスク名タスク名タスク名</span>
-              <span class="opacity-30  text-xs hover:opacity-100 hover:text-red-500">
-                <i class="fa-regular fa-trash-can"></i>
-              </span>
-            </button>
-          </li>
-          <li>
-            <button class="w-full p-2 bg-neutral-100 rounded flex items-center gap-1">
-              <span class="opacity-30 hover:opacity-100">
-                <i class="fa-regular fa-square-check"></i>
-              </span>
-              <span class="text-sm text-neutral-600 truncate">タスク名タスク名タスク名タスク名</span>
-              <span class="opacity-30  text-xs hover:opacity-100 hover:text-red-500">
-                <i class="fa-regular fa-trash-can"></i>
-              </span>
-            </button>
-          </li>
-          <li>
-            <button class="w-full p-2 bg-neutral-100 rounded flex items-center gap-1">
-              <span class="opacity-30 hover:opacity-100">
-                <i class="fa-regular fa-square-check"></i>
-              </span>
-              <span class="text-sm text-neutral-600 truncate">タスク名タスク名タスク名タスク名</span>
-              <span class="opacity-30  text-xs hover:opacity-100 hover:text-red-500">
-                <i class="fa-regular fa-trash-can"></i>
-              </span>
-            </button>
-          </li>
-          <li>
-            <button class="w-full p-2 bg-neutral-100 rounded flex items-center gap-1">
-              <span class="opacity-30 hover:opacity-100">
-                <i class="fa-regular fa-square-check"></i>
-              </span>
-              <span class="text-sm text-neutral-600 truncate">タスク名タスク名タスク名タスク名</span>
-              <span class="opacity-30  text-xs hover:opacity-100 hover:text-red-500">
-                <i class="fa-regular fa-trash-can"></i>
-              </span>
-            </button>
-          </li>
-          <li>
-            <button class="w-full p-2 bg-neutral-100 rounded flex items-center gap-1">
-              <span class="opacity-30 hover:opacity-100">
-                <i class="fa-regular fa-square-check"></i>
-              </span>
-              <span class="text-sm text-neutral-600 truncate">タスク名タスク名タスク名タスク名</span>
-              <span class="opacity-30  text-xs hover:opacity-100 hover:text-red-500">
-                <i class="fa-regular fa-trash-can"></i>
-              </span>
-            </button>
-          </li>
 
           <li>
             <a href="" class="block bg-gray-500 w-9 aspect-square rounded">
@@ -91,10 +36,13 @@
       <div @click="toggleModal()" class="fixed top-0 left-0 w-screen h-screen bg-gray-950 opacity-50"></div>
       <div class="bg-gray-100 p-4 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
         <div class="flex justify-between items-center">
-          <h3>タスクの編集</h3>
+          <h3 class="text-lg font-medium">タスクの編集</h3>
           <button @click="toggleModal()" class="text-lg">
             <i class="fa-solid fa-xmark"></i>
           </button>
+        </div>
+        <div class="mt-3">
+          <livewire:Pages.edit-todo />
         </div>
       </div>
     </div>
