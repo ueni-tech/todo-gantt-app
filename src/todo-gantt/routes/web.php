@@ -16,8 +16,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [TodoController::class, 'index'])->middleware(['auth'])->name('todo.index');
-Route::resource('todo', TodoController::class)->middleware(['auth']);
+Route::resource('/', TodoController::class)->only('index')->middleware(['auth']);
+Route::resource('todo', TodoController::class)->except(['index'])->middleware(['auth']);
 Route::resource('ganttchart', GanttchartController::class)->middleware(['auth']);
 
 Route::view('dashboard', 'dashboard')
