@@ -26,9 +26,9 @@ class TeamTest extends TestCase
         //ユーザーを作成
         $user = User::factory()->create();
         $this->actingAs($user);
-        $response = $this->post('/teams', ['name' => 'Team 1']);
+        $response = $this->post('/teams', ['name' => 'Team1']);
         $response->assertRedirect(route('index'));
-        $this->assertDatabaseHas('teams', ['name' => 'Team 1']);
+        $this->assertDatabaseHas('teams', ['name' => 'Team1']);
 
         $team = Team::first();
         $this->assertDatabaseHas('team_user', ['team_id' => $team->id, 'user_id' => $user->id]);

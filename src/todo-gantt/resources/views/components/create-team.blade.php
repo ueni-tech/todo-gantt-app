@@ -3,12 +3,12 @@
         <div class="bg-gray-100 p-4 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
           <div class="flex justify-between items-center">
             <h3 class="text-lg font-medium">チームの作成</h3>
-            <button @click="toggleaTeamModal()" class="text-lg">
+            <button @click="toggleTeamModal()" class="text-lg">
               <i class="fa-solid fa-xmark"></i>
             </button>
           </div>
           <div class="mt-3">
-            <livewire:Pages.edit-todo />
+            <livewire:Pages.CreateTeam />
           </div>
         </div>
       </div>
