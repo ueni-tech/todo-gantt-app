@@ -33,7 +33,7 @@ new class extends Component
                     <x-nav-link class="text-neutral-100" :href="route('index')" :active="request()->routeIs('index')" wire:navigate>
                         your Todos
                     </x-nav-link>
-                    <x-nav-link class="text-neutral-100" :href="route('ganttchart.index')" :active="request()->routeIs('ganttchart.index')" wire:navigate>
+                    <x-nav-link class="text-neutral-100" :href="route('ganttcharts.index')" :active="request()->routeIs('ganttchart.index')" wire:navigate>
                         team Ganttcharts
                     </x-nav-link>
                 </div>
