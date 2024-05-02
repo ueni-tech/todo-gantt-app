@@ -23,14 +23,14 @@ new class extends Component
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('todo.index') }}" wire:navigate>
+                    <a href="{{ route('index') }}" wire:navigate>
                         <h1 class="text-lg font-bold text-emerald-900 bg-neutral-100 py-1 px-2">Todo-Gannt</h1>
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex sm:items-center">
-                    <x-nav-link class="text-neutral-100" :href="route('todo.index')" :active="request()->routeIs('todo.index')" wire:navigate>
+                    <x-nav-link class="text-neutral-100" :href="route('index')" :active="request()->routeIs('index')" wire:navigate>
                         your Todos
                     </x-nav-link>
                     <x-nav-link class="text-neutral-100" :href="route('ganttchart.index')" :active="request()->routeIs('ganttchart.index')" wire:navigate>
