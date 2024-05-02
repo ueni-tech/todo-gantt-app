@@ -32,7 +32,7 @@ class GoogleLoginController extends Controller
 
             Auth::login($user);
 
-            return redirect('/');
+            return redirect(route('index'));
         } catch (Exception $e) {
             Log::error($e);
             throw $e;

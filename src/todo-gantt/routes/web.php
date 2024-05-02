@@ -1,7 +1,8 @@
 <?php
 
+use App\Http\Controllers\GanttchartController;
 use App\Http\Controllers\GoogleLoginController;
-use App\Http\Controllers\IndexController;
+use App\Http\Controllers\TodoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,7 +16,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [IndexController::class, 'index'])->middleware(['auth'])->name('index');
+Route::resource('/', TodoController::class)->only('index')->middleware(['auth']);
+Route::resource('todo', TodoController::class)->except(['index'])->middleware(['auth']);
+Route::resource('ganttchart', GanttchartController::class)->middleware(['auth']);
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
