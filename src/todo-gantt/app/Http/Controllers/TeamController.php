@@ -29,14 +29,14 @@ class TeamController extends Controller
      */
     public function store(TeamRequest $request)
     {
-        $team = new Team();
-        $team->name = $request->input('name');
-        $team->save();
+        // $team = new Team();
+        // $team->name = $request->input('name');
+        // $team->save();
 
-        // ユーザーにチームを紐付ける
-        $team->users()->attach(auth()->user());
+        // // ユーザーにチームを紐付ける
+        // $team->users()->attach(auth()->user());
 
-        return redirect()->route('index');
+        // return redirect()->route('index');
     }
 
     /**
