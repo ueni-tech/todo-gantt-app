@@ -8,8 +8,14 @@ use Livewire\Component;
 
 class CreateTeam extends Component
 {
-    #[Validate('required|string|max:255|unique:teams,name')] 
+    // #[Validate('required|string|max:255|unique:teams,name')] 
     public $name = '';
+
+    public $val;
+
+    protected $rules = [
+        'name' => 'required|string|max:255|unique:teams,name',
+    ];
 
     public $isButtonDisabled = true;
 
@@ -43,5 +49,6 @@ class CreateTeam extends Component
         // 全角スペースだけの入力を許可しない
         $trimmedValue = preg_replace('/\A\s*\z/u', '', $value);
         $this->isButtonDisabled = $trimmedValue === '';
+        $this->validateOnly('name');
     }
 }
