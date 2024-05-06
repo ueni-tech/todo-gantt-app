@@ -16,4 +16,14 @@ class Team extends Model
     public function users(){
         return $this->belongsToMany(User::class);
     }
+
+    public function getNameAttribute($value)
+    {
+        return trim($value);
+    }
+
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = trim($value);
+    }
 }

@@ -40,6 +40,7 @@ class CreateTeam extends Component
 
     public function updatedName($value)
     {
+        // 全角スペースだけの入力を許可しない
         $trimmedValue = preg_replace('/\A\s*\z/u', '', $value);
         $this->isButtonDisabled = $trimmedValue === '';
     }
