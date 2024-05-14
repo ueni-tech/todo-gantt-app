@@ -13,24 +13,44 @@ class TeamTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_teams_index()
+    /**
+     * @test
+     */
+    public function teams_store()
     {
         $this->withoutMiddleware(Authenticate::class);
-        $response = $this->get('/teams');
-        $response->assertStatus(200);
+        $this->post('/teams', ['name' => ' 犬チーム_123 ']);
+        $this->assertDatabaseHas('teams', ['name' => '犬チーム_123']);
     }
 
-    public function test_teams_store()
+    /**
+     * @test
+     */
+    public function teams_store_name_length_256()
     {
         $this->withoutMiddleware(Authenticate::class);
-        //ユーザーを作成
-        $user = User::factory()->create();
-        $this->actingAs($user);
-        $response = $this->post('/teams', ['name' => 'Team1']);
-        $response->assertRedirect(route('index'));
-        $this->assertDatabaseHas('teams', ['name' => 'Team1']);
+        $response = $this->post('/teams', ['name' => str_repeat('あ', 256)]);
+        $response->assertSessionHasErrors(['name']);
+    }
 
-        $team = Team::first();
-        $this->assertDatabaseHas('team_user', ['team_id' => $team->id, 'user_id' => $user->id]);
+    /**
+     * @test
+     */
+    public function teams_store_validation_error()
+    {
+        $this->withoutMiddleware(Authenticate::class);
+        $response = $this->post('/teams', ['name' => ' ']);
+        $response->assertSessionHasErrors(['name']);
+    }
+
+    /**
+     * @test
+     */
+    public function teams_store_unique_error()
+    {
+        $this->withoutMiddleware(Authenticate::class);
+        $team = Team::factory()->create(['name' => '犬チーム']);
+        $response = $this->post('/teams', ['name' => '犬チーム']);
+        $response->assertSessionHasErrors(['name']);
     }
 }
