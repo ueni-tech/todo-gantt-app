@@ -25,14 +25,18 @@
     <header class="bg-white shadow">
       <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
         {{ $header }}
-  </div>
-  </header>
-  @endif
+      </div>
+    </header>
+    @endif
 
-  <!-- Page Content -->
-  <main>
-    {{ $slot }}
-  </main>
+    <!-- Page Content -->
+    <main x-data="{
+    teamModalOpened : false,
+    toggleTeamModal(){this.teamModalOpened = !this.teamModalOpened}
+    }">
+      {{ $slot }}
+      <x-create-team />
+    </main>
   </div>
 
   <script src="https://kit.fontawesome.com/891a71c277.js" crossorigin="anonymous"></script>
