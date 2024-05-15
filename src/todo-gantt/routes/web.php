@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\GanttchartController;
 use App\Http\Controllers\GoogleLoginController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\TodoController;
 use Illuminate\Support\Facades\Route;

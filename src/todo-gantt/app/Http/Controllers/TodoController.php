@@ -9,6 +9,7 @@ class TodoController extends Controller
     public function index()
     {
         $user = auth()->user();
-        return view('todos', compact('user'));
+        $teams = $user->teams;
+        return view('todos', compact('user', 'teams'));
     }
 }

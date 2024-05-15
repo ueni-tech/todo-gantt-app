@@ -8,7 +8,7 @@
     toggleTodoModal(){this.todoModalOpened = !this.todoModalOpened},
   }">
 
-    <x-sidebar :user="$user" />
+    <x-sidebar :teams="$teams" />
     <div class="ml-16 h-screen pt-[64px]">
       <div class="w-[95%] h-full mx-auto py-6 flex justify-items-start gap-3 overflow-x-auto">
         <div class="w-56 h-full py-2 px-4 bg-zinc-300 rounded">
