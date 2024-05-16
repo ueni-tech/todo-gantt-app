@@ -30,12 +30,8 @@
     @endif
 
     <!-- Page Content -->
-    <main x-data="{
-    teamModalOpened : false,
-    toggleTeamModal(){this.teamModalOpened = !this.teamModalOpened}
-    }">
+    <main>
       {{ $slot }}
-      <x-create-team />
     </main>
   </div>
 
