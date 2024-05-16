@@ -32,7 +32,9 @@ class GoogleLoginController extends Controller
 
             Auth::login($user);
 
-            return redirect(route('index'));
+            $firstTeam = $user->teams->first();
+
+            return redirect(route('todos.index', $firstTeam));
         } catch (Exception $e) {
             Log::error($e);
             throw $e;
