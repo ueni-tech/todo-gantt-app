@@ -22,6 +22,7 @@ Route::resource('/', TodoController::class)->only('index')->middleware(['auth'])
 Route::resource('todos', TodoController::class)->except(['index'])->middleware(['auth']);
 Route::resource('ganttcharts', GanttchartController::class)->middleware(['auth']);
 Route::resource('teams', TeamController::class)->middleware(['auth']);
+Route::get('teams/{team}/change', [TeamController::class, 'change'])->name('teams.change');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])

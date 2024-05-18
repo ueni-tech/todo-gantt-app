@@ -76,4 +76,13 @@ class TeamController extends Controller
 
         return redirect()->route('index');
     }
+
+    public function change(Team $team)
+    {
+        $user = User::find(auth()->id());
+        $user->selected_team_id = $team->id;
+        $user->save();
+
+        return redirect()->back();
+    }
 }
