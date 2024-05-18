@@ -64,7 +64,14 @@ class TeamController extends Controller
      */
     public function update(Request $request, Team $team)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        $team->name = $request->input('name');
+        $team->save();
+
+        return redirect()->back();
     }
 
     /**

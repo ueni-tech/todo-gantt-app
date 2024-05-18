@@ -10,7 +10,12 @@
 
     <x-sidebar :teams="$teams" />
     <div class="ml-16 h-screen pt-[64px]">
-      <h2 class="ml-6 mt-4 text-lg font-semibold">{{$current_team->name}}</h2>
+      @if($current_team)
+      <div class="ml-6 mt-4 flex items-baseline gap-3">
+        <h2 class="text-lg font-semibold">{{$current_team->name}}</h2>
+        <button class="text-sm opacity-50 hover:opacity-100" @click="toggleTeamEditModal()"><i class="fa-solid fa-pen-to-square"></i></button>
+      </div>
+      @endif
       <div class="w-[95%] mx-auto py-4 flex justify-items-start gap-3 overflow-x-auto">
         <div class="w-56 h-full py-2 px-4 bg-zinc-300 rounded">
           <h2 class="text-base font-medium pb-2">プロジェクト名</h2>

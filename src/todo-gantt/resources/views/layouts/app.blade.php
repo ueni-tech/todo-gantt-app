@@ -17,7 +17,12 @@
 </head>
 
 <body class="basic-font tracking-wide">
-  <div class="min-h-screen bg-gray-100">
+  <div class="min-h-screen bg-gray-100" x-data="{
+    teamStoreModalOpened : false,
+    toggleTeamStoreModal(){this.teamStoreModalOpened = !this.teamStoreModalOpened},
+    teamEditModalOpened : false,
+    toggleTeamEditModal(){this.teamEditModalOpened = !this.teamEditModalOpened},
+}">
     <livewire:layout.navigation />
 
     <!-- Page Heading -->
@@ -33,6 +38,9 @@
     <main>
       {{ $slot }}
     </main>
+
+    <x-modals.team-store />
+    <x-modals.team-edit :selectedTeam="$selectedTeam"/>
   </div>
 
   <script src="https://kit.fontawesome.com/891a71c277.js" crossorigin="anonymous"></script>
