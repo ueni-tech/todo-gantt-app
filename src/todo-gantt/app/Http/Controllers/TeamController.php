@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TeamRequest;
 use App\Models\Team;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class TeamController extends Controller
@@ -32,10 +33,14 @@ class TeamController extends Controller
         $team->name = $request->input('name');
         $team->save();
 
+        $user = User::find(auth()->id());
+        $user->selected_team_id = $team->id;
+        $user->save();
+
         // ユーザーにチームを紐付ける
         $team->users()->attach(auth()->user());
 
-        return redirect()->route('index');
+        return redirect()->back();
     }
 
     /**
