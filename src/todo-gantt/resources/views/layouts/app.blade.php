@@ -18,11 +18,9 @@
 
 <body class="basic-font tracking-wide">
   <div class="min-h-screen bg-gray-100" x-data="{
-    teamStoreModalOpened : false,
-    toggleTeamStoreModal(){this.teamStoreModalOpened = !this.teamStoreModalOpened},
-    teamEditModalOpened : false,
-    toggleTeamEditModal(){this.teamEditModalOpened = !this.teamEditModalOpened},
-}">
+    ...teamStoreModal(),
+    ...teamEditModal()
+  }">
     <livewire:layout.navigation />
 
     <!-- Page Heading -->
@@ -45,6 +43,21 @@
 
   <script src="https://kit.fontawesome.com/891a71c277.js" crossorigin="anonymous"></script>
   @stack('scripts')
+  <script>
+    const teamStoreModal = () => {
+      return {
+        teamStoreModalOpened : false,
+        toggleTeamStoreModal(){this.teamStoreModalOpened = !this.teamStoreModalOpened},
+      }
+    }
+
+    const teamEditModal = () => {
+      return {
+        teamEditModalOpened : false,
+        toggleTeamEditModal(){this.teamEditModalOpened = !this.teamEditModalOpened},
+      }
+    }
+  </script>
 </body>
 
 </html>
