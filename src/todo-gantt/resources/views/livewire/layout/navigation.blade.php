@@ -5,12 +5,6 @@ use Livewire\Volt\Component;
 
 new class extends Component
 {
-    public $firstTeam;
-
-    public function mount()
-    {
-        $this->firstTeam = auth()->user()->teams()->first();
-    }
     /**
      * Log the current user out of the application.
      */
@@ -29,14 +23,14 @@ new class extends Component
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{route('todos.index', $firstTeam)}}">
+                    <a href="{{ route('index') }}">
                         <h1 class="text-lg font-bold text-emerald-900 bg-neutral-100 py-1 px-2">Todo-Gannt</h1>
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex sm:items-center">
-                    <x-nav-link class="text-neutral-100" :href="route('todos.index', $firstTeam)" :active="request()->routeIs('index')">
+                    <x-nav-link class="text-neutral-100" :href="route('index')" :active="request()->routeIs('index')">
                         your Todos
                     </x-nav-link>
                     <x-nav-link class="text-neutral-100" :href="route('ganttcharts.index')" :active="request()->routeIs('ganttchart.index')">

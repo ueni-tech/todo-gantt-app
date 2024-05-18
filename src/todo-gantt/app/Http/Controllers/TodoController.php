@@ -6,11 +6,10 @@ use Illuminate\Http\Request;
 
 class TodoController extends Controller
 {
-    public function index($team)
+    public function index()
     {
         $user = auth()->user();
         $teams = $user->teams;
-        $nowTeam = $teams->where('id', $team)->first();
-        return view('todos', compact('user', 'teams', 'nowTeam'));
+        return view('todos', compact('user', 'teams'));
     }
 }
