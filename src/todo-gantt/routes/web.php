@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\GanttchartController;
 use App\Http\Controllers\GoogleLoginController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\TodoController;
 use Illuminate\Support\Facades\Route;
@@ -21,6 +22,7 @@ Route::resource('/', TodoController::class)->only('index')->middleware(['auth'])
 Route::resource('todos', TodoController::class)->except(['index'])->middleware(['auth']);
 Route::resource('ganttcharts', GanttchartController::class)->middleware(['auth']);
 Route::resource('teams', TeamController::class)->middleware(['auth']);
+Route::get('teams/{team}/change', [TeamController::class, 'change'])->name('teams.change');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])

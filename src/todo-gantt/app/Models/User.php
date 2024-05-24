@@ -22,7 +22,8 @@ class User extends Authenticatable
         'email',
         'password',
         'provider',
-        'provider_id'
+        'provider_id',
+        'selected_team_id',
     ];
 
     /**
@@ -47,5 +48,9 @@ class User extends Authenticatable
 
     public function teams(){
         return $this->belongsToMany(Team::class);
+    }
+
+    public function selectedTeam(){
+        return $this->belongsTo(Team::class, 'selected_team_id');
     }
 }

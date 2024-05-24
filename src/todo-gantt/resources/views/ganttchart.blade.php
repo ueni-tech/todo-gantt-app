@@ -1,5 +1,5 @@
 <x-app-layout>
-  <x-sidebar />
+  <x-sidebar :teams="$teams"/>
   <div class="ml-16 pt-[64px]">
 <div class="flex justify-center items-center flex-col h-[80vh] gap-5">
   <p class="text-6xl">in the making...</p>

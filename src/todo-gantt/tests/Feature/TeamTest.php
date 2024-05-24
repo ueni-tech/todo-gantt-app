@@ -26,6 +26,32 @@ class TeamTest extends TestCase
     /**
      * @test
      */
+    public function teams_store_bind_user()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        $this->post('/teams', ['name' => '犬チーム']);
+        $this->assertDatabaseHas('teams', ['name' => '犬チーム']);
+        $team = Team::where('name', '犬チーム')->first();
+        $this->assertDatabaseHas('team_user', ['team_id' => $team->id, 'user_id' => $user->id]);
+    }
+
+    /**
+     * @test
+     */
+    public function teams_store_selected_team()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        $this->post('/teams', ['name' => '犬チーム']);
+        $this->assertDatabaseHas('teams', ['name' => '犬チーム']);
+        $team = Team::where('name', '犬チーム')->first();
+        $this->assertDatabaseHas('users', ['id' => $user->id, 'selected_team_id' => $team->id]);
+    }
+
+    /**
+     * @test
+     */
     public function teams_store_name_length_256()
     {
         $this->withoutMiddleware(Authenticate::class);

@@ -9,6 +9,7 @@ class GanttchartController extends Controller
     public function index()
     {
         $user = auth()->user();
-        return view('ganttchart', compact('user'));
+        $teams = $user->teams;
+        return view('ganttchart', compact('user', 'teams'));
     }
 }

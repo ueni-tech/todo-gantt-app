@@ -8,9 +8,10 @@
     toggleTodoModal(){this.todoModalOpened = !this.todoModalOpened},
   }">
 
-    <x-sidebar :user="$user" />
+    <x-sidebar :teams="$teams" />
     <div class="ml-16 h-screen pt-[64px]">
-      <div class="w-[95%] h-full mx-auto py-6 flex justify-items-start gap-3 overflow-x-auto">
+      <h2 class="ml-6 mt-4 text-lg font-semibold">{{$current_team->name}}</h2>
+      <div class="w-[95%] mx-auto py-4 flex justify-items-start gap-3 overflow-x-auto">
         <div class="w-56 h-full py-2 px-4 bg-zinc-300 rounded">
           <h2 class="text-base font-medium pb-2">プロジェクト名</h2>
           <ul class="todo-list-height overflow-y-auto flex flex-col gap-3 hidden-scrollbar hidden-scrollbar::-webkit-scrollbar">
