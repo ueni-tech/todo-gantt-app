@@ -62,7 +62,7 @@ class TeamController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Team $team)
+    public function update(TeamRequest $request, Team $team)
     {
         $request->validate([
             'name' => 'required|string|max:255',
@@ -84,6 +84,9 @@ class TeamController extends Controller
         return redirect()->route('index');
     }
 
+    /**
+     * チームを切り替える
+     */
     public function change(Team $team)
     {
         $user = User::find(auth()->id());

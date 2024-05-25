@@ -38,11 +38,13 @@
     </main>
 
     <x-modals.team-store />
+    @if($selectedTeam)
     <x-modals.team-edit :selectedTeam="$selectedTeam"/>
+    @endif
   </div>
 
   <script src="https://kit.fontawesome.com/891a71c277.js" crossorigin="anonymous"></script>
-  @stack('scripts')
+
   <script>
     const teamStoreModal = () => {
       return {

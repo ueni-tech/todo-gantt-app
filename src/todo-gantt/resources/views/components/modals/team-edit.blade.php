@@ -21,6 +21,8 @@
             <button type="submit" class="bg-primary-500 text-white text-sm mt-2 p-1 rounded self-end">更新</button>
           </div>
         </form>
+        <div class="mb-6"></div>
+        <livewire:delete-team :selectedTeam="$selectedTeam"/>
       </div>
     </div>
   </div>
