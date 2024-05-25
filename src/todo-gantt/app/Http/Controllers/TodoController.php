@@ -12,6 +12,7 @@ class TodoController extends Controller
         $user = auth()->user();
         $teams = $user->teams;
         $current_team = Team::find($user->selected_team_id);
-        return view('todos', compact('user', 'teams', 'current_team'));
+        $projects = $current_team->projects()->where('user_id', $user->id)->get();
+        return view('todos', compact('user', 'teams', 'current_team', 'projects'));
     }
 }

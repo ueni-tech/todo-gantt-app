@@ -22,4 +22,9 @@ class Team extends Model
     {
         $this->attributes['name'] = trim($value);
     }
+
+    public function projects()
+    {
+        return $this->hasMany(Project::class);
+    }
 }
