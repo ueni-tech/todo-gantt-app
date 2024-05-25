@@ -64,7 +64,10 @@ class ProjectController extends Controller
      */
     public function update(ProjectRequest $request, Project $project)
     {
-        //
+        $project->name = $request->name;
+        $project->save();
+
+        return redirect()->back();
     }
 
     /**
@@ -72,6 +75,8 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        //
+        $project->delete();
+
+        return redirect()->back();
     }
 }
