@@ -19,7 +19,8 @@
 <body class="basic-font tracking-wide">
   <div class="min-h-screen bg-gray-100" x-data="{
     ...teamStoreModal(),
-    ...teamEditModal()
+    ...teamEditModal(),
+    ...projectStoreModal(),
   }">
     <livewire:layout.navigation />
 
@@ -41,6 +42,8 @@
     @if($selectedTeam)
     <x-modals.team-edit :selectedTeam="$selectedTeam"/>
     @endif
+
+    <x-modals.project-store />
   </div>
 
   <script src="https://kit.fontawesome.com/891a71c277.js" crossorigin="anonymous"></script>
@@ -57,6 +60,13 @@
       return {
         teamEditModalOpened : false,
         toggleTeamEditModal(){this.teamEditModalOpened = !this.teamEditModalOpened},
+      }
+    }
+
+    const projectStoreModal = () => {
+      return {
+        projectStoreModalOpened : false,
+        toggleProjectStoreModal(){this.projectStoreModalOpened = !this.projectStoreModalOpened},
       }
     }
   </script>
