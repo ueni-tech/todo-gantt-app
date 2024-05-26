@@ -19,7 +19,7 @@
       <div class="w-[95%] mx-auto py-4 flex justify-items-start gap-3 overflow-x-auto">
         @foreach($projects as $project)
         <div class="w-56 h-full py-2 px-4 bg-zinc-300 rounded">
-          <h2 class="text-base font-medium pb-2">{{$project->name}}</h2>
+          <livewire:edit-project :project="$project" />
           <ul class="todo-list-height overflow-y-auto flex flex-col gap-3 hidden-scrollbar hidden-scrollbar::-webkit-scrollbar">
             <li>
               <button @click="toggleTodoModal()" class="w-full p-2 bg-neutral-100 rounded flex items-center gap-1">
