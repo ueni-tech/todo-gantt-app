@@ -19,6 +19,11 @@ class EditProject extends Component
     public function toggleEditing()
     {
         $this->editing = !$this->editing;
+        $this->name = $this->project->name;
+        // iput focus
+        if($this->editing){
+            $this->dispatch('focus-input');
+        }
     }
 
     public function render()

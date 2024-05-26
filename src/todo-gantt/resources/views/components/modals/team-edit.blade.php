@@ -22,7 +22,7 @@
           </div>
         </form>
         <div class="mb-6"></div>
-        <livewire:delete-team :selectedTeam="$selectedTeam"/>
+        <livewire:delete-team :selectedTeam="$selectedTeam" />
       </div>
     </div>
   </div>

@@ -102,3 +102,17 @@
   background-color: #303030;
   opacity: 8%;
 }
+
+/* カスタムスクロールバー */
+.scroll-box::-webkit-scrollbar {
+  height: 5px;
+}
+
+.scroll-box::-webkit-scrollbar-thumb {
+  background-color: #777;
+  border-radius: 3px;
+}
+
+.scroll-box::-webkit-scrollbar-thumb:hover {
+  background-color: #333;
+}

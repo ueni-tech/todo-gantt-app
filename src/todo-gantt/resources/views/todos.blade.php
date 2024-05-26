@@ -1,7 +1,3 @@
-@push('scripts')
-<script src="{{ asset('js/main.js') }}"></script>
-@endpush
-
 <x-app-layout>
   <div x-data="{
     todoModalOpened : false,
