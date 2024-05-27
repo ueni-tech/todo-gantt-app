@@ -79,4 +79,60 @@ class TeamTest extends TestCase
         $response = $this->post('/teams', ['name' => '犬チーム']);
         $response->assertSessionHasErrors(['name']);
     }
+
+    /**
+     * @test
+     */
+    public function teams_update()
+    {
+        $this->withoutMiddleware(Authenticate::class);
+        $team = Team::factory()->create();
+        $this->patch("/teams/{$team->id}", ['name' => '猫チーム']);
+        $this->assertDatabaseHas('teams', ['id' => $team->id, 'name' => '猫チーム']);
+    }
+
+    /**
+     * @test
+     */
+    public function teams_update_name_length_256()
+    {
+        $this->withoutMiddleware(Authenticate::class);
+        $team = Team::factory()->create();
+        $response = $this->patch("/teams/{$team->id}", ['name' => str_repeat('あ', 256)]);
+        $response->assertSessionHasErrors(['name']);
+    }
+
+    /**
+     * @test
+     */
+    public function teams_update_validation_error()
+    {
+        $this->withoutMiddleware(Authenticate::class);
+        $team = Team::factory()->create();
+        $response = $this->patch("/teams/{$team->id}", ['name' => ' ']);
+        $response->assertSessionHasErrors(['name']);
+    }
+
+    /**
+     * @test
+     */
+    public function teams_update_unique_error()
+    {
+        $this->withoutMiddleware(Authenticate::class);
+        $team1 = Team::factory()->create(['name' => '犬チーム']);
+        $team2 = Team::factory()->create(['name' => '猫チーム']);
+        $response = $this->patch("/teams/{$team1->id}", ['name' => '猫チーム']);
+        $response->assertSessionHasErrors(['name']);
+    }
+
+    /**
+     * @test
+     */
+    public function teams_destroy()
+    {
+        $this->withoutMiddleware(Authenticate::class);
+        $team = Team::factory()->create();
+        $this->delete("/teams/{$team->id}");
+        $this->assertDatabaseMissing('teams', ['id' => $team->id]);
+    }
 }
