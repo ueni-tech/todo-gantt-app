@@ -16,13 +16,27 @@
         <i class="fa-solid fa-pen-to-square"></i>
     </button>
     @endif
-
 </div>
 
 @script
 <script>
     $wire.on('focus-input', () => {
         console.log('focus-input');
+
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                const input = document.querySelector('.input');
+                if (input) {
+                    input.focus();
+                    observer.disconnect();
+                }
+            });
+        });
+
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
     });
 </script>
 @endscript
