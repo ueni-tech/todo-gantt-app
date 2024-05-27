@@ -21,8 +21,6 @@
 @script
 <script>
     $wire.on('focus-input', () => {
-        console.log('focus-input');
-
         const observer = new MutationObserver((mutations) => {
             mutations.forEach((mutation) => {
                 const input = document.querySelector('.input');
