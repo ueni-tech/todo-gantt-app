@@ -23,8 +23,7 @@
   <div class="min-h-screen bg-gray-100" x-data="{
     ...teamStoreModal(),
     ...teamEditModal(),
-    ...projectStoreModal(),
-    ...projectDeleteModal(),
+    ...projectStoreModal()
   }">
     <livewire:layout.navigation />
 
@@ -48,6 +47,7 @@
     @endif
 
     <x-modals.project-store />
+
   </div>
 
   <script src="https://kit.fontawesome.com/891a71c277.js" crossorigin="anonymous"></script>
@@ -76,15 +76,6 @@
         projectStoreModalOpened: false,
         toggleProjectStoreModal() {
           this.projectStoreModalOpened = !this.projectStoreModalOpened
-        },
-      }
-    }
-
-    const projectDeleteModal = () => {
-      return {
-        projectDeleteModalOpened: false,
-        toggleProjectDeleteModal() {
-          this.projectDeleteModalOpened = !this.projectDeleteModalOpened
         },
       }
     }

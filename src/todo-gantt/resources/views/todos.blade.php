@@ -36,14 +36,11 @@
                     <i class="fa-solid fa-plus"></i>
                   </span>
                 </a>
-                <button class="opacity-30 text-sm hover:opacity-100 hover:text-red-500" @click="toggleProjectDeleteModal()">
-                  <i class="fa-regular fa-trash-can"></i>
-                </button>
+                <livewire:delete-project :project="$project" />
               </div>
             </li>
           </ul>
         </div>
-        <x-modals.project-delete :project="$project" />
         @endforeach
 
         <button @click="toggleProjectStoreModal()" class="w-8 h-8 aspect-square bg-gray-500 rounded overflow-hidden border-2 border-gray-500">
