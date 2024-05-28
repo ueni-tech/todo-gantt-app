@@ -24,6 +24,7 @@
     ...teamStoreModal(),
     ...teamEditModal(),
     ...projectStoreModal(),
+    ...projectDeleteModal(),
   }">
     <livewire:layout.navigation />
 
@@ -43,7 +44,7 @@
 
     <x-modals.team-store />
     @if($selectedTeam)
-    <x-modals.team-edit :selectedTeam="$selectedTeam"/>
+    <x-modals.team-edit :selectedTeam="$selectedTeam" />
     @endif
 
     <x-modals.project-store />
@@ -54,22 +55,37 @@
   <script>
     const teamStoreModal = () => {
       return {
-        teamStoreModalOpened : false,
-        toggleTeamStoreModal(){this.teamStoreModalOpened = !this.teamStoreModalOpened},
+        teamStoreModalOpened: false,
+        toggleTeamStoreModal() {
+          this.teamStoreModalOpened = !this.teamStoreModalOpened
+        },
       }
     }
 
     const teamEditModal = () => {
       return {
-        teamEditModalOpened : false,
-        toggleTeamEditModal(){this.teamEditModalOpened = !this.teamEditModalOpened},
+        teamEditModalOpened: false,
+        toggleTeamEditModal() {
+          this.teamEditModalOpened = !this.teamEditModalOpened
+        },
       }
     }
 
     const projectStoreModal = () => {
       return {
-        projectStoreModalOpened : false,
-        toggleProjectStoreModal(){this.projectStoreModalOpened = !this.projectStoreModalOpened},
+        projectStoreModalOpened: false,
+        toggleProjectStoreModal() {
+          this.projectStoreModalOpened = !this.projectStoreModalOpened
+        },
+      }
+    }
+
+    const projectDeleteModal = () => {
+      return {
+        projectDeleteModalOpened: false,
+        toggleProjectDeleteModal() {
+          this.projectDeleteModalOpened = !this.projectDeleteModalOpened
+        },
       }
     }
   </script>
