@@ -32,13 +32,9 @@ class ProjectController extends Controller
     public function store(ProjectRequest $request)
     {
         $user = auth()->user();
-        $current_team = Team::find($user->selected_team_id);
+        $current_team = $user->selectedTeam()->first();
 
-        $project = new Project();
-        $project->name = $request->name;
-        $project->team_id = $current_team->id;
-        $project->user_id = $user->id;
-        $project->save();
+        Project::createProject($user, $current_team, $request->name);
 
         return redirect()->back();
     }

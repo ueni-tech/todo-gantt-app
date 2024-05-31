@@ -24,4 +24,15 @@ class Project extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public static function createProject($user, $current_team, $name)
+    {
+        $project = new Project();
+        $project->name = $name;
+        $project->team_id = $current_team->id;
+        $project->user_id = $user->id;
+        $project->save();
+        
+        return $project;
+    }
 }
