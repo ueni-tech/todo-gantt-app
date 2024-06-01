@@ -9,7 +9,7 @@
     </div>
     <div class="mt-3">
       <div class="flex flex-col">
-        <form action="{{route('teams.update', $selectedTeam)}}" method="post">
+        <form action="{{route('teams.update', $selectedTeam)}}" method="POST">
           @csrf
           @method('PUT')
           <div class="flex flex-col">
