@@ -41,4 +41,12 @@ class Project extends Model
         
         return $project;
     }
+
+    public static function updateName(String $name, Project $project): Project
+    {
+        $project->name = $name;
+        $project->save();
+
+        return $project;
+    }
 }

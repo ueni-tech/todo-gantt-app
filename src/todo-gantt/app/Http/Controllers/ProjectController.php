@@ -60,8 +60,7 @@ class ProjectController extends Controller
      */
     public function update(ProjectRequest $request, Project $project)
     {
-        $project->name = $request->name;
-        $project->save();
+        Project::updateName($request->name, $project);
 
         return redirect()->back();
     }

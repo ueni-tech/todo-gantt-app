@@ -125,5 +125,4 @@ class ProjectTest extends TestCase
         $response->assertRedirect();
         $this->assertDatabaseMissing('projects', ['name' => 'プロジェクト', 'team_id' => $team->id, 'user_id' => $user->id]);
     }
-
 }
