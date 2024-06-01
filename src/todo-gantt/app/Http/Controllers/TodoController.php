@@ -11,7 +11,7 @@ class TodoController extends Controller
     {
         $user = auth()->user();
         $teams = $user->teams;
-        $current_team = $user->selectedTeam()->first();
+        $current_team = $user->selectedTeam;
 
         if(!$current_team){
             return view('todos', [

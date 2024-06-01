@@ -26,12 +26,12 @@ class Project extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function scopeForUser($query, $user): Builder
+    public function scopeForUser($query, User $user): Builder
     {
         return $query->where('user_id', $user->id);
     }
 
-    public static function createProject($user, $current_team, $name)
+    public static function createProject(User $user, Team $current_team, string $name): Project
     {
         $project = new Project();
         $project->name = $name;
