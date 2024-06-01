@@ -27,4 +27,21 @@ class Team extends Model
     {
         return $this->hasMany(Project::class);
     }
+
+    public static function createTeam(String $name): Team
+    {
+        $team = new Team();
+        $team->name = $name;
+        $team->save();
+        
+        return $team;
+    }
+
+    public static function updateName(String $name, Team $team): Team
+    {
+        $team->name = $name;
+        $team->save();
+        
+        return $team;
+    }
 }
