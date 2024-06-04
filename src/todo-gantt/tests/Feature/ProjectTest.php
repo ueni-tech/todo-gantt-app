@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Http\Middleware\Authenticate;
+use App\Models\Project;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -59,6 +60,34 @@ class ProjectTest extends TestCase
         $response->assertSessionHasErrors('name');
     }
 
+    /**
+     * @test
+     */
+    public function createProjectのテスト()
+    {
+        $user = User::factory()->create();
+        $team = Team::factory()->create();
+        $team->users()->attach($user);
+        $user->selected_team_id = $team->id;
+
+        $project = Project::createProject($user, $team, 'プロジェクト');
+        $this->assertDatabaseHas('projects', ['name' => 'プロジェクト', 'team_id' => $team->id, 'user_id' => $user->id]);
+    }
+
+    /**
+     * @test
+     */
+    public function updateNameのテスト()
+    {
+        $user = User::factory()->create();
+        $team = Team::factory()->create();
+        $team->users()->attach($user);
+        $user->selected_team_id = $team->id;
+        $project = Project::createProject($user, $team, 'プロジェクト');
+
+        $project = Project::updateName('プロジェクト2', $project);
+        $this->assertEquals('プロジェクト2', $project->name);
+    }
 
     /**
      * @test
