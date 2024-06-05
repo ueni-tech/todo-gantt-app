@@ -40,6 +40,7 @@ class TaskTest extends TestCase
             'note' => $note,
             'start_date' => $start_date,
             'end_date' => $end_date,
+            'completed' => 0,
         ]);
     }
 
@@ -63,13 +64,16 @@ class TaskTest extends TestCase
             'start_date' => '2021-01-01',
             'end_date' => '2021-01-31',
         ]);
+
         $response->assertRedirect();
+
         $this->assertDatabaseHas('tasks', [
             'project_id' => $project->id,
             'name' => 'タスク',
             'note' => 'メモ',
             'start_date' => '2021-01-01',
             'end_date' => '2021-01-31',
+            'completed' => 0,
         ]);
     }
 }
