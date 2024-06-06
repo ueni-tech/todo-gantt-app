@@ -222,4 +222,33 @@ class TaskTest extends TestCase
             'completed' => 0,
         ]);
     }
+
+    /**
+     * @test
+     */
+    public function a_user_can_delete_task()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        $team = Team::factory()->create();
+        $team->users()->attach($user);
+        $user->selected_team_id = $team->id;
+
+        $project = Project::createProject($user, $team, 'プロジェクト');
+
+        $task = Task::createTask($project, 'タスク', 'メモ', '2021-01-01', '2021-01-31');
+
+        $response = $this->delete('/tasks/' . $task->id);
+
+        $response->assertRedirect();
+
+        $this->assertDatabaseMissing('tasks', [
+            'project_id' => $project->id,
+            'name' => 'タスク',
+            'note' => 'メモ',
+            'start_date' => '2021-01-01',
+            'end_date' => '2021-01-31',
+            'completed' => 0,
+        ]);
+    }
 }
