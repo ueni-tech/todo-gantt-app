@@ -27,6 +27,7 @@ Route::resource('teams', TeamController::class)->middleware(['auth']);
 Route::get('teams/{team}/change', [TeamController::class, 'change'])->name('teams.change');
 Route::resource('projects', ProjectController::class)->middleware(['auth']);
 Route::resource('tasks', TaskController::class)->middleware(['auth']);
+Route::get('tasks/{task}/toggle', [TaskController::class, 'toggle'])->name('tasks.toggle');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])

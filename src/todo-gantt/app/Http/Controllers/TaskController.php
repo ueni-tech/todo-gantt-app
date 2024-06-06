@@ -57,7 +57,9 @@ class TaskController extends Controller
      */
     public function update(Request $request, Task $task)
     {
-        //
+        Task::updateTask($task, $request->name, $request->note, $request->start_date, $request->end_date);
+
+        return redirect()->back();
     }
 
     /**
@@ -66,5 +68,12 @@ class TaskController extends Controller
     public function destroy(Task $task)
     {
         //
+    }
+
+    public function toggle(Task $task)
+    {
+        Task::toggleCompleted($task);
+
+        return redirect()->back();
     }
 }

@@ -27,4 +27,23 @@ class Task extends Model
     
         return $task;
     }
+
+    public static function updateTask(Task $task, String $name, String $note, String $start_date, String $end_date): Task
+    {
+        $task->name = $name;
+        $task->note = $note;
+        $task->start_date = $start_date;
+        $task->end_date = $end_date;
+        $task->save();
+    
+        return $task;
+    }
+
+    public static function toggleCompleted(Task $task): Task
+    {
+        $task->completed = !$task->completed;
+        $task->save();
+    
+        return $task;
+    }
 }
