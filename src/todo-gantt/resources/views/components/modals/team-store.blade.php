@@ -9,7 +9,7 @@
     </div>
     <div class="mt-3">
       <div class="flex flex-col">
-        <form action="{{route('teams.store')}}" method="post">
+        <form action="{{route('teams.store')}}" method="POST">
           @csrf
           <div class="flex flex-col">
             <label for="team-name">チーム名</label>

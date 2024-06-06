@@ -9,7 +9,7 @@
     </div>
     <div class="mt-3">
       <div class="flex flex-col">
-        <form action="{{route('projects.store')}}" method="post">
+        <form action="{{route('projects.store')}}" method="POST">
           @csrf
           <div class="flex flex-col">
             <label for="project-name">プロジェクト名</label>

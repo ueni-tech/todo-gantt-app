@@ -14,7 +14,7 @@
         </div>
         <div class="mt-3">
             <div>
-                <form action="{{route('projects.destroy', $project)}}" method="post">
+                <form action="{{route('projects.destroy', $project)}}" method="POST">
                     @csrf
                     @method('delete')
                     <div class="flex flex-col">

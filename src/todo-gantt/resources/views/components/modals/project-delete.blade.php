@@ -9,7 +9,7 @@
     </div>
     <div class="mt-3">
       <div class="flex flex-col">
-        <form action="{{route('projects.destroy', $project)}}" method="post">
+        <form action="{{route('projects.destroy', $project)}}" method="POST">
           @csrf
           @method('delete')
           <div class="flex flex-col">

@@ -32,7 +32,7 @@ class ProjectController extends Controller
     public function store(ProjectRequest $request)
     {
         $user = auth()->user();
-        $current_team = $user->selectedTeam()->first();
+        $current_team = $user->selectedTeam;
 
         Project::createProject($user, $current_team, $request->name);
 
@@ -60,8 +60,7 @@ class ProjectController extends Controller
      */
     public function update(ProjectRequest $request, Project $project)
     {
-        $project->name = $request->name;
-        $project->save();
+        Project::updateName($request->name, $project);
 
         return redirect()->back();
     }

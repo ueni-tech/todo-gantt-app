@@ -1,6 +1,6 @@
 <div class="flex items-baseline gap-3">
     @if($editing)
-    <form action="{{route('projects.update', $project)}}" method="post">
+    <form action="{{route('projects.update', $project)}}" method="POST">
         @csrf
         @method('put')
         <div class="flex items-center gap-2 mb-2">
