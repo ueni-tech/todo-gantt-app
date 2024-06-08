@@ -15,7 +15,7 @@ class Task extends Model
         return $this->belongsTo(Project::class);
     }
 
-    public static function createTask(Project $project, String $name, String $note, String $start_date, String $end_date): Task
+    public static function createTask(Project $project, String $name, ?String $note, String $start_date, String $end_date): Task
     {
         $task = new Task();
         $task->project_id = $project->id;
