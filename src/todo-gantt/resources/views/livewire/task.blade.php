@@ -1,10 +1,17 @@
 <div>
     <button wire:click="toggleTaskEditModal" class="w-full p-2 bg-neutral-100 rounded flex justify-between items-center gap-1">
         <div>
-            <span class="opacity-30 hover:opacity-100">
-                <i class="fa-regular fa-square-check"></i>
+            @if(!$completed)
+            <span wire:click.stop="toggleCompleted" class="opacity-30 hover:opacity-100" >
+                <i class="fa-regular fa-square"></i>
             </span>
             <span class="text-sm text-neutral-600 truncate">{{$task->name}}</span>
+            @else
+            <span wire:click.stop="toggleCompleted" class="opacity-30 hover:opacity-100" >
+                <i class="fa-regular fa-square-check"></i>
+            </span>
+            <span class="text-sm text-neutral-900 truncate line-through opacity-50">{{$task->name}}</span>
+            @endif
         </div>
         <span class="opacity-30  text-xs hover:opacity-100 hover:text-red-500">
             <i class="fa-regular fa-trash-can"></i>
