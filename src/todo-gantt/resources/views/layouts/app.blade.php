@@ -24,7 +24,6 @@
     ...teamStoreModal(),
     ...teamEditModal(),
     ...projectStoreModal(),
-    ...taskEditModal(),
   }">
     <livewire:layout.navigation />
 

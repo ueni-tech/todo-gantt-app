@@ -41,9 +41,6 @@
                         <label for="task-note">メモ</label>
                         <textarea id="task-note" name="note">{{$task->note}}</textarea>
                     </div>
-                    @error('name')
-                    <span class="text-red-500 text-xs">{{ $message }}</span>
-                    @enderror
                     <div class="flex justify-end">
                         <button type="submit" class="bg-blue-500 text-white text-sm mt-3 p-1 rounded self-end">更新</button>
                     </div>
