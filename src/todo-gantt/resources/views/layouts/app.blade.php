@@ -23,7 +23,8 @@
   <div class="min-h-screen bg-gray-100" x-data="{
     ...teamStoreModal(),
     ...teamEditModal(),
-    ...projectStoreModal()
+    ...projectStoreModal(),
+    ...taskEditModal(),
   }">
     <livewire:layout.navigation />
 
