@@ -9,7 +9,8 @@ class Task extends Component
 {
     public $task;
     public $completed = false;
-    public $showModal = false;
+    public $showEditModal = false;
+    public $showDeleteModal = false;
 
     public function mount($task)
     {
@@ -25,7 +26,12 @@ class Task extends Component
 
     public function toggleTaskEditModal()
     {
-        $this->showModal = !$this->showModal;
+        $this->showEditModal = !$this->showEditModal;
+    }
+
+    public function toggleTaskDeleteModal()
+    {
+        $this->showDeleteModal = !$this->showDeleteModal;
     }
 
     public function render()
