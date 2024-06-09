@@ -12,7 +12,7 @@ class Task extends Component
     public $showEditModal = false;
     public $showDeleteModal = false;
 
-    public function mount($task)
+    public function mount(ModelsTask $task)
     {
         $this->task = $task;
         $this->completed = $task->completed;

@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Project;
 use Livewire\Component;
 
 class StoreTask extends Component
@@ -9,7 +10,7 @@ class StoreTask extends Component
     public $project;
     public $showModal = false;
 
-    public function mount($project)
+    public function mount(Project $project)
     {
         $this->project = $project;
     }

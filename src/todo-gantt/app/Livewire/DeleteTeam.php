@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Team;
 use Livewire\Component;
 
 class DeleteTeam extends Component
@@ -9,7 +10,7 @@ class DeleteTeam extends Component
     public $confirmDeletion = false;
     public $selectedTeam;
 
-    public function mount($selectedTeam)
+    public function mount(Team $selectedTeam)
     {
         $this->selectedTeam = $selectedTeam;
     }
