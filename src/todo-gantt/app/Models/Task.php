@@ -15,7 +15,7 @@ class Task extends Model
         return $this->belongsTo(Project::class);
     }
 
-    public static function createTask(Project $project, String $name, ?String $note, String $start_date, String $end_date): Task
+    public static function createTask(Project $project, String $name, ?String $note, ?String $start_date, ?String $end_date): Task
     {
         $task = new Task();
         $task->project_id = $project->id;
@@ -28,7 +28,7 @@ class Task extends Model
         return $task;
     }
 
-    public static function updateTask(Task $task, String $name, String $note, String $start_date, String $end_date): Task
+    public static function updateTask(Task $task, String $name, ?String $note, ?String $start_date, ?String $end_date): Task
     {
         $task->name = $name;
         $task->note = $note;
@@ -49,11 +49,19 @@ class Task extends Model
 
     public function getStartDateAttribute($value): String
     {
-        return (new DateTime($value))->format('Y-m-d');
+        if($value){
+            return (new DateTime($value))->format('Y-m-d');
+        };
+
+        return '';
     }
 
     public function getEndDateAttribute($value): String
     {
-        return (new DateTime($value))->format('Y-m-d');
+        if($value){
+            return (new DateTime($value))->format('Y-m-d');
+        };
+        
+        return '';
     }
 }
