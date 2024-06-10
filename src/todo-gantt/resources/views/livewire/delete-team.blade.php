@@ -7,7 +7,7 @@
         @if($confirmDeletion)
         <div class="flex justify-between items-center mt-2">
             <p class="text-xs text-red-500">この操作は取り消せません</p>
-            <form action="{{ route('teams.destroy', $selectedTeam) }}" method="post">
+            <form action="{{ route('teams.destroy', $selectedTeam) }}" method="POST">
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="bg-red-500 text-white text-xs p-1 rounded self-end">削除</button>

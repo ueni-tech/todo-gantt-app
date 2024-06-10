@@ -14,12 +14,16 @@
   <!-- Scripts -->
   @vite(['resources/css/app.css', 'resources/js/app.js'])
 
+  <!-- Styles -->
+  <link rel="stylesheet" href="{{asset('css/style.css')}}">
+
 </head>
 
 <body class="basic-font tracking-wide">
   <div class="min-h-screen bg-gray-100" x-data="{
     ...teamStoreModal(),
-    ...teamEditModal()
+    ...teamEditModal(),
+    ...projectStoreModal()
   }">
     <livewire:layout.navigation />
 
@@ -39,8 +43,11 @@
 
     <x-modals.team-store />
     @if($selectedTeam)
-    <x-modals.team-edit :selectedTeam="$selectedTeam"/>
+    <x-modals.team-edit :selectedTeam="$selectedTeam" />
     @endif
+
+    <x-modals.project-store />
+
   </div>
 
   <script src="https://kit.fontawesome.com/891a71c277.js" crossorigin="anonymous"></script>
@@ -48,15 +55,28 @@
   <script>
     const teamStoreModal = () => {
       return {
-        teamStoreModalOpened : false,
-        toggleTeamStoreModal(){this.teamStoreModalOpened = !this.teamStoreModalOpened},
+        teamStoreModalOpened: false,
+        toggleTeamStoreModal() {
+          this.teamStoreModalOpened = !this.teamStoreModalOpened
+        },
       }
     }
 
     const teamEditModal = () => {
       return {
-        teamEditModalOpened : false,
-        toggleTeamEditModal(){this.teamEditModalOpened = !this.teamEditModalOpened},
+        teamEditModalOpened: false,
+        toggleTeamEditModal() {
+          this.teamEditModalOpened = !this.teamEditModalOpened
+        },
+      }
+    }
+
+    const projectStoreModal = () => {
+      return {
+        projectStoreModalOpened: false,
+        toggleProjectStoreModal() {
+          this.projectStoreModalOpened = !this.projectStoreModalOpened
+        },
       }
     }
   </script>

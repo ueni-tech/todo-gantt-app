@@ -29,16 +29,12 @@ class TeamController extends Controller
      */
     public function store(TeamRequest $request)
     {
-        $team = new Team();
-        $team->name = $request->input('name');
-        $team->save();
-
-        $user = User::find(auth()->id());
-        $user->selected_team_id = $team->id;
-        $user->save();
-
+        $team = Team::createTeam($request->input('name'));
         // ユーザーにチームを紐付ける
         $team->users()->attach(auth()->user());
+
+        $user = User::find(auth()->id());
+        User::changeCurrentTeam($user, $team);
 
         return redirect()->back();
     }
@@ -64,12 +60,7 @@ class TeamController extends Controller
      */
     public function update(TeamRequest $request, Team $team)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-        ]);
-
-        $team->name = $request->input('name');
-        $team->save();
+        $team = Team::updateName($request->input('name'), $team);
 
         return redirect()->back();
     }
@@ -90,8 +81,7 @@ class TeamController extends Controller
     public function change(Team $team)
     {
         $user = User::find(auth()->id());
-        $user->selected_team_id = $team->id;
-        $user->save();
+        User::changeCurrentTeam($user, $team);
 
         return redirect()->back();
     }

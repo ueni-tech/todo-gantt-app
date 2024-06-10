@@ -53,4 +53,15 @@ class User extends Authenticatable
     public function selectedTeam(){
         return $this->belongsTo(Team::class, 'selected_team_id');
     }
+
+    public function projects()
+    {
+        return $this->hasMany(Project::class);
+    }
+
+    public static function changeCurrentTeam(User $user, Team $team)
+    {
+        $user->selected_team_id = $team->id;
+        $user->save();
+    }
 }

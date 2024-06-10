@@ -1,7 +1,3 @@
-@push('scripts')
-<script src="{{ asset('js/main.js') }}"></script>
-@endpush
-
 <x-app-layout>
   <div x-data="{
     todoModalOpened : false,
@@ -17,8 +13,9 @@
       </div>
       @endif
       <div class="w-[95%] mx-auto py-4 flex justify-items-start gap-3 overflow-x-auto">
+        @foreach($projects as $project)
         <div class="w-56 h-full py-2 px-4 bg-zinc-300 rounded">
-          <h2 class="text-base font-medium pb-2">プロジェクト名</h2>
+          <livewire:edit-project :project="$project" />
           <ul class="todo-list-height overflow-y-auto flex flex-col gap-3 hidden-scrollbar hidden-scrollbar::-webkit-scrollbar">
             <li>
               <button @click="toggleTodoModal()" class="w-full p-2 bg-neutral-100 rounded flex items-center gap-1">
@@ -33,14 +30,24 @@
             </li>
 
             <li>
-              <a href="" class="block bg-gray-500 w-9 aspect-square rounded">
-                <span class=" text-white text-2xl flex justify-center items-center w-full h-full">
-                  <i class="fa-solid fa-plus"></i>
-                </span>
-              </a>
+              <div class="flex justify-between items-center">
+                <a href="" class="block bg-gray-500 w-8 aspect-square rounded">
+                  <span class=" text-white text-xl flex justify-center items-center w-full h-full">
+                    <i class="fa-solid fa-plus"></i>
+                  </span>
+                </a>
+                <livewire:delete-project :project="$project" />
+              </div>
             </li>
           </ul>
         </div>
+        @endforeach
+
+        <button @click="toggleProjectStoreModal()" class="w-8 h-8 aspect-square bg-gray-500 rounded overflow-hidden border-2 border-gray-500">
+          <span class="text-white text-xl flex justify-center items-center w-full h-full">
+            <i class="fa-solid fa-plus"></i>
+          </span>
+        </button>
 
       </div>
       <div class="hidden transition" :class="{'hidden': !todoModalOpened}">
