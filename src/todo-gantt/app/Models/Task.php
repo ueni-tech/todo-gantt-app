@@ -46,22 +46,4 @@ class Task extends Model
     
         return $task;
     }
-
-    public function getStartDateAttribute($value): String
-    {
-        if($value){
-            return (new DateTime($value))->format('Y-m-d');
-        };
-
-        return '';
-    }
-
-    public function getEndDateAttribute($value): String
-    {
-        if($value){
-            return (new DateTime($value))->format('Y-m-d');
-        };
-        
-        return '';
-    }
 }
