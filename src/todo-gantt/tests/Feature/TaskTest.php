@@ -47,6 +47,30 @@ class TaskTest extends TestCase
     /**
      * @test
      */
+    public function 新規登録でend_dateがstart_dateより前の日付のテスト()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        $team = Team::factory()->create();
+        $team->users()->attach($user);
+        $user->selected_team_id = $team->id;
+
+        $project = Project::createProject($user, $team, 'プロジェクト');
+
+        $response = $this->post('/tasks', [
+            'project_id' => $project->id,
+            'name' => 'タスク',
+            'note' => 'メモ',
+            'start_date' => '2024-01-31',
+            'end_date' => '2024-01-30',
+        ]);
+
+        $response->assertSessionHasErrors(['end_date']);
+    }
+
+    /**
+     * @test
+     */
     public function a_user_can_create_task()
     {
         $user = User::factory()->create();
@@ -107,6 +131,31 @@ class TaskTest extends TestCase
             'end_date' => $end_date,
             'completed' => 0,
         ]);
+    }
+
+    /**
+     * @test
+     */
+    public function 更新でend_dateがstart_dateより前の日付のテスト()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        $team = Team::factory()->create();
+        $team->users()->attach($user);
+        $user->selected_team_id = $team->id;
+
+        $project = Project::createProject($user, $team, 'プロジェクト');
+
+        $task = Task::createTask($project, 'タスク', 'メモ', '2021-01-01', '2021-01-31');
+
+        $response = $this->patch('/tasks/' . $task->id, [
+            'name' => 'タスク2',
+            'note' => 'メモ2',
+            'start_date' => '2024-01-31',
+            'end_date' => '2024-01-30',
+        ]);
+
+        $response->assertSessionHasErrors(['end_date']);
     }
 
     /**
