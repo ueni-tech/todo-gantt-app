@@ -36,6 +36,7 @@ class ProjectController extends Controller
 
         Project::createProject($user, $current_team, $request->name);
 
+        session()->flash('flashSuccess', 'プロジェクトを作成しました');
         return redirect()->back();
     }
 
@@ -62,6 +63,7 @@ class ProjectController extends Controller
     {
         Project::updateName($request->name, $project);
 
+        session()->flash('flashInfo', 'プロジェクト情報を更新しました');
         return redirect()->back();
     }
 
@@ -72,6 +74,7 @@ class ProjectController extends Controller
     {
         $project->delete();
 
+        session()->flash('flashInfo', 'プロジェクトを削除しました');
         return redirect()->back();
     }
 }
