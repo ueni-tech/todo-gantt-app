@@ -33,6 +33,7 @@ class TaskController extends Controller
         $project = Project::find($request->project_id);        
         Task::createTask($project, $request->name, $request->note, $request->start_date, $request->end_date);
 
+        session()->flash('flashSuccess', 'タスクを作成しました');
         return redirect()->back();
     }
 
@@ -59,6 +60,7 @@ class TaskController extends Controller
     {
         Task::updateTask($task, $request->name, $request->note, $request->start_date, $request->end_date);
 
+        session()->flash('flashInfo', 'タスク情報を更新しました');
         return redirect()->back();
     }
 
@@ -69,6 +71,7 @@ class TaskController extends Controller
     {
         $task->delete();
 
+        session()->flash('flashInfo', 'タスクを削除しました');
         return redirect()->back();
     }
 
