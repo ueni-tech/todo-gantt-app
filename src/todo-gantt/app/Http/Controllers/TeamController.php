@@ -36,6 +36,7 @@ class TeamController extends Controller
         $user = User::find(auth()->id());
         User::changeCurrentTeam($user, $team);
 
+        session()->flash('flashSuccess', 'チームを作成しました');
         return redirect()->back();
     }
 
@@ -62,6 +63,7 @@ class TeamController extends Controller
     {
         $team = Team::updateName($request->input('name'), $team);
 
+        session()->flash('flashInfo', 'チーム情報を更新しました');
         return redirect()->back();
     }
 
@@ -72,6 +74,7 @@ class TeamController extends Controller
     {
         $team->delete();
 
+        session()->flash('flashInfo', 'チームを削除しました');
         return redirect()->route('index');
     }
 
