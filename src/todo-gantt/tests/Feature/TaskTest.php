@@ -8,6 +8,7 @@ use App\Models\Team;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
 
 class TaskTest extends TestCase
@@ -44,6 +45,42 @@ class TaskTest extends TestCase
         ]);
     }
 
+    /**
+     * @test
+     */
+    public function createTaskでend_dateがstart_date以前の場合のテスト()
+    {
+        $this->expectException(ValidationException::class);
+
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        $team = Team::factory()->create();
+        $team->users()->attach($user);
+        $user->selected_team_id = $team->id;
+
+        $project = Project::createProject($user, $team, 'プロジェクト');
+
+        $name = 'タスク';
+        $note = 'メモ';
+        $start_date = '2021-01-31';
+        $end_date = '2021-01-30';
+
+        // ValidationExceptionがスローされるため、ここでタスクは作成されない
+        $task = Task::createTask($project, $name, $note, $start_date, $end_date);
+
+        // バリデーションエラーがスローされるため、この部分のコードは実行されない
+        $this->assertDatabaseMissing('tasks', [
+            'project_id' => $project->id,
+            'name' => $name,
+            'note' => $note,
+            'start_date' => $start_date,
+            'end_date' => $end_date,
+            'completed' => 0,
+        ]);
+
+        $this->assertDatabaseCount('tasks', 0);
+    }
+    
     /**
      * @test
      */
