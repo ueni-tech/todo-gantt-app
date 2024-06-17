@@ -14,7 +14,7 @@
           @method('PUT')
           <div class="flex flex-col">
             <label for="team-name">チーム名</label>
-            <input id="team-name" type="text" name="name" value="{{$selectedTeam->name}}">
+            <input id="team-name" type="text" name="team_name" value="{{$selectedTeam->name}}">
             @error('name')
             <span class="text-red-500 text-xs">{{ $message }}</span>
             @enderror

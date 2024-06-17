@@ -13,7 +13,7 @@
           @csrf
           <div class="flex flex-col">
             <label for="project-name">プロジェクト名</label>
-            <input id="project-name" type="text" name="name">
+            <input id="project-name" type="text" name="project_name">
             @error('name')
             <span class="text-red-500 text-xs">{{ $message }}</span>
             @enderror

@@ -31,7 +31,7 @@ class TaskController extends Controller
     public function store(TaskRequest $request)
     {
         $project = Project::find($request->project_id);        
-        Task::createTask($project, $request->name, $request->note, $request->start_date, $request->end_date);
+        Task::createTask($project, $request->task_name, $request->note, $request->start_date, $request->end_date);
 
         session()->flash('flashSuccess', 'タスクを作成しました');
         return redirect()->back();
@@ -58,7 +58,7 @@ class TaskController extends Controller
      */
     public function update(TaskRequest $request, Task $task)
     {
-        Task::updateTask($task, $request->name, $request->note, $request->start_date, $request->end_date);
+        Task::updateTask($task, $request->task_name, $request->note, $request->start_date, $request->end_date);
 
         session()->flash('flashInfo', 'タスク情報を更新しました');
         return redirect()->back();

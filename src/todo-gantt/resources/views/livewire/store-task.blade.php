@@ -21,7 +21,7 @@
                     <input type="hidden" name="project_id" value="{{$project->id}}">
                     <div class="flex flex-col">
                         <label for="task-name">タスク名</label>
-                        <input id="task-name" type="text" name="name">
+                        <input id="task-name" type="text" name="task_name">
                     </div>
                     <div class="flex flex-col">
                         <label for="task-start-date">開始日</label>
