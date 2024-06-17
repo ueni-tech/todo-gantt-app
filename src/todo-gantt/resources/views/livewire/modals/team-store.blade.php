@@ -13,11 +13,18 @@
           @csrf
           <div class="flex flex-col">
             <label for="team-name">チーム名</label>
-            <input id="team-name" type="text" name="team_name">
-            @error('name')
-            <span class="text-red-500 text-xs">{{ $message }}</span>
-            @enderror
+            <input id="team-name" type="text" wire:model.live.debounce="team_name" name="team_name">
+            @if($errors->any())
+            @foreach($errors->all() as $error)
+            <p class="text-red-500 text-xs">{{$error}}</p>
+            @endforeach
+            @endif
+
+            @if($team_name && !$errors->any())
             <button type="submit" class="bg-primary-500 text-white text-sm mt-2 p-1 rounded self-end">作成</button>
+            @else
+            <button type="submit" class="bg-primary-500 text-white text-sm mt-2 p-1 rounded self-end opacity-30" disabled>作成</button>
+            @endif
           </div>
         </form>
       </div>

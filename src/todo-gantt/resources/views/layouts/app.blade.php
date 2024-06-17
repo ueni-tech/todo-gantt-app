@@ -45,7 +45,8 @@
       {{ $slot }}
     </main>
 
-    <x-modals.team-store />
+    <livewire:modals.team-store />
+    
     @if($selectedTeam)
     <x-modals.team-edit :selectedTeam="$selectedTeam" />
     @endif
