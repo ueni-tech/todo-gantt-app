@@ -46,9 +46,9 @@
     </main>
 
     <livewire:modals.team-store />
-    
+
     @if($selectedTeam)
-    <x-modals.team-edit :selectedTeam="$selectedTeam" />
+    <livewire:modals.team-edit :selectedTeam="$selectedTeam" />
     @endif
 
     <x-modals.project-store />
