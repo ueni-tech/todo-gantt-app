@@ -51,7 +51,7 @@
     <livewire:modals.team-edit :selectedTeam="$selectedTeam" />
     @endif
 
-    <x-modals.project-store />
+    <livewire:modals.project-store />
 
   </div>
 
