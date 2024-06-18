@@ -29,6 +29,9 @@
           <div class="flex flex-col">
             <label for="task-start-date">開始日</label>
             <input id="task-start-date" type="date" wire:model.live="start_date" name="start_date">
+            @error('start_date')
+            <p class="text-red-500 text-xs">{{$message}}</p>
+            @enderror
           </div>
           <div class="flex flex-col">
             <label for="task-end-date">終了日</label>
@@ -39,7 +42,10 @@
           </div>
           <div class="flex flex-col">
             <label for="task-note">メモ</label>
-            <textarea id="task-note" name="note"></textarea>
+            <textarea id="task-note" name="note" wire:model.live="note"></textarea>
+            @error('note')
+            <p class="text-red-500 text-xs">{{$message}}</p>
+            @enderror
           </div>
           <div class="flex justify-end">
             @if($task_name && !$errors->any())
