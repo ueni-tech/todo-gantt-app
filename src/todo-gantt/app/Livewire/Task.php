@@ -48,6 +48,10 @@ class Task extends Component
   public function toggleTaskEditModal()
   {
     $this->showEditModal = !$this->showEditModal;
+    if(!$this->showEditModal)
+    {
+      $this->resetModal();
+    }
   }
 
   public function toggleTaskDeleteModal()
@@ -74,6 +78,16 @@ class Task extends Component
   public function updatedEndDate()
   {
     $this->validateOnly('end_date');
+  }
+
+  public function resetModal()
+  {
+    $this->resetErrorBag();
+    $this->resetValidation();
+    $this->task_name = $this->task->name;
+    $this->note = $this->task->note;
+    $this->start_date = $this->task->start_date;
+    $this->end_date = $this->task->end_date;
   }
 
   public function render()

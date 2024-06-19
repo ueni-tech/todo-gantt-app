@@ -43,6 +43,14 @@ class TeamEdit extends Component
     return $this->selectedTeam->name !== $this->team_name;
   }
 
+  public function resetModal()
+  {
+    $this->team_name = $this->selectedTeam->name;
+    $this->isTeamNameChanged = false;
+    $this->resetErrorBag();
+    $this->resetValidation();
+  }
+
   public function render()
   {
     return view('livewire.modals.team-edit');

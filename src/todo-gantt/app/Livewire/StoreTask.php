@@ -55,6 +55,17 @@ class StoreTask extends Component
   public function toggleTaskStoreModal()
   {
     $this->showModal = !$this->showModal;
+    if(!$this->showModal)
+    {
+      $this->resetModal();
+    }
+  }
+
+  public function resetModal()
+  {
+    $this->resetErrorBag();
+    $this->resetValidation();
+    $this->reset('task_name', 'note', 'start_date', 'end_date');
   }
 
   public function render()

@@ -21,6 +21,13 @@ class ProjectStore extends Component
     $this->validateOnly('project_name');
   }
 
+  public function resetModal()
+  {
+    $this->resetErrorBag();
+    $this->resetValidation();
+    $this->reset();
+  }
+
   public function render()
   {
     return view('livewire.modals.project-store');
