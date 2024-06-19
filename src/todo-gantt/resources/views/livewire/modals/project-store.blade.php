@@ -13,7 +13,7 @@
           @csrf
           <div class="flex flex-col">
             <label for="project-name">プロジェクト名</label>
-            <input id="project-name" type="text" wire:model.live.debounce="project_name" name="project_name">
+            <input id="project-name" type="text" wire:model.live.debounce.150ms="project_name" name="project_name">
             @if($errors->any())
             @foreach($errors->all() as $error)
             <p class="text-red-500 text-xs">{{$error}}</p>

@@ -34,7 +34,7 @@
           @method('put')
           <div class="flex flex-col">
             <label for="task-name">タスク名</label>
-            <input id="task-name" type="text" name="task_name" wire:model.live.debounce="task_name">
+            <input id="task-name" type="text" name="task_name" wire:model.live.debounce.150ms="task_name">
             @error('task_name')
             <p class="text-red-500 text-xs">{{$message}}</p>
             @enderror

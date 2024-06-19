@@ -14,7 +14,7 @@
           @method('PUT')
           <div class="flex flex-col">
             <label for="team-name">チーム名</label>
-            <input id="team-name" type="text" wire:model.live.debounce="team_name" name="team_name">
+            <input id="team-name" type="text" wire:model.live.debounce.150ms="team_name" name="team_name">
             @if($errors->any())
             @foreach($errors->all() as $error)
             <p class="text-red-500 text-xs">{{$error}}</p>

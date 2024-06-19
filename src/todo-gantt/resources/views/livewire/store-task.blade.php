@@ -21,7 +21,7 @@
           <input type="hidden" name="project_id" value="{{$project->id}}">
           <div class="flex flex-col">
             <label for="task-name">タスク名</label>
-            <input id="task-name" type="text" wire:model.live.debounce="task_name" name="task_name">
+            <input id="task-name" type="text" wire:model.live.debounce.150ms="task_name" name="task_name">
             @error('task_name')
             <p class="text-red-500 text-xs">{{$message}}</p>
             @enderror

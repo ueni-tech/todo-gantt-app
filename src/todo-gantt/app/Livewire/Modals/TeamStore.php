@@ -21,6 +21,13 @@ class TeamStore extends Component
     $this->validateOnly('team_name');
   }
 
+  public function resetModal()
+  {
+    $this->resetErrorBag();
+    $this->resetValidation();
+    $this->reset();
+  }
+
   public function render()
   {
     return view('livewire.modals.team-store');
