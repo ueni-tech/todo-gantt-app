@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Project;
 use Livewire\Component;
 
 class EditProject extends Component
@@ -10,7 +11,7 @@ class EditProject extends Component
     public $editing = false;
     public $name;
 
-    public function mount($project)
+    public function mount(Project $project)
     {
         $this->project = $project;
         $this->name = $project->name;
@@ -20,9 +21,6 @@ class EditProject extends Component
     {
         $this->editing = !$this->editing;
         $this->name = $this->project->name;
-        // if($this->editing){
-        //     $this->dispatch('focus-input');
-        // }
     }
 
     public function render()

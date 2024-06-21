@@ -26,7 +26,12 @@ class Project extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function scopeForUser($query, User $user): Builder
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
+    }
+
+    public function scopeForUser($query, $user): Builder
     {
         return $query->where('user_id', $user->id);
     }
