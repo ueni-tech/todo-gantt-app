@@ -25,7 +25,7 @@ class ProjectTest extends TestCase
         $team->users()->attach($user);
         $user->selected_team_id = $team->id;
 
-        $response = $this->post('/projects', ['name' => 'プロジェクト']);
+        $response = $this->post('/projects', ['project_name' => 'プロジェクト']);
         $response->assertRedirect();
         $this->assertDatabaseHas('projects', ['name' => 'プロジェクト', 'team_id' => $team->id, 'user_id' => $user->id]);
     }
@@ -41,8 +41,8 @@ class ProjectTest extends TestCase
         $team->users()->attach($user);
         $user->selected_team_id = $team->id;
 
-        $response = $this->post('/projects', ['name' => '']);
-        $response->assertSessionHasErrors('name');
+        $response = $this->post('/projects', ['project_name' => '']);
+        $response->assertSessionHasErrors('project_name');
     }
 
     /**
@@ -56,8 +56,8 @@ class ProjectTest extends TestCase
         $team->users()->attach($user);
         $user->selected_team_id = $team->id;
 
-        $response = $this->post('/projects', ['name' => str_repeat('a', 256)]);
-        $response->assertSessionHasErrors('name');
+        $response = $this->post('/projects', ['project_name' => str_repeat('a', 256)]);
+        $response->assertSessionHasErrors('project_name');
     }
 
     /**
@@ -101,7 +101,7 @@ class ProjectTest extends TestCase
         $user->selected_team_id = $team->id;
         $project = $team->projects()->create(['name' => 'プロジェクト', 'user_id' => $user->id]);
 
-        $response = $this->patch("/projects/{$project->id}", ['name' => 'プロジェクト2']);
+        $response = $this->patch("/projects/{$project->id}", ['project_name' => 'プロジェクト2']);
         $response->assertRedirect();
         $this->assertDatabaseHas('projects', ['name' => 'プロジェクト2', 'team_id' => $team->id, 'user_id' => $user->id]);
     }

@@ -19,7 +19,7 @@ class TeamTest extends TestCase
     public function teams_store()
     {
         $this->withoutMiddleware(Authenticate::class);
-        $this->post('/teams', ['name' => ' 犬チーム_123 ']);
+        $this->post('/teams', ['team_name' => ' 犬チーム_123 ']);
         $this->assertDatabaseHas('teams', ['name' => '犬チーム_123']);
     }
 
@@ -30,7 +30,7 @@ class TeamTest extends TestCase
     {
         $user = User::factory()->create();
         $this->actingAs($user);
-        $this->post('/teams', ['name' => '犬チーム']);
+        $this->post('/teams', ['team_name' => '犬チーム']);
         $this->assertDatabaseHas('teams', ['name' => '犬チーム']);
         $team = Team::where('name', '犬チーム')->first();
         $this->assertDatabaseHas('team_user', ['team_id' => $team->id, 'user_id' => $user->id]);
@@ -43,7 +43,7 @@ class TeamTest extends TestCase
     {
         $user = User::factory()->create();
         $this->actingAs($user);
-        $this->post('/teams', ['name' => '犬チーム']);
+        $this->post('/teams', ['team_name' => '犬チーム']);
         $this->assertDatabaseHas('teams', ['name' => '犬チーム']);
         $team = Team::where('name', '犬チーム')->first();
         $this->assertDatabaseHas('users', ['id' => $user->id, 'selected_team_id' => $team->id]);
@@ -55,8 +55,8 @@ class TeamTest extends TestCase
     public function teams_store_name_length_256()
     {
         $this->withoutMiddleware(Authenticate::class);
-        $response = $this->post('/teams', ['name' => str_repeat('あ', 256)]);
-        $response->assertSessionHasErrors(['name']);
+        $response = $this->post('/teams', ['team_name' => str_repeat('あ', 256)]);
+        $response->assertSessionHasErrors(['team_name']);
     }
 
     /**
@@ -65,8 +65,8 @@ class TeamTest extends TestCase
     public function teams_store_validation_error()
     {
         $this->withoutMiddleware(Authenticate::class);
-        $response = $this->post('/teams', ['name' => ' ']);
-        $response->assertSessionHasErrors(['name']);
+        $response = $this->post('/teams', ['team_name' => ' ']);
+        $response->assertSessionHasErrors(['team_name']);
     }
 
     /**
@@ -76,8 +76,8 @@ class TeamTest extends TestCase
     {
         $this->withoutMiddleware(Authenticate::class);
         $team = Team::factory()->create(['name' => '犬チーム']);
-        $response = $this->post('/teams', ['name' => '犬チーム']);
-        $response->assertSessionHasErrors(['name']);
+        $response = $this->post('/teams', ['team_name' => '犬チーム']);
+        $response->assertSessionHasErrors(['team_name']);
     }
 
     /**
@@ -87,7 +87,7 @@ class TeamTest extends TestCase
     {
         $this->withoutMiddleware(Authenticate::class);
         $team = Team::factory()->create();
-        $this->patch("/teams/{$team->id}", ['name' => '猫チーム']);
+        $this->patch("/teams/{$team->id}", ['team_name' => '猫チーム']);
         $this->assertDatabaseHas('teams', ['id' => $team->id, 'name' => '猫チーム']);
     }
 
@@ -98,8 +98,8 @@ class TeamTest extends TestCase
     {
         $this->withoutMiddleware(Authenticate::class);
         $team = Team::factory()->create();
-        $response = $this->patch("/teams/{$team->id}", ['name' => str_repeat('あ', 256)]);
-        $response->assertSessionHasErrors(['name']);
+        $response = $this->patch("/teams/{$team->id}", ['team_name' => str_repeat('あ', 256)]);
+        $response->assertSessionHasErrors(['team_name']);
     }
 
     /**
@@ -109,8 +109,8 @@ class TeamTest extends TestCase
     {
         $this->withoutMiddleware(Authenticate::class);
         $team = Team::factory()->create();
-        $response = $this->patch("/teams/{$team->id}", ['name' => ' ']);
-        $response->assertSessionHasErrors(['name']);
+        $response = $this->patch("/teams/{$team->id}", ['team_name' => ' ']);
+        $response->assertSessionHasErrors(['team_name']);
     }
 
     /**
@@ -121,8 +121,8 @@ class TeamTest extends TestCase
         $this->withoutMiddleware(Authenticate::class);
         $team1 = Team::factory()->create(['name' => '犬チーム']);
         $team2 = Team::factory()->create(['name' => '猫チーム']);
-        $response = $this->patch("/teams/{$team1->id}", ['name' => '猫チーム']);
-        $response->assertSessionHasErrors(['name']);
+        $response = $this->patch("/teams/{$team1->id}", ['team_name' => '猫チーム']);
+        $response->assertSessionHasErrors(['team_name']);
     }
 
     /**
