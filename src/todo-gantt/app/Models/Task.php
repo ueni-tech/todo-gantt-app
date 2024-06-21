@@ -5,10 +5,35 @@ namespace App\Models;
 use DateTime;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 class Task extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['start_date', 'end_date', 'project_id', 'name', 'note', 'completed'];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::saving(function ($task) {
+            $task->validate();
+        });
+    }
+
+    public function validate()
+    {
+        $validator = Validator::make($this->attributes, [
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after:start_date',
+        ]);
+
+        if ($validator->fails()) {
+            throw new ValidationException($validator);
+        }
+    }
 
     public function project()
     {
@@ -24,7 +49,7 @@ class Task extends Model
         $task->start_date = $start_date;
         $task->end_date = $end_date;
         $task->save();
-    
+
         return $task;
     }
 
@@ -35,7 +60,7 @@ class Task extends Model
         $task->start_date = $start_date;
         $task->end_date = $end_date;
         $task->save();
-    
+
         return $task;
     }
 
@@ -43,25 +68,7 @@ class Task extends Model
     {
         $task->completed = !$task->completed;
         $task->save();
-    
+
         return $task;
-    }
-
-    public function getStartDateAttribute($value): String
-    {
-        if($value){
-            return (new DateTime($value))->format('Y-m-d');
-        };
-
-        return '';
-    }
-
-    public function getEndDateAttribute($value): String
-    {
-        if($value){
-            return (new DateTime($value))->format('Y-m-d');
-        };
-        
-        return '';
     }
 }
