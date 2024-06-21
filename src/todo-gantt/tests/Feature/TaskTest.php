@@ -68,7 +68,6 @@ class TaskTest extends TestCase
         // ValidationExceptionがスローされるため、ここでタスクは作成されない
         $task = Task::createTask($project, $name, $note, $start_date, $end_date);
 
-        // バリデーションエラーがスローされるため、この部分のコードは実行されない
         $this->assertDatabaseMissing('tasks', [
             'project_id' => $project->id,
             'name' => $name,
@@ -195,7 +194,6 @@ class TaskTest extends TestCase
         // ValidationExceptionがスローされるため、ここでタスクは更新されない
         $task = Task::updateTask($task, $name, $note, $start_date, $end_date);
 
-        // バリデーションエラーがスローされるため、この部分のコードは実行されない
         $this->assertDatabaseMissing('tasks', [
             'project_id' => $project->id,
             'name' => $name,
