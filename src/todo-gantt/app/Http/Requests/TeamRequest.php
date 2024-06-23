@@ -23,7 +23,8 @@ class TeamRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'team_name' => ['required', 'string', 'max:255', 'unique:teams,name']
+            'team_name' => ['required', 'string', 'max:255', 'unique:teams,name'],
+            'team_image_name' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
         ];
     }
 }

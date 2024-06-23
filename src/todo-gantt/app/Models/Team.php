@@ -4,12 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\UploadedFile;
 
 class Team extends Model
 {
     use HasFactory;
 
-    public function users(){
+    public function users()
+    {
         return $this->belongsToMany(User::class);
     }
 
@@ -28,12 +30,17 @@ class Team extends Model
         return $this->hasMany(Project::class);
     }
 
-    public static function createTeam(String $name): Team
+    public static function createTeam(String $name, UploadedFile $file): Team
     {
         $team = new Team();
         $team->name = $name;
+
+        if ($file !== null) {
+            $image_path = $file->store('public/team_images');
+            $team->image_name = basename($image_path);
+        }
         $team->save();
-        
+
         return $team;
     }
 
@@ -41,7 +48,7 @@ class Team extends Model
     {
         $team->name = $name;
         $team->save();
-        
+
         return $team;
     }
 }

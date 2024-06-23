@@ -29,7 +29,7 @@ class TeamController extends Controller
      */
     public function store(TeamRequest $request)
     {
-        $team = Team::createTeam($request->input('team_name'));
+        $team = Team::createTeam($request->input('team_name'), $request->file('team_image_name'));
         // ユーザーにチームを紐付ける
         $team->users()->attach(auth()->user());
 
