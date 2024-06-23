@@ -3,12 +3,20 @@
     <div class="flex flex-col justify-start items-center gap-4">
       @foreach($teams as $team)
       @if($team->id == auth()->user()->selected_team_id)
-      <a href="{{route('teams.change', $team)}}" class="w-3/4 rounded-lg overflow-hidden border-2 border-gray-200">
+      <a href="{{route('teams.change', $team)}}" class="w-3/4 rounded-lg overflow-hidden border-2 p-[2px] border-white">
+        @if(!$team->image_name)
         <img src="https://ui-avatars.com/api/?name={{$team->name}}&background=999&color=eee&bold=true&length=1" alt="">
+        @else
+        <img src="{{asset('/storage/team_images/' . $team->image_name)}}" alt="">
+        @endif
       </a>
       @else
       <a href="{{route('teams.change', $team)}}" class="w-3/4 rounded-lg overflow-hidden">
+        @if(!$team->image_name)
         <img src="https://ui-avatars.com/api/?name={{$team->name}}&background=999&color=eee&bold=true&length=1" alt="">
+        @else
+        <img src="{{asset('/storage/team_images/' . $team->image_name)}}" alt="">
+        @endif
       </a>
       @endif
       @endforeach
