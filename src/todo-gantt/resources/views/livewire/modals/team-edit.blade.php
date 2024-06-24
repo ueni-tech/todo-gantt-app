@@ -13,8 +13,26 @@
           @csrf
           @method('PUT')
           <div class="flex flex-col">
-            <label for="team-name">チーム名</label>
-            <input id="team-name" type="text" wire:model.live.debounce.150ms="team_name" name="team_name">
+            <div class="flex flex-col gap-4">
+              <div class="flex flex-col gap-2">
+                <label for=" team-name">チーム名</label>
+                <input id="team-name" type="text" wire:model.live.debounce.150ms="team_name" name="team_name">
+              </div>
+              <div>
+                <p>チームアイコン</p>
+                <div class="flex justify-start items-baseline gap-5 mt-2">
+                  <div class="w-16 h-16 flex justify-center items-center">
+                    @if($selectedTeam->image_name)
+                    <img class="w-full" src="{{asset('/storage/team_images/' . $selectedTeam->image_name)}}" alt="">
+                    @else
+                    <img class="w-full" src="https://ui-avatars.com/api/?name={{$selectedTeam->name}}&background=999&color=eee&bold=true&length=1" alt="">
+                    @endif
+                  </div>
+                  <a class="text-primary-700" href="{{route('upload-image.create')}}">編集</a>
+                </div>
+              </div>
+
+            </div>
             @if($errors->any())
             @foreach($errors->all() as $error)
             <p class="text-red-500 text-xs">{{$error}}</p>
