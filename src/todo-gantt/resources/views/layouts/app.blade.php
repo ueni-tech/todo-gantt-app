@@ -13,7 +13,8 @@
 
   <!-- Scripts -->
   @vite(['resources/css/app.css', 'resources/js/app.js'])
-
+  @stack('scripts')
+  
   <!-- Toastr.js -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
 
@@ -65,7 +66,6 @@
         crossorigin="anonymous">
 </script>
   @include('layouts.flash-message')
-
   <script>
     const teamStoreModal = () => {
       return {

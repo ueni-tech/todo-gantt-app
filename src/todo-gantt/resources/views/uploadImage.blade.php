@@ -28,12 +28,18 @@
         <a class="text-gray-500" href="{{ route('index')}}">戻る</a>
       </div>
     </div>
+
+    <div class="container">
+      <h1>Cropper.js Example</h1>
+      <img id="image" src="{{asset('/img/team_icon_01.jpg')}}" alt="Image for cropping">
+    </div>
+
   </div>
+
 
   <div class="upload-imge-modal hidden">
     <div class="upload-imge-modal-outer fixed top-0 left-0 w-screen h-screen bg-gray-950 opacity-50"></div>
-    <div class="bg-gray-100 p-4 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-    </div>
+    <div class="bg-gray-100 p-4 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"></div>
   </div>
 
   <script>
@@ -100,4 +106,8 @@
       }
     });
   </script>
+
+  @push('scripts')
+  @vite(['resources/js/cropper.js'])
+  @endpush
 </x-app-layout>
