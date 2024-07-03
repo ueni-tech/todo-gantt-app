@@ -20,6 +20,7 @@
             <div id="dropZone" class="w-72 h-72 flex justify-center items-center border-2 border-gray-300 border-dashed rounded-lg cursor-pointer">
               ここをクリック<br>または<br>画像をドロップ
             </div>
+
           </div>
         </div>
       </div>
@@ -28,84 +29,17 @@
         <a class="text-gray-500" href="{{ route('index')}}">戻る</a>
       </div>
     </div>
-
-    <div class="container">
-      <h1>Cropper.js Example</h1>
-      <img id="image" src="{{asset('/img/team_icon_01.jpg')}}" alt="Image for cropping">
-    </div>
-
   </div>
 
 
   <div class="upload-imge-modal hidden">
     <div class="upload-imge-modal-outer fixed top-0 left-0 w-screen h-screen bg-gray-950 opacity-50"></div>
-    <div class="bg-gray-100 p-4 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"></div>
+    <div class="bg-gray-100 p-4 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+      <div class="uploadFile w-[80vw] h-[80vh]">
+        <img id="image" src="" alt="">
+      </div>
+    </div>
   </div>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', (event) => {
-      const dropZone = document.getElementById('dropZone');
-      const fileInput = document.getElementById('fileInput');
-      const uploadImageModal = document.querySelector('.upload-imge-modal');
-
-      // ドラッグオーバーイベント
-      dropZone.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        dropZone.style.borderColor = 'green';
-      });
-
-      // ドラッグリーブイベント
-      dropZone.addEventListener('dragleave', (e) => {
-        e.preventDefault();
-        dropZone.style.borderColor = '#ccc';
-      });
-
-      // ドロップイベント
-      dropZone.addEventListener('drop', (e) => {
-        e.preventDefault();
-        dropZone.style.borderColor = '#ccc';
-
-        const files = e.dataTransfer.files;
-        if (files.length > 0) {
-          handleFiles(files);
-        }
-
-        console.log('drop!!');
-        uploadImageModal.style.display = 'block';
-      });
-
-      // ドロップゾーンクリックイベント
-      dropZone.addEventListener('click', (e) => {
-        fileInput.click();
-      });
-
-      // ファイルインプット変更イベント
-      fileInput.addEventListener('change', (e) => {
-        const files = e.target.files;
-        if (files.length > 0) {
-          handleFiles(files);
-        }
-      });
-
-      function handleFiles(files) {
-        const file = files[0];
-        if (file.type.startsWith('image/')) {
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            const img = document.createElement('img');
-            img.src = e.target.result;
-            img.style.width = '100%';
-            img.style.height = 'auto';
-            dropZone.innerHTML = '';
-            dropZone.appendChild(img);
-          };
-          reader.readAsDataURL(file);
-        } else {
-          alert('画像ファイルを選択してください');
-        }
-      }
-    });
-  </script>
 
   @push('scripts')
   @vite(['resources/js/cropper.js'])
