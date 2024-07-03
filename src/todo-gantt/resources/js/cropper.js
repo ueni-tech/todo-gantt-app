@@ -4,6 +4,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
   const dropZone = document.getElementById('dropZone');
   const fileInput = document.getElementById('fileInput');
   const uploadImageModal = document.querySelector('.upload-imge-modal');
+  const uploadImageModalClose = document.querySelectorAll('.upload-imge-modal-close');
+  const cropBtn = document.querySelector('.crop-btn');
   let cropper;
 
   dropZone.addEventListener('dragover', (e) => {
@@ -37,6 +39,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
     }
   });
 
+  uploadImageModalClose.forEach((element) => {
+    element.addEventListener('click', () => {
+      uploadImageModal.style.display = 'none';
+    });
+  });
+
   function handleFiles(files) {
     const file = files[0];
     if (file.type.startsWith('image/')) {
@@ -53,6 +61,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         cropper = new Cropper(image, {
           aspectRatio: 1,
           viewMode: 2,
+          dragMode: 'move',
         });
 
         uploadImageModal.style.display = 'block';
@@ -62,4 +71,16 @@ document.addEventListener('DOMContentLoaded', (event) => {
       alert('画像ファイルを選択してください');
     }
   }
+
+  cropBtn.addEventListener('click', () => {
+    const resultImgUrl = cropper.getCroppedCanvas().toDataURL();
+    const result = document.createElement('img');
+    result.src = resultImgUrl;
+    result.style.width = '100%';
+    result.style.height = 'auto';
+    dropZone.innerHTML = '';
+    dropZone.appendChild(result);
+    uploadImageModal.style.display = 'none';
+});
+
 });
