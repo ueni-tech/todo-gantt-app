@@ -52,4 +52,4 @@ Route::get('/test', function () {
     return view('test');
 });
 
-Route::resource('upload-image', UploadImageController::class)->only(['create', 'store']);
+Route::resource('upload-image', UploadImageController::class)->only(['edit', 'update']);

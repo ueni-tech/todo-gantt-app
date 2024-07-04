@@ -20,10 +20,7 @@ class UploadImageController extends Controller
    */
   public function create()
   {
-    $teams = User::find(auth()->id())->teams;
-    $team = User::find(auth()->id())->selectedTeam;
-
-    return view('uploadImage', compact('teams', 'team'));
+    //
   }
 
   /**
@@ -47,7 +44,10 @@ class UploadImageController extends Controller
    */
   public function edit(string $id)
   {
-    //
+    $teams = User::find(auth()->id())->teams;
+    $team = User::find(auth()->id())->selectedTeam;
+
+    return view('uploadImage', compact('teams', 'team'));
   }
 
   /**

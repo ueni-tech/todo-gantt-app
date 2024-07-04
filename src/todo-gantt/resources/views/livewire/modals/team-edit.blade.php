@@ -28,7 +28,7 @@
                     <img class="w-full" src="https://ui-avatars.com/api/?name={{$selectedTeam->name}}&background=999&color=eee&bold=true&length=1" alt="">
                     @endif
                   </div>
-                  <a class="text-primary-700" href="{{route('upload-image.create')}}">編集</a>
+                  <a class="text-primary-700" href="{{route('upload-image.edit', $selectedTeam)}}">編集</a>
                 </div>
               </div>
 
