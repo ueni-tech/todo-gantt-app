@@ -80,6 +80,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     result.style.height = 'auto';
     dropZone.innerHTML = '';
     dropZone.appendChild(result);
+    fileInput.value = resultImgUrl;
     uploadImageModal.style.display = 'none';
 });
 

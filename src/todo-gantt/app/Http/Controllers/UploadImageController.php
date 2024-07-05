@@ -55,7 +55,14 @@ class UploadImageController extends Controller
    */
   public function update(Request $request, string $id)
   {
-    //
+    if ($request->hasFile('image_name')) {
+      // アップロードされたファイル（name="image"）をstorage/app/public/productsフォルダに保存し、戻り値（ファイルパス）を変数$image_pathに代入する
+      $image_path = $request->file('image_name')->store('public/team_images');
+    } else {
+      return redirect()->route('index');
+    }
+
+    return redirect()->back();
   }
 
   /**
