@@ -30,7 +30,7 @@ class Team extends Model
         return $this->hasMany(Project::class);
     }
 
-    public static function createTeam(String $name, UploadedFile $file): Team
+    public static function createTeam(String $name, UploadedFile $file = null): Team
     {
         $team = new Team();
         $team->name = $name;

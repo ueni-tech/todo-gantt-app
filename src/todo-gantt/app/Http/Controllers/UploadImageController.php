@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Team;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class UploadImageController extends Controller
 {
@@ -55,11 +57,25 @@ class UploadImageController extends Controller
    */
   public function update(Request $request, string $id)
   {
-    if ($request->hasFile('image_name')) {
-      // アップロードされたファイル（name="image"）をstorage/app/public/productsフォルダに保存し、戻り値（ファイルパス）を変数$image_pathに代入する
-      $image_path = $request->file('image_name')->store('public/team_images');
-    } else {
-      return redirect()->route('index');
+    $imageData = $request->input('image_data');
+    $team = Team::find($id);
+
+    if ($imageData) {
+        $image = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $imageData));
+        // ユニークな$imageNameを生成
+        $imageName = md5(uniqid(rand(), true)) . '.png';
+
+        // 画像をストレージに保存する
+        Storage::disk('public')->put('team_images/' . $imageName, $image);
+
+        // $teamのimage_nameを文字列にして更新する
+        $team->image_name = $imageName;
+        // 更新前の画像を削除する
+        if ($team->getOriginal('image_name')) {
+            Storage::disk('public')->delete('team_images/' . $team->getOriginal('image_name'));
+        }
+        $team->save();
+
     }
 
     return redirect()->back();

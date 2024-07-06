@@ -3,6 +3,7 @@ import Cropper from 'cropperjs';
 document.addEventListener('DOMContentLoaded', (event) => {
   const dropZone = document.getElementById('dropZone');
   const fileInput = document.getElementById('fileInput');
+  const hiddenInput = document.getElementById('hiddenInput');
   const uploadImageModal = document.querySelector('.upload-imge-modal');
   const uploadImageModalClose = document.querySelectorAll('.upload-imge-modal-close');
   const cropBtn = document.querySelector('.crop-btn');
@@ -73,15 +74,27 @@ document.addEventListener('DOMContentLoaded', (event) => {
   }
 
   cropBtn.addEventListener('click', () => {
-    const resultImgUrl = cropper.getCroppedCanvas().toDataURL();
-    const result = document.createElement('img');
-    result.src = resultImgUrl;
-    result.style.width = '100%';
-    result.style.height = 'auto';
-    dropZone.innerHTML = '';
-    dropZone.appendChild(result);
-    fileInput.value = resultImgUrl;
+    const canvas = cropper.getCroppedCanvas();
+    canvas.toBlob(function (blob) {
+      const url = URL.createObjectURL(blob);
+      const reader = new FileReader();
+      reader.readAsDataURL(blob);
+      reader.onloadend = function () {
+        const base64data = reader.result;
+        hiddenInput.value = base64data;
+      }
+      const img = document.createElement('img');
+      img.src = url;
+      img.style.width = '100%';
+      img.style.height = 'auto';
+      dropZone.innerHTML = '';
+      dropZone.appendChild(img);
+
+      cropper.destroy();
+    });
+
+
     uploadImageModal.style.display = 'none';
-});
+  });
 
 });

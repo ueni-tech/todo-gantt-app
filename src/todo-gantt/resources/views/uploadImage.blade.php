@@ -1,7 +1,7 @@
 <x-app-layout>
   <div class="h-screen pt-[64px]">
     <div class="mt-4 px-12">
-      <form action="{{route('upload-image.update', $team)}}" method="POST" enctype="multipart/form-data">
+      <form action="{{route('upload-image.update', $team)}}" method="POST">
         @csrf
         @method('PUT')
         <h3 class="text-lg font-medium">チームアイコンの編集</h3>
@@ -19,7 +19,8 @@
           <div>
             <h4>変更後のアイコン</h4>
             <div class="mt-3">
-              <input type="file" id="fileInput" style="display: none;" name="image_name" />
+              <input type="file" id="fileInput" style="display: none;" />
+              <input type="hidden" name="image_data" id="hiddenInput"/>
               <div id="dropZone" class="w-72 h-72 flex justify-center items-center border-2 border-gray-300 border-dashed rounded-lg cursor-pointer">
                 ここをクリック<br>または<br>画像をドロップ
               </div>
