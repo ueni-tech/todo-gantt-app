@@ -59,10 +59,19 @@ class Team extends Model
             Storage::disk('public')->put('team_images/' . $imageName, $image);
 
             $team->image_name = $imageName;
-            if ($team->getOriginal('image_name')) {
-                Storage::disk('public')->delete('team_images/' . $team->getOriginal('image_name'));
+
+            if ($team->isDirty('image_name') && $team->getOriginal('image_name') !== null) {
+                static::deleteTeamIcon($id);
             }
             $team->save();
         }
+    }
+
+    public static function deleteTeamIcon(string $id)
+    {
+        $team = Team::find($id);
+        Storage::disk('public')->delete('team_images/' . $team->image_name);
+        $team->image_name = null;
+        $team->save();
     }
 }
