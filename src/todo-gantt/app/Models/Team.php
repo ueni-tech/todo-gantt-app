@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use App\Http\Requests\UploadImageRequest;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 class Team extends Model
 {
@@ -30,15 +32,10 @@ class Team extends Model
         return $this->hasMany(Project::class);
     }
 
-    public static function createTeam(String $name, UploadedFile $file = null): Team
+    public static function createTeam(String $name): Team
     {
         $team = new Team();
         $team->name = $name;
-
-        if ($file !== null) {
-            $image_path = $file->store('public/team_images');
-            $team->image_name = basename($image_path);
-        }
         $team->save();
 
         return $team;
@@ -50,5 +47,23 @@ class Team extends Model
         $team->save();
 
         return $team;
+    }
+
+    public static function updateImage(UploadImageRequest $request, string $id)
+    {
+        $imageData = $request->input('image_data');
+        $team = Team::find($id);
+        if ($imageData) {
+            $image = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $imageData));
+            $imageName = md5(uniqid(rand(), true)) . '.png';
+
+            Storage::disk('public')->put('team_images/' . $imageName, $image);
+
+            $team->image_name = $imageName;
+            if ($team->getOriginal('image_name')) {
+                Storage::disk('public')->delete('team_images/' . $team->getOriginal('image_name'));
+            }
+            $team->save();
+        }
     }
 }

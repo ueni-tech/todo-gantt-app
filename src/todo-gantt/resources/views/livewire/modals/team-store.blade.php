@@ -16,10 +16,6 @@
               <label for="team-name">チーム名</label>
               <input id="team-name" type="text" wire:model.live.debounce.150ms="team_name" name="team_name">
             </div>
-            <div class="flex flex-col gap-2 mt-4">
-              <label for="team-icon">チームアイコン</label>
-              <input id="team-icon" type="file" wire:model="team_image_name" name="team_image_name">
-            </div>
             @if($errors->any())
             @foreach($errors->all() as $error)
             <p class="text-red-500 text-xs">{{$error}}</p>
