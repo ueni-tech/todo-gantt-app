@@ -72,12 +72,16 @@ class TeamController extends Controller
      */
     public function destroy(Team $team)
     {
-        if($team->image_name) {
+        if ($team->image_name) {
             Team::deleteTeamIcon($team->id);
         }
         $team->delete();
 
-        
+        $user = User::find(auth()->id());
+        if ($user->teams->count() > 0) {
+            User::changeCurrentTeam($user, $user->teams->first());
+        }
+
         session()->flash('flashInfo', 'チームを削除しました');
         return redirect()->route('index');
     }
