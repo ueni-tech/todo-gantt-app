@@ -49,9 +49,8 @@ class Team extends Model
         return $team;
     }
 
-    public static function updateImage(UploadImageRequest $request, string $id)
+    public static function uploadImage(string $imageData, string $id)
     {
-        $imageData = $request->input('image_data');
         $team = Team::find($id);
         if ($imageData) {
             $image = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $imageData));
