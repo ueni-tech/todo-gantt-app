@@ -3,6 +3,7 @@
 namespace App\Livewire\Modals;
 
 use App\Models\User;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class TeamEdit extends Component
@@ -52,6 +53,8 @@ class TeamEdit extends Component
     $this->resetValidation();
   }
 
+  
+  #[On('removeUser')]
   public function removeUserFromTeam($user_id)
   {
     $this->selectedTeam->users()->detach($user_id);
@@ -66,6 +69,7 @@ class TeamEdit extends Component
 
     if($this->selectedTeam->users->count() === 0){
       $this->selectedTeam->delete();
+      return redirect()->route('index');
     }
   }
 

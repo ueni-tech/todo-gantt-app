@@ -49,9 +49,9 @@
                     <div class="flex justify-between items-center">
                       <p>{{$user->name}}</p>
                       @if($user->id !== auth()->user()->id)
-                      <button onclick="confirm('本当に削除しますか？')" wire:click="removeUserFromTeam({{$user->id}})" class="text-red-200 text-xs hover:text-red-500">削除</button>
+                      <button type="button" onclick="confirmRemoveUser({{$user->id}})" class="text-red-200 text-xs hover:text-red-500">削除</button>
                       @else
-                      <button onclick="confirm('本当に退出しますか？')" wire:click="removeUserFromTeam({{$user->id}})" class="text-red-200 text-xs hover:text-red-500">退出</button>
+                      <button type="button" onclick="confirmRemoveUser({{$user->id}})" class="text-red-200 text-xs hover:text-red-500">退出</button>
                       @endif
                     </div>
                     @endforeach
@@ -66,3 +66,12 @@
     </div>
   </div>
 </div>
+
+<script>
+  function confirmRemoveUser(user_id) {
+    if(confirm('本当に削除しますか？')) {
+      Livewire.dispatch('removeUser', {user_id: user_id})
+    }
+  }
+</script>
+
