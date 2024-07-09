@@ -45,7 +45,7 @@
               <a class="text-primary-700" href="{{route('upload-image.edit', $selectedTeam)}}">編集</a>
             </div>
           </div>
-          
+
           <div>
             <p>チームメンバー</p>
             <div class="flex flex-col gap-2 mt-2 ">
@@ -63,13 +63,22 @@
               </div>
             </div>
             <div class="flex flex-col gap-2 mt-2">
-              <input type="email" placeholder="メールアドレスから招待">
+              <input type="email" placeholder="メールアドレスから招待" wire:model.live.debounce="mailaddress">
+              @foreach($users as $user)
+              @if($user->id === auth()->user()->id)
+              @continue
+              @endif
+              <div class="flex justify-between items-center">
+                <p>{{$user->name}}</p>
+                <button type="button" wire:click="addUserToTeam({{$user->id}})" class="bg-primary-500 text-white text-sm p-1 rounded self-end">招待</button>
+              </div>
+              @endforeach
+
               @if($errors->any())
               @foreach($errors->all() as $error)
               <p class="text-red-500 text-xs">{{$error}}</p>
               @endforeach
               @endif
-              <button type="button" class="bg-primary-500 text-white text-sm p-1 rounded self-end">招待</button>
             </div>
           </div>
 

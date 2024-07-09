@@ -14,6 +14,10 @@ class TeamEdit extends Component
 
   public $isTeamNameChanged = false;
 
+  public $mailaddress = '';
+
+  public $users = [];
+
   public function mount($selectedTeam)
   {
     $this->selectedTeam = $selectedTeam;
@@ -53,7 +57,7 @@ class TeamEdit extends Component
     $this->resetValidation();
   }
 
-  
+
   #[On('removeUser')]
   public function removeUserFromTeam($user_id)
   {
@@ -67,10 +71,31 @@ class TeamEdit extends Component
       $user->save();
     }
 
-    if($this->selectedTeam->users->count() === 0){
+    if ($this->selectedTeam->users->count() === 0) {
       $this->selectedTeam->delete();
       return redirect()->route('index');
     }
+  }
+
+  public function updatedMailaddress()
+  {
+    $this->validate([
+      'mailaddress' => ['string'],
+    ]);
+
+    if (!empty($this->mailaddress)) {
+      $users = User::where('email', 'like', $this->mailaddress . '%')->get();
+    } else {
+      $users = collect(); // 空のコレクションを返す
+    }
+    $this->users = $users;
+  }
+
+  public function addUserToTeam($user_id)
+  {
+    $this->selectedTeam->users()->attach($user_id);
+    $this->mailaddress = '';
+    $this->users = [];
   }
 
   public function render()
