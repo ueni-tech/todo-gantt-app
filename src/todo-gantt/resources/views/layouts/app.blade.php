@@ -14,8 +14,12 @@
   <!-- Scripts -->
   @vite(['resources/css/app.css', 'resources/js/app.js'])
 
+  <!-- Toastr.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
+
   <!-- Styles -->
   <link rel="stylesheet" href="{{asset('css/style.css')}}">
+
 
 </head>
 
@@ -41,16 +45,22 @@
       {{ $slot }}
     </main>
 
-    <x-modals.team-store />
+    <livewire:modals.team-store />
+
     @if($selectedTeam)
-    <x-modals.team-edit :selectedTeam="$selectedTeam" />
+    <livewire:modals.team-edit :selectedTeam="$selectedTeam" />
     @endif
 
-    <x-modals.project-store />
+    <livewire:modals.project-store />
 
   </div>
 
   <script src="https://kit.fontawesome.com/891a71c277.js" crossorigin="anonymous"></script>
+
+  <!-- Toastr.js -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+  @include('layouts.flash-message')
 
   <script>
     const teamStoreModal = () => {

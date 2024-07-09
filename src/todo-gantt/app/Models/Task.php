@@ -26,8 +26,8 @@ class Task extends Model
     public function validate()
     {
         $validator = Validator::make($this->attributes, [
-            'start_date' => 'required|date',
-            'end_date' => 'required|date|after:start_date',
+            'start_date' => 'nullable|date',
+            'end_date' => 'nullable|date|after:start_date',
         ]);
 
         if ($validator->fails()) {

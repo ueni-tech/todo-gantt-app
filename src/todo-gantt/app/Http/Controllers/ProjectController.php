@@ -34,8 +34,9 @@ class ProjectController extends Controller
         $user = auth()->user();
         $current_team = $user->selectedTeam;
 
-        Project::createProject($user, $current_team, $request->name);
+        Project::createProject($user, $current_team, $request->project_name);
 
+        session()->flash('flashSuccess', 'プロジェクトを作成しました');
         return redirect()->back();
     }
 
@@ -60,8 +61,9 @@ class ProjectController extends Controller
      */
     public function update(ProjectRequest $request, Project $project)
     {
-        Project::updateName($request->name, $project);
+        Project::updateName($request->project_name, $project);
 
+        session()->flash('flashInfo', 'プロジェクト情報を更新しました');
         return redirect()->back();
     }
 
@@ -72,6 +74,7 @@ class ProjectController extends Controller
     {
         $project->delete();
 
+        session()->flash('flashInfo', 'プロジェクトを削除しました');
         return redirect()->back();
     }
 }

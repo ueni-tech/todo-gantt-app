@@ -119,7 +119,7 @@ class TaskTest extends TestCase
 
         $response = $this->post('/tasks', [
             'project_id' => $project->id,
-            'name' => 'タスク',
+            'task_name' => 'タスク',
             'note' => 'メモ',
             'start_date' => '2021-01-01',
             'end_date' => '2021-01-31',
@@ -254,7 +254,7 @@ class TaskTest extends TestCase
         $task = Task::createTask($project, 'タスク', 'メモ', '2021-01-01', '2021-01-31');
 
         $response = $this->patch('/tasks/' . $task->id, [
-            'name' => 'タスク2',
+            'task_name' => 'タスク2',
             'note' => 'メモ2',
             'start_date' => '2021-02-01',
             'end_date' => '2021-02-28',

@@ -44,3 +44,9 @@ Route::get('/auth/google', [GoogleLoginController::class, 'redirectToGoogle'])
 
 Route::get('/auth/google/callback', [GoogleLoginController::class, 'handleGoogleCallback'])
     ->name('login.google.callback');
+
+Route::get('/test', function () {
+    session()->flash('flashError', 'エラーが発生しました');
+
+    return view('test');
+});
