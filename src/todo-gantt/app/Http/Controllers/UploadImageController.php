@@ -15,8 +15,9 @@ class UploadImageController extends Controller
    */
   public function edit(string $id)
   {
-    $teams = User::find(auth()->id())->teams;
-    $team = User::find(auth()->id())->selectedTeam;
+    $user = User::with(['teams', 'selectedTeam'])->find(auth()->id());
+    $teams = $user->teams;
+    $team = $user->selectedTeam;
 
     return view('uploadImage', compact('teams', 'team'));
   }
