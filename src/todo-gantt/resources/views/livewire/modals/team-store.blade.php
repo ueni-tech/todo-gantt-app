@@ -9,11 +9,13 @@
     </div>
     <div class="mt-3">
       <div class="flex flex-col">
-        <form action="{{route('teams.store')}}" method="POST">
+        <form action="{{route('teams.store')}}" method="POST" enctype="multipart/form-data">
           @csrf
           <div class="flex flex-col">
-            <label for="team-name">チーム名</label>
-            <input id="team-name" type="text" wire:model.live.debounce.150ms="team_name" name="team_name">
+            <div class="flex flex-col gap-2 mt-4">
+              <label for="team-name">チーム名</label>
+              <input id="team-name" type="text" wire:model.live.debounce.150ms="team_name" name="team_name">
+            </div>
             @if($errors->any())
             @foreach($errors->all() as $error)
             <p class="text-red-500 text-xs">{{$error}}</p>

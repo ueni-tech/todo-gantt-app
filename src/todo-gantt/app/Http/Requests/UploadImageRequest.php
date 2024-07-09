@@ -3,9 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Session;
 
-class TeamRequest extends FormRequest
+class UploadImageRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,8 +22,7 @@ class TeamRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'team_name' => ['required', 'string', 'max:255', 'unique:teams,name'],
-            'team_image_name' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+            'image_data' => ['required', 'string'],
         ];
     }
 }

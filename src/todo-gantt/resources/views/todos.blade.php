@@ -8,7 +8,7 @@
         <h2 class="text-lg font-semibold">{{$current_team->name}}</h2>
         <button class="text-sm opacity-50 hover:opacity-100" @click="toggleTeamEditModal()"><i class="fa-solid fa-pen-to-square"></i></button>
       </div>
-      @endif
+
       <div class="w-[95%] mx-auto py-4 flex justify-items-start gap-3 overflow-x-auto">
         @foreach($projects as $project)
         <div class="w-56 h-full py-2 px-4 bg-zinc-300 rounded">
@@ -22,8 +22,8 @@
             <i class="fa-solid fa-plus"></i>
           </span>
         </button>
-
       </div>
+      @endif
     </div>
   </div>
 </x-app-layout>
