@@ -9,15 +9,15 @@
         <button class="text-sm opacity-50 hover:opacity-100" @click="toggleTeamEditModal()"><i class="fa-solid fa-pen-to-square"></i></button>
       </div>
 
-      <div class="w-[95%] mx-auto py-4 flex justify-items-start gap-3 overflow-x-auto">
+      <div class="w-[95%] mx-auto py-4 flex justify-items-start gap-3 overflow-x-auto hidden-scrollbar hidden-scrollbar::-webkit-scrollbar">
         @foreach($projects as $project)
-        <div class="w-56 h-full py-2 px-4 bg-zinc-300 rounded">
+        <div class="w-56 h-full py-2 px-4 bg-zinc-300 rounded hidden-scrollbar flex-shrink-0">
           <livewire:edit-project :project="$project" />
           <x-tasks :project="$project" />
         </div>
         @endforeach
 
-        <button @click="toggleProjectStoreModal()" class="w-8 h-8 aspect-square bg-gray-500 rounded overflow-hidden border-2 border-gray-500">
+        <button @click="toggleProjectStoreModal()" class="w-8 h-8 aspect-square bg-gray-500 rounded overflow-hidden border-2 border-gray-500 flex-shrink-0">
           <span class="text-white text-xl flex justify-center items-center w-full h-full">
             <i class="fa-solid fa-plus"></i>
           </span>
