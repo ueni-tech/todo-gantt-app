@@ -28,7 +28,7 @@
           </div>
         </div>
         <div class="flex justify-start items-center gap-4 mt-6">
-          <button type="submit" class="bg-primary-500 text-white text-base px-2 py-1 rounded shadow-md">更新</button>
+          <button onclick="isDisabled()" type="submit" class="bg-primary-500 text-white text-base px-2 py-1 rounded shadow-md">更新</button>
           <a class="text-gray-500" href="{{ route('index')}}">戻る</a>
         </div>
       </form>
