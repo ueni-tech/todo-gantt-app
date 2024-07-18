@@ -108,7 +108,7 @@ class ProjectTest extends TestCase
     $team = Team::factory()->create();
     $team->users()->attach($user);
     $user->selected_team_id = $team->id;
-    $project = $team->projects()->create(['name' => 'プロジェクト', 'user_id' => $user->id]);
+    $project = Project::createProject($user, $team, 'プロジェクト');
 
     $response = $this->patch("/projects/{$project->id}", ['project_name' => 'プロジェクト2']);
     $response->assertRedirect();
@@ -125,7 +125,7 @@ class ProjectTest extends TestCase
     $team = Team::factory()->create();
     $team->users()->attach($user);
     $user->selected_team_id = $team->id;
-    $project = $team->projects()->create(['name' => 'プロジェクト', 'user_id' => $user->id]);
+    $project = Project::createProject($user, $team, 'プロジェクト');
 
     $response = $this->patch("/projects/{$project->id}", ['name' => '']);
     $response->assertSessionHasErrors();
@@ -141,7 +141,7 @@ class ProjectTest extends TestCase
     $team = Team::factory()->create();
     $team->users()->attach($user);
     $user->selected_team_id = $team->id;
-    $project = $team->projects()->create(['name' => 'プロジェクト', 'user_id' => $user->id]);
+    $project = Project::createProject($user, $team, 'プロジェクト');
 
     $response = $this->patch("/projects/{$project->id}", ['name' => str_repeat('a', 256)]);
     $response->assertSessionHasErrors();
@@ -157,7 +157,7 @@ class ProjectTest extends TestCase
     $team = Team::factory()->create();
     $team->users()->attach($user);
     $user->selected_team_id = $team->id;
-    $project = $team->projects()->create(['name' => 'プロジェクト', 'user_id' => $user->id]);
+    $project = Project::createProject($user, $team, 'プロジェクト');
 
     $response = $this->delete("/projects/{$project->id}");
     $response->assertRedirect();
