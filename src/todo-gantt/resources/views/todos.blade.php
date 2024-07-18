@@ -24,15 +24,15 @@
         </div>
 
         @foreach(['incomplete', 'pending', 'completed'] as $status)
-        <div x-show="activeTab === '{{ $status }}'" class="flex justify-start items-start gap-3 overflow-x-auto">
+        <div x-show="activeTab === '{{ $status }}'" class="flex justify-start items-start gap-3">
           @foreach($projects->where('status', $status) as $project)
-          <div class="w-56 h-full py-2 px-4 bg-zinc-300  rounded hidden-scrollbar flex-shrink-0">
+          <div class="w-56 py-2 px-4 bg-zinc-300  rounded hidden-scrollbar flex-shrink-0">
             <livewire:edit-project :project="$project" />
             <x-tasks :project="$project" />
           </div>
           @endforeach
           @if($status === 'incomplete')
-          <button @click="toggleProjectStoreModal()" class="w-8 h-8 aspect-square bg-gray-500 rounded overflow-hidden border-2 border-gray-500">
+          <button @click="toggleProjectStoreModal()" class="w-8 h-8 aspect-square bg-gray-500 rounded overflow-hidden border-2 border-gray-500 flex-shrink-0">
             <span class="text-white text-xl flex justify-center items-center w-full h-full">
               <i class="fa-solid fa-plus"></i>
             </span>
