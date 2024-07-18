@@ -10,7 +10,7 @@
             <form action="{{ route('teams.destroy', $selectedTeam) }}" method="POST">
                 @csrf
                 @method('DELETE')
-                <button type="submit" class="bg-red-500 text-white text-xs p-1 rounded self-end">削除</button>
+                <button type="submit" onclick="isDisabled()" class="bg-red-500 text-white text-xs p-1 rounded self-end">削除</button>
             </form>
         </div>
         @endif

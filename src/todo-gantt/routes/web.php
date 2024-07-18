@@ -27,6 +27,7 @@ Route::resource('ganttcharts', GanttchartController::class)->middleware(['auth']
 Route::resource('teams', TeamController::class)->middleware(['auth']);
 Route::get('teams/{team}/change', [TeamController::class, 'change'])->name('teams.change');
 Route::resource('projects', ProjectController::class)->middleware(['auth']);
+Route::patch('projects/{project}/update-status', [ProjectController::class, 'updateStatus'])->middleware(['auth'])->name('projects.update-status');
 Route::resource('tasks', TaskController::class)->middleware(['auth']);
 Route::get('tasks/{task}/toggle', [TaskController::class, 'toggle'])->name('tasks.toggle');
 

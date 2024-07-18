@@ -24,3 +24,5 @@
     display: none;
   }
 }
+
+[x-cloak] { display: none !important; }

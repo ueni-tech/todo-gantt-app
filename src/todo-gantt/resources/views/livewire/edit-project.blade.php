@@ -5,7 +5,7 @@
     @method('put')
     <div class="flex items-center gap-2 mb-2">
       <input type="text" class="input w-full text-sm font-medium p-1" name="project_name" wire:model="name" wire:blur="toggleEditing">
-      <button type="submit" class="text-sm opacity-50 hover:opacity-100">
+      <button type="submit" onclick="isDisabled()" class="text-sm opacity-50 hover:opacity-100" onclick="this.disabled=true; this.form.submit();">
         <i class="fa-solid fa-check"></i>
       </button>
     </div>
