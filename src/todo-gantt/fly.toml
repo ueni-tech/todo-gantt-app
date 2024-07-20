@@ -21,7 +21,7 @@ console_command = 'php /var/www/html/artisan tinker'
   SESSION_SECURE_COOKIE = 'true'
   SESSION_DOMAIN= 'todo-gantt.fly.dev'
   DB_CONNECTION = "mysql"
-  DB_HOST = "https://todo-gantt-db.fly.dev/"
+  DB_HOST = "todo-gantt-db.internal"
   DB_DATABASE= "todo-gantt-db"
 
 [http_service]
