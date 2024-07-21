@@ -9,7 +9,7 @@
     </div>
     <div class="mt-3">
       <div class="flex flex-col">
-        <form action="{{route('projects.destroy', $project)}}" method="POST">
+        <form x-data="{ isDisabled: false }" @submit="isDisabled = true" action="{{route('projects.destroy', $project)}}" method="POST">
           @csrf
           @method('delete')
           <div class="flex flex-col">
@@ -18,7 +18,7 @@
             @error('name')
             <span class="text-red-500 text-xs">{{ $message }}</span>
             @enderror
-            <button type="submit" onclick="isDisabled()" class="bg-primary-500 text-white text-sm mt-2 p-1 rounded self-end">作成</button>
+            <button type="submit" :disabled="isDisabled" class="bg-primary-500 text-white text-sm mt-2 p-1 rounded self-end">作成</button>
           </div>
         </form>
       </div>

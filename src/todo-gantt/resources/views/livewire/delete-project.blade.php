@@ -14,7 +14,7 @@
         </div>
         <div class="mt-3">
             <div>
-                <form action="{{route('projects.destroy', $project)}}" method="POST">
+                <form x-data="{ isDisabled: false }" @submit="isDisabled = true" action="{{route('projects.destroy', $project)}}" method="POST">
                     @csrf
                     @method('delete')
                     <div class="flex flex-col">
@@ -24,7 +24,7 @@
                         @enderror
                         <div class="flex justify-between items-center gap-5">
                             <p class="text-sm mt-3">このプロジェクトを削除しますか？</p>
-                            <button type="submit" onclick="isDisabled()" class="bg-red-500 text-white text-sm mt-3 p-1 rounded self-end">削除</button>
+                            <button type="submit" :disabled="isDisabled" class="bg-red-500 text-white text-sm mt-3 p-1 rounded self-end">削除</button>
                         </div>
                     </div>
                 </form>
