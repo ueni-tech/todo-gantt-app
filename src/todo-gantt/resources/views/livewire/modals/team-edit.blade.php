@@ -27,7 +27,7 @@
               @if($isTeamNameChanged && $team_name && !$errors->any())
               <button type="submit" :disabled="isDisabled" class="bg-primary-500 text-white text-sm p-1 rounded self-end">更新</button>
               @else
-              <button type="submit" :disabled="isDisabled" class="bg-primary-500 text-white text-sm p-1 rounded self-end opacity-30" disabled>更新</button>
+              <button type="submit" class="bg-primary-500 text-white text-sm p-1 rounded self-end opacity-30" disabled>更新</button>
               @endif
             </div>
           </form>
