@@ -61,6 +61,11 @@ class TeamEdit extends Component
   #[On('removeUser')]
   public function removeUserFromTeam($user_id)
   {
+    if (!$this->selectedTeam->users->contains($user_id)) {
+      session()->flash('flashWarning', 'そのユーザーはチームに所属していません');
+      return redirect()->route('index');
+    }
+
     $this->selectedTeam->users()->detach($user_id);
 
     $user = User::find($user_id);
@@ -71,10 +76,10 @@ class TeamEdit extends Component
       $user->save();
     }
 
-    if ($this->selectedTeam->users->count() === 0) {
+    if ($this->selectedTeam->users->count() == 0) {
       $this->selectedTeam->delete();
-      return redirect()->route('index');
     }
+    return redirect()->route('index');
   }
 
   public function updatedMailaddress()
