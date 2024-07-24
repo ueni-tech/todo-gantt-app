@@ -39,11 +39,11 @@ class ProjectTest extends TestCase
    */
   public function a_user_can_create_project()
   {
-    $incompleteStatus_id = ProjectStatus::where('name', 'incomplete')->first()->id;
+    $incompleteStatus_name = 'incomplete';
 
     $response = $this->post('/projects', ['project_name' => 'プロジェクト']);
     $response->assertRedirect();
-    $this->assertDatabaseHas('projects', ['name' => 'プロジェクト', 'team_id' => $this->team->id, 'user_id' => $this->user->id, 'status_id' => $incompleteStatus_id]);
+    $this->assertDatabaseHas('projects', ['name' => 'プロジェクト', 'team_id' => $this->team->id, 'user_id' => $this->user->id, 'status_name' => $incompleteStatus_name]);
   }
 
   /**
@@ -137,14 +137,14 @@ class ProjectTest extends TestCase
   {
     $project = Project::createProject($this->user, $this->team, 'プロジェクト');
 
-    $completedStatus_id = ProjectStatus::where('name', 'completed')->first()->id;
+    $completedStatus_name = 'completed';
     $response = $this->patch("/projects/{$project->id}/update-status", ['status' => 'completed']);
     $response->assertRedirect();
     $this->assertDatabaseHas('projects', [
       'name' => 'プロジェクト',
       'team_id' => $this->team->id,
       'user_id' => $this->user->id,
-      'status_id' => $completedStatus_id
+      'status_name' => $completedStatus_name
     ]);
   }
 
@@ -155,14 +155,14 @@ class ProjectTest extends TestCase
   {
     $project = Project::createProject($this->user, $this->team, 'プロジェクト');
 
-    $incompleteStatus_id = ProjectStatus::where('name', 'incomplete')->first()->id;
+    $incompleteStatus_name = 'incomplete';
     $response = $this->patch("/projects/{$project->id}/update-status", ['status' => 'incomplete']);
     $response->assertRedirect();
     $this->assertDatabaseHas('projects', [
       'name' => 'プロジェクト',
       'team_id' => $this->team->id,
       'user_id' => $this->user->id,
-      'status_id' => $incompleteStatus_id
+      'status_name' => $incompleteStatus_name
     ]);
   }
 
@@ -173,14 +173,14 @@ class ProjectTest extends TestCase
   {
     $project = Project::createProject($this->user, $this->team, 'プロジェクト');
 
-    $pendingStatus_id = ProjectStatus::where('name', 'pending')->first()->id;
+    $pendingStatus_name = 'pending';
     $response = $this->patch("/projects/{$project->id}/update-status", ['status' => 'pending']);
     $response->assertRedirect();
     $this->assertDatabaseHas('projects', [
       'name' => 'プロジェクト',
       'team_id' => $this->team->id,
       'user_id' => $this->user->id,
-      'status_id' => $pendingStatus_id
+      'status_name' => $pendingStatus_name
     ]);
   }
 }

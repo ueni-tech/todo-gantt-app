@@ -33,7 +33,7 @@ class Project extends Model
 
     public function status()
     {
-        return $this->belongsTo(ProjectStatus::class);
+        return $this->belongsTo(ProjectStatus::class, 'status_name', 'name');
     }
 
     public function scopeForUser($query, $user): Builder
@@ -43,12 +43,12 @@ class Project extends Model
 
     public static function createProject(User $user, Team $current_team, string $name): Project
     {
-        $defaultStatus = ProjectStatus::where('name', 'incomplete')->first();
+        $defaultStatus = 'incomplete';
         $project = new Project();
         $project->name = $name;
         $project->team_id = $current_team->id;
         $project->user_id = $user->id;
-        $project->status_id = $defaultStatus->id;
+        $project->status_name = $defaultStatus;
         $project->save();
         
         return $project;
@@ -62,9 +62,9 @@ class Project extends Model
         return $project;
     }
 
-    public function getStatusAttribute()
-    {
-        $status_id = $this->status_id;
-        return ProjectStatus::where('id', $status_id)->first()->name;
-    }
+    // public function getStatusAttribute()
+    // {
+    //     $status_id = $this->status_id;
+    //     return ProjectStatus::where('id', $status_id)->first()->name;
+    // }
 }
