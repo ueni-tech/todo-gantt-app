@@ -9,6 +9,10 @@ class ProjectStatus extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'name';
+    public $incrementing = false;
+    protected $keyType = 'string';
+
     protected $fillable = ['name', 'description'];
 
     public function projects()

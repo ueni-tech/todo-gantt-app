@@ -15,10 +15,23 @@ class ProjectTest extends TestCase
 {
   use RefreshDatabase;
 
+  protected $user;
+  protected $team;
+
   protected function setUp(): void
   {
     parent::setUp();
     $this->seed('ProjectStatusSeeder');
+    $this->setUpUserAndTeam();
+  }
+
+  protected function setUpUserAndTeam()
+  {
+    $this->user = User::factory()->create();
+    $this->team = Team::factory()->create();
+    $this->team->users()->attach($this->user);
+    $this->user->selected_team_id = $this->team->id;
+    $this->actingAs($this->user);
   }
 
   /**
@@ -26,17 +39,11 @@ class ProjectTest extends TestCase
    */
   public function a_user_can_create_project()
   {
-    $user = User::factory()->create();
-    $this->actingAs($user);
-    $team = Team::factory()->create();
-    $team->users()->attach($user);
-    $user->selected_team_id = $team->id;
-
-    $incompleteStatus_id = ProjectStatus::where('name', 'incomplete')->first()->id;
+    $incompleteStatus_name = 'incomplete';
 
     $response = $this->post('/projects', ['project_name' => 'プロジェクト']);
     $response->assertRedirect();
-    $this->assertDatabaseHas('projects', ['name' => 'プロジェクト', 'team_id' => $team->id, 'user_id' => $user->id, 'status_id' => $incompleteStatus_id]);
+    $this->assertDatabaseHas('projects', ['name' => 'プロジェクト', 'team_id' => $this->team->id, 'user_id' => $this->user->id, 'status_name' => $incompleteStatus_name]);
   }
 
   /**
@@ -44,12 +51,6 @@ class ProjectTest extends TestCase
    */
   public function a_user_can_not_create_project_without_name()
   {
-    $user = User::factory()->create();
-    $this->actingAs($user);
-    $team = Team::factory()->create();
-    $team->users()->attach($user);
-    $user->selected_team_id = $team->id;
-
     $response = $this->post('/projects', ['project_name' => '']);
     $response->assertSessionHasErrors('project_name');
   }
@@ -57,14 +58,8 @@ class ProjectTest extends TestCase
   /**
    * @test
    */
-  public function a_user_can_not_create_project_without_name_length_over_255()
+  public function a_user_can_not_create_project_with_name_length_over_255()
   {
-    $user = User::factory()->create();
-    $this->actingAs($user);
-    $team = Team::factory()->create();
-    $team->users()->attach($user);
-    $user->selected_team_id = $team->id;
-
     $response = $this->post('/projects', ['project_name' => str_repeat('a', 256)]);
     $response->assertSessionHasErrors('project_name');
   }
@@ -74,13 +69,8 @@ class ProjectTest extends TestCase
    */
   public function createProjectのテスト()
   {
-    $user = User::factory()->create();
-    $team = Team::factory()->create();
-    $team->users()->attach($user);
-    $user->selected_team_id = $team->id;
-
-    $project = Project::createProject($user, $team, 'プロジェクト');
-    $this->assertDatabaseHas('projects', ['name' => 'プロジェクト', 'team_id' => $team->id, 'user_id' => $user->id]);
+    $project = Project::createProject($this->user, $this->team, 'プロジェクト');
+    $this->assertDatabaseHas('projects', ['name' => 'プロジェクト', 'team_id' => $this->team->id, 'user_id' => $this->user->id]);
   }
 
   /**
@@ -88,11 +78,7 @@ class ProjectTest extends TestCase
    */
   public function updateNameのテスト()
   {
-    $user = User::factory()->create();
-    $team = Team::factory()->create();
-    $team->users()->attach($user);
-    $user->selected_team_id = $team->id;
-    $project = Project::createProject($user, $team, 'プロジェクト');
+    $project = Project::createProject($this->user, $this->team, 'プロジェクト');
 
     $project = Project::updateName('プロジェクト2', $project);
     $this->assertEquals('プロジェクト2', $project->name);
@@ -103,16 +89,11 @@ class ProjectTest extends TestCase
    */
   public function a_user_can_update_project()
   {
-    $user = User::factory()->create();
-    $this->actingAs($user);
-    $team = Team::factory()->create();
-    $team->users()->attach($user);
-    $user->selected_team_id = $team->id;
-    $project = Project::createProject($user, $team, 'プロジェクト');
+    $project = Project::createProject($this->user, $this->team, 'プロジェクト');
 
     $response = $this->patch("/projects/{$project->id}", ['project_name' => 'プロジェクト2']);
     $response->assertRedirect();
-    $this->assertDatabaseHas('projects', ['name' => 'プロジェクト2', 'team_id' => $team->id, 'user_id' => $user->id]);
+    $this->assertDatabaseHas('projects', ['name' => 'プロジェクト2', 'team_id' => $this->team->id, 'user_id' => $this->user->id]);
   }
 
   /**
@@ -120,12 +101,7 @@ class ProjectTest extends TestCase
    */
   public function a_user_can_not_update_project_without_name()
   {
-    $user = User::factory()->create();
-    $this->actingAs($user);
-    $team = Team::factory()->create();
-    $team->users()->attach($user);
-    $user->selected_team_id = $team->id;
-    $project = Project::createProject($user, $team, 'プロジェクト');
+    $project = Project::createProject($this->user, $this->team, 'プロジェクト');
 
     $response = $this->patch("/projects/{$project->id}", ['name' => '']);
     $response->assertSessionHasErrors();
@@ -134,14 +110,9 @@ class ProjectTest extends TestCase
   /**
    * @test
    */
-  public function a_user_can_not_update_project_without_name_length_over_255()
+  public function a_user_can_not_update_project_with_name_length_over_255()
   {
-    $user = User::factory()->create();
-    $this->actingAs($user);
-    $team = Team::factory()->create();
-    $team->users()->attach($user);
-    $user->selected_team_id = $team->id;
-    $project = Project::createProject($user, $team, 'プロジェクト');
+    $project = Project::createProject($this->user, $this->team, 'プロジェクト');
 
     $response = $this->patch("/projects/{$project->id}", ['name' => str_repeat('a', 256)]);
     $response->assertSessionHasErrors();
@@ -152,71 +123,64 @@ class ProjectTest extends TestCase
    */
   public function a_user_can_delete_project()
   {
-    $user = User::factory()->create();
-    $this->actingAs($user);
-    $team = Team::factory()->create();
-    $team->users()->attach($user);
-    $user->selected_team_id = $team->id;
-    $project = Project::createProject($user, $team, 'プロジェクト');
+    $project = Project::createProject($this->user, $this->team, 'プロジェクト');
 
     $response = $this->delete("/projects/{$project->id}");
     $response->assertRedirect();
-    $this->assertDatabaseMissing('projects', ['name' => 'プロジェクト', 'team_id' => $team->id, 'user_id' => $user->id]);
+    $this->assertDatabaseMissing('projects', ['name' => 'プロジェクト', 'team_id' => $this->team->id, 'user_id' => $this->user->id]);
   }
 
   /**
    * @test
    */
-  public function updateStatusのテスト()
+  public function project_statusをcompletedに更新するテスト()
   {
-    $user = User::factory()->create();
-    $team = Team::factory()->create();
-    $this->actingAs($user);
-    $team->users()->attach($user);
-    $user->selected_team_id = $team->id;
-    $project = Project::createProject($user, $team, 'プロジェクト');
+    $project = Project::createProject($this->user, $this->team, 'プロジェクト');
 
-    // 各ステータスのidを取得
-    $incompleteStatus_id = ProjectStatus::where('name', 'incomplete')->first()->id;
-    $completedStatus_id = ProjectStatus::where('name', 'completed')->first()->id;
-    $pendingStatus_id = ProjectStatus::where('name', 'pending')->first()->id;
-
-    // プロジェクトが作成されたときのステータスを確認
-    $this->assertDatabaseHas('projects', [
-      'name' => 'プロジェクト',
-      'team_id' => $team->id,
-      'user_id' => $user->id,
-      'status_id' => $incompleteStatus_id
-    ]);
-
-    // ステータスを'completed'に更新
+    $completedStatus_name = 'completed';
     $response = $this->patch("/projects/{$project->id}/update-status", ['status' => 'completed']);
     $response->assertRedirect();
     $this->assertDatabaseHas('projects', [
       'name' => 'プロジェクト',
-      'team_id' => $team->id,
-      'user_id' => $user->id,
-      'status_id' => $completedStatus_id
+      'team_id' => $this->team->id,
+      'user_id' => $this->user->id,
+      'status_name' => $completedStatus_name
     ]);
+  }
 
-    // ステータスを'incomplete'に戻す
+  /**
+   * @test
+   */
+  public function project_statusをincompleteに更新するテスト()
+  {
+    $project = Project::createProject($this->user, $this->team, 'プロジェクト');
+
+    $incompleteStatus_name = 'incomplete';
     $response = $this->patch("/projects/{$project->id}/update-status", ['status' => 'incomplete']);
     $response->assertRedirect();
     $this->assertDatabaseHas('projects', [
       'name' => 'プロジェクト',
-      'team_id' => $team->id,
-      'user_id' => $user->id,
-      'status_id' => $incompleteStatus_id
+      'team_id' => $this->team->id,
+      'user_id' => $this->user->id,
+      'status_name' => $incompleteStatus_name
     ]);
+  }
 
-    // ステータスを'pending'に更新
+  /**
+   * @test
+   */
+  public function project_statusをpendingに更新するテスト()
+  {
+    $project = Project::createProject($this->user, $this->team, 'プロジェクト');
+
+    $pendingStatus_name = 'pending';
     $response = $this->patch("/projects/{$project->id}/update-status", ['status' => 'pending']);
     $response->assertRedirect();
     $this->assertDatabaseHas('projects', [
       'name' => 'プロジェクト',
-      'team_id' => $team->id,
-      'user_id' => $user->id,
-      'status_id' => $pendingStatus_id
+      'team_id' => $this->team->id,
+      'user_id' => $this->user->id,
+      'status_name' => $pendingStatus_name
     ]);
   }
 }

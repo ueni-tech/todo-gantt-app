@@ -61,9 +61,31 @@ class TeamEdit extends Component
   #[On('removeUser')]
   public function removeUserFromTeam($user_id)
   {
-    $this->selectedTeam->users()->detach($user_id);
+    if (!auth()->check()) {
+      session()->flash('flashWarning', '認証が必要です');
+      return redirect()->route('login');
+    }
+
+    if (!is_numeric($user_id)) {
+      session()->flash('flashWarning', '無効なユーザーIDです');
+      return redirect()->route('index');
+    }
+
+    if (!auth()->user()->can('removeTeamMember', [$this->selectedTeam, $user_id])) {
+      session()->flash('flashWarning', 'この操作を行う権限がないか、ユーザーがチームに所属していません');
+      return redirect()->route('index');
+    }
 
     $user = User::find($user_id);
+    if (!$user) {
+      session()->flash('flashWarning', 'ユーザーが見つかりません');
+      return redirect()->route('index');
+    }
+
+    $this->selectedTeam->users()->detach($user_id);
+
+    $this->selectedTeam->load('users');
+
     if ($user->teams->count() > 0) {
       User::changeCurrentTeam($user, $user->teams->first());
     } else {
@@ -71,10 +93,14 @@ class TeamEdit extends Component
       $user->save();
     }
 
-    if ($this->selectedTeam->users->count() === 0) {
+    if ($this->selectedTeam->users->isEmpty()) {
       $this->selectedTeam->delete();
-      return redirect()->route('index');
+      session()->flash('flashInfo', 'チームが空になったため削除されました');
+    } else {
+      session()->flash('flashSuccess', 'ユーザーがチームから削除されました');
     }
+
+    return redirect()->route('index');
   }
 
   public function updatedMailaddress()

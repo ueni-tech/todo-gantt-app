@@ -10,12 +10,12 @@
                     <form action="{{route('projects.update-status', $project)}}" method="POST" id="statusForm">
                         @csrf
                         @method('PATCH')
-                        <input type="hidden" name="status" value="{{$project->status == 'incomplete' ? 'completed' : 'incomplete'}}">
+                        <input type="hidden" name="status" value="{{$project->status_name == 'incomplete' ? 'completed' : 'incomplete'}}">
                         <button type="submit" class="text-xs text-white bg-primary-500 hover:bg-primary-600 p-1 rounded-md shadow-md">
-                            {{$project->status == 'incomplete' ? '完了' : '未完'}}
+                            {{$project->status_name == 'incomplete' ? '完了' : '未完'}}
                         </button>
                     </form>
-                    @if($project->status === 'incomplete')
+                    @if($project->status_name === 'incomplete')
                     <form action="{{route('projects.update-status', $project)}}" method="POST" id="statusForm">
                         @csrf
                         @method('PATCH')
