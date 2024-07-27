@@ -39,13 +39,15 @@ Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
-Route::get('/auth/google', [GoogleLoginController::class, 'redirectToGoogle'])
-    ->name('login.google');
+Route::middleware(['guest'])->group(function () {
+    Route::get('/auth/google', [GoogleLoginController::class, 'redirectToGoogle'])
+        ->name('login.google');
 
-Route::get('/auth/google/callback', [GoogleLoginController::class, 'handleGoogleCallback'])
-    ->name('login.google.callback');
+    Route::get('/auth/google/callback', [GoogleLoginController::class, 'handleGoogleCallback'])
+        ->name('login.google.callback');
+});
 
 Route::get('/test', function () {
     session()->flash('flashError', 'エラーが発生しました');
