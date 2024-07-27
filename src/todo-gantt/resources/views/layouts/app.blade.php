@@ -26,10 +26,13 @@
 
 <body class="basic-font tracking-wide">
   <div class="min-h-screen bg-gray-100" x-data="{
-    ...teamStoreModal(),
-    ...teamEditModal(),
-    ...projectStoreModal(),
-  }">
+  teamStoreModalOpened: false,
+  teamEditModalOpened: false,
+  projectStoreModalOpened: false,
+  toggleTeamStoreModal() { this.teamStoreModalOpened = !this.teamStoreModalOpened },
+  toggleTeamEditModal() { this.teamEditModalOpened = !this.teamEditModalOpened },
+  toggleProjectStoreModal() { this.projectStoreModalOpened = !this.projectStoreModalOpened }
+}">
     <livewire:layout.navigation />
 
     <!-- Page Heading -->
@@ -64,6 +67,7 @@
   <script src="https://cdn.jsdelivr.net/npm/jdenticon@3.1.1/dist/jdenticon.min.js" integrity="sha384-l0/0sn63N3mskDgRYJZA6Mogihu0VY3CusdLMiwpJ9LFPklOARUcOiWEIGGmFELx" crossorigin="anonymous"></script>
   <script src="{{asset('/js/main.js')}}"></script>
   @include('layouts.flash-message')
+  {{--
   <script>
     const teamStoreModal = () => {
       return {
@@ -92,6 +96,13 @@
       }
     }
   </script>
+  --}}
+
+  <script>
+    window.addEventListener('clearBrowserHistory', event => {
+        window.history.pushState(null, '', '/login');
+    });
+</script>
 </body>
 
 </html>
