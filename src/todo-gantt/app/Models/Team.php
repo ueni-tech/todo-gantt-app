@@ -74,4 +74,14 @@ class Team extends Model
         $team->image_name = null;
         $team->save();
     }
+
+    public static function checkAllTeamsHasUser()
+    {
+        $teams = Team::all();
+        foreach ($teams as $team) {
+            if ($team->users->count() === 0) {
+                $team->delete();
+            }
+        }
+    }
 }

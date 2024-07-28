@@ -204,4 +204,44 @@ class TeamTest extends TestCase
             'user_id' => $user->id
         ]);
     }
+
+    /** 
+     * @test
+     * */
+    public function checkAllTeamsHasUserのテスト()
+    {
+        $team1 = Team::factory()->create();
+        $team2 = Team::factory()->create();
+        $user = User::factory()->create();
+        $team1->users()->attach($user);
+
+        Team::checkAllTeamsHasUser();
+
+        $this->assertDatabaseHas('teams', ['id' => $team1->id]);
+        $this->assertDatabaseMissing('teams', ['id' => $team2->id]);
+    }
+
+    /** 
+     * @test
+     * */
+    public function ユーザーを削除したときのcheckAllTeamsHasUserのテスト()
+    {
+        $team1 = Team::factory()->create();
+        $team2 = Team::factory()->create();
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+
+        $team1->users()->attach($user1);
+        $team1->users()->attach($user2);
+        $team2->users()->attach($user1);
+
+        $this->actingAs($user1);
+
+        $user1->delete();
+
+        Team::checkAllTeamsHasUser();
+
+        $this->assertDatabaseHas('teams', ['id' => $team1->id]);
+        $this->assertDatabaseMissing('teams', ['id' => $team2->id]);
+    }
 }

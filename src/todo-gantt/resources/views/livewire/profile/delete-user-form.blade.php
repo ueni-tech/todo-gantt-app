@@ -3,6 +3,7 @@
 use App\Livewire\Actions\Logout;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Volt\Component;
+use App\Models\Team;
 
 new class extends Component
 {
@@ -18,6 +19,7 @@ new class extends Component
         // ]);
 
         tap(Auth::user(), $logout(...))->delete();
+        Team::checkAllTeamsHasUser();
 
         $this->redirect('/', navigate: true);
     }
