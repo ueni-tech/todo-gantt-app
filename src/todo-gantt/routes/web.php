@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::resource('/', TodoController::class)->only('index')->middleware(['auth']);
+Route::resource('/', TodoController::class)->only('index')->middleware(['auth', 'cache.headers:no_store;max_age=0']);
 Route::resource('todos', TodoController::class)->except(['index'])->middleware(['auth']);
 Route::resource('ganttcharts', GanttchartController::class)->middleware(['auth']);
 Route::resource('teams', TeamController::class)->middleware(['auth']);

@@ -5,6 +5,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="csrf-token" content="{{ csrf_token() }}">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
 
   <title>{{ config('app.name', 'Laravel') }}</title>
 
@@ -58,6 +61,9 @@
     <livewire:modals.project-store />
 
   </div>
+  <div x-data x-init="setInterval(() => $wire.checkAuth(), 60000)">
+    <livewire:auth-check />
+  </div>
 
   <script src="https://kit.fontawesome.com/891a71c277.js" crossorigin="anonymous"></script>
 
@@ -100,9 +106,9 @@
 
   <script>
     window.addEventListener('clearBrowserHistory', event => {
-        window.history.pushState(null, '', '/login');
+      window.history.pushState(null, '', '/login');
     });
-</script>
+  </script>
 </body>
 
 </html>
