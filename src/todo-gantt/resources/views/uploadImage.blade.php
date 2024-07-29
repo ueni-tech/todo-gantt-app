@@ -1,7 +1,7 @@
 <x-app-layout>
   <div class="h-screen pt-[64px]">
     <div class="mt-4 px-12">
-      <form action="{{route('upload-image.update', $team)}}" method="POST">
+      <form x-data="{ isDisabled: false }" @submit="isDisabled = true" action="{{route('upload-image.update', $team)}}" method="POST">
         @csrf
         @method('PUT')
         <h3 class="text-lg font-medium">チームアイコンの編集</h3>
@@ -28,7 +28,7 @@
           </div>
         </div>
         <div class="flex justify-start items-center gap-4 mt-6">
-          <button onclick="isDisabled()" type="submit" class="bg-primary-500 text-white text-base px-2 py-1 rounded shadow-md">更新</button>
+          <button :disabled="isDisabled" type="submit" class="bg-primary-500 text-white text-base px-2 py-1 rounded shadow-md">更新</button>
           <a class="text-gray-500" href="{{ route('index')}}">戻る</a>
         </div>
       </form>

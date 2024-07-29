@@ -3,10 +3,12 @@
 namespace Tests\Feature;
 
 use App\Http\Middleware\Authenticate;
+use App\Livewire\Modals\TeamEdit;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Livewire\Livewire;
 use Tests\TestCase;
 
 class TeamTest extends TestCase
@@ -125,14 +127,81 @@ class TeamTest extends TestCase
         $response->assertSessionHasErrors(['team_name']);
     }
 
-    /**
-     * @test
-     */
-    public function teams_destroy()
+    /** 
+     * @test 
+     * */
+    public function ログインしていないユーザーによる削除のテスト()
     {
-        $this->withoutMiddleware(Authenticate::class);
         $team = Team::factory()->create();
-        $this->delete("/teams/{$team->id}");
-        $this->assertDatabaseMissing('teams', ['id' => $team->id]);
+        $user = User::factory()->create();
+        $unauthorizedUser = User::factory()->create();
+
+        $this->actingAs($unauthorizedUser);
+
+        Livewire::test(TeamEdit::class, ['selectedTeam' => $team])
+            ->call('removeUserFromTeam', $user->id)
+            ->assertRedirect(route('index'))
+            ->assertSessionHas('flashWarning', 'この操作を行う権限がないか、ユーザーがチームに所属していません');
+    }
+
+    /** 
+     * @test 
+     * */
+    public function チームに所属していないユーザーによる削除のテスト()
+    {
+        $team = Team::factory()->create();
+        $user = User::factory()->create();
+        $unauthorizedUser = User::factory()->create();
+
+        $this->actingAs($unauthorizedUser);
+
+        Livewire::test(TeamEdit::class, ['selectedTeam' => $team])
+            ->call('removeUserFromTeam', $user->id)
+            ->assertRedirect(route('index'))
+            ->assertSessionHas('flashWarning', 'この操作を行う権限がないか、ユーザーがチームに所属していません');
+    }
+
+    /** @test */
+    public function チームからユーザーを削除するテスト()
+    {
+        $team = Team::factory()->create();
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+        $team->users()->attach($user1);
+        $team->users()->attach($user2);
+
+        $this->actingAs($user1);
+
+        Livewire::test(TeamEdit::class, ['selectedTeam' => $team])
+            ->call('removeUserFromTeam', $user2->id)
+            ->assertRedirect(route('index'))
+            ->assertSessionHas('flashSuccess', 'ユーザーがチームから削除されました');
+
+        $this->assertDatabaseMissing('team_user', [
+            'team_id' => $team->id,
+            'user_id' => $user2->id
+        ]);
+    }
+
+    /** 
+     * @test
+     * */
+    public function 最後のユーザーが退出した場合のテスト()
+    {
+        $team = Team::factory()->create();
+        $user = User::factory()->create();
+        $team->users()->attach($user);
+
+        $this->actingAs($user);
+
+        Livewire::test(TeamEdit::class, ['selectedTeam' => $team])
+            ->call('removeUserFromTeam', $user->id)
+            ->assertRedirect(route('index'))
+            ->assertSessionHas('flashInfo', 'チームが空になったため削除されました');
+
+        $this->assertDatabaseMissing('team_user', [
+            'team_id' => $team->id,
+            'user_id' => $user->id
+        ]);
     }
 }
