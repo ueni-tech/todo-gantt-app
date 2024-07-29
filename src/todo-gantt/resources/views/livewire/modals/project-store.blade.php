@@ -9,7 +9,7 @@
     </div>
     <div class="mt-3">
       <div class="flex flex-col">
-        <form action="{{route('projects.store')}}" method="POST">
+        <form x-data="{ isDisabled: false }" @submit="isDisabled = true" action="{{route('projects.store')}}" method="POST">
           @csrf
           <div class="flex flex-col">
             <label for="project-name">プロジェクト名</label>
@@ -21,7 +21,7 @@
             @endif
 
             @if($project_name && !$errors->any())
-            <button type="submit" class="bg-primary-500 text-white text-sm mt-2 p-1 rounded self-end">作成</button>
+            <button type="submit" :disabled="isDisabled" class="bg-primary-500 text-white text-sm mt-2 p-1 rounded self-end">作成</button>
             @else
             <button type="submit" class="bg-primary-500 text-white text-sm mt-2 p-1 rounded self-end opacity-30" disabled>作成</button>
             @endif

@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('name');
             $table->foreignId('team_id')->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('status_name');
+            $table->foreign('status_name')->references('name')->on('project_statuses'); // Add foreign key constraint
             $table->timestamps();
         });
     }

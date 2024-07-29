@@ -23,6 +23,7 @@ class ProjectRequest extends FormRequest
     {
         return [
             'project_name' => ['required', 'string', 'max:255'],
+            'status_id' => ['integer', 'exists:project_statuses,id']
         ];
     }
 }

@@ -8,27 +8,29 @@ use Livewire\Volt\Component;
 
 new #[Layout('layouts.guest')] class extends Component
 {
-    public LoginForm $form;
+    // public LoginForm $form;
 
     /**
      * Handle an incoming authentication request.
      */
-    public function login(): void
-    {
-        $this->validate();
+    // public function login(): void
+    // {
+    //     $this->validate();
 
-        $this->form->authenticate();
+    //     $this->form->authenticate();
 
-        Session::regenerate();
+    //     Session::regenerate();
 
-        $this->redirectIntended(default: RouteServiceProvider::HOME, navigate: true);
-    }
-}; ?>
+    //     $this->redirectIntended(default: RouteServiceProvider::HOME, navigate: true);
+    // }
+};
+?>
 
 <div>
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
+    {{--
     <form wire:submit="login">
         <!-- Email Address -->
         <div>
@@ -66,9 +68,10 @@ new #[Layout('layouts.guest')] class extends Component
             </x-primary-button>
         </div>
     </form>
+    --}}
 
-    <div class="flex items-center justify-end mt-4">
-        <a href="{{ route('login.google') }}" class="ml-3 inline-flex items-center">
+    <div class="w-full flex justify-center items-center rounded bg-white">
+        <a href="{{ route('login.google') }}">
             <!-- <img src="https://developers.google.com/identity/images/btn_google_signin_dark_normal_web.png" style="margin-left: 3em;"> -->
 
             <button class="gsi-material-button">

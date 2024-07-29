@@ -29,7 +29,7 @@
     </div>
     <div class="mt-3">
       <div>
-        <form action="{{route('tasks.update', $task)}}" method="POST">
+        <form x-data="{ isDisabled: false }" @submit="isDisabled = true" action="{{route('tasks.update', $task)}}" method="POST">
           @csrf
           @method('put')
           <div class="flex flex-col">
@@ -62,7 +62,7 @@
           </div>
           <div class="flex justify-end">
             @if($task_name && !$errors->any())
-            <button type="submit" class="bg-primary-500 text-white text-sm mt-2 p-1 rounded self-end">更新</button>
+            <button type="submit" :disabled="isDisabled" class="bg-primary-500 text-white text-sm mt-2 p-1 rounded self-end" onclick="this.disabled=true; this.form.submit();">更新</button>
             @else
             <button type="submit" class="bg-primary-500 text-white text-sm mt-2 p-1 rounded self-end opacity-30" disabled>更新</button>
             @endif
@@ -83,7 +83,7 @@
       </div>
       <div class="mt-3">
         <div>
-          <form action="{{route('tasks.destroy', $task)}}" method="POST">
+          <form x-data="{ isDisabled: false }" @submit="isDisabled = true" action="{{route('tasks.destroy', $task)}}" method="POST">
             @csrf
             @method('delete')
             <div class="flex flex-col">
@@ -93,7 +93,7 @@
               @enderror
               <div class="flex justify-between items-center gap-5">
                 <p class="text-sm mt-3">このタスクを削除しますか？</p>
-                <button type="submit" class="bg-red-500 text-white text-sm mt-3 p-1 rounded self-end">削除</button>
+                <button type="submit" :disabled="isDisabled" class="bg-red-500 text-white text-sm mt-3 p-1 rounded self-end">削除</button>
               </div>
             </div>
           </form>
