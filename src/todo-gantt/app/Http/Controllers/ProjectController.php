@@ -86,9 +86,8 @@ class ProjectController extends Controller
       'status' => 'required|string|exists:project_statuses,name'
     ]);
 
-    $status_id = ProjectStatus::where('name', $request->status)->first()->id;
 
-    $project->status_id = $status_id;
+    $project->status_name = $request->status;
     $project->save();
 
     session()->flash('flashInfo', 'プロジェクトステータスを更新しました');

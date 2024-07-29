@@ -25,7 +25,7 @@
 
         @foreach(['incomplete', 'pending', 'completed'] as $status)
         <div x-show="activeTab === '{{ $status }}'" class="flex justify-items-start gap-3 overflow-x-auto">
-          @foreach($projects->where('status', $status) as $project)
+          @foreach($projects->where('status_name', $status) as $project)
           <div class="w-56 h-full py-2 px-4 bg-zinc-300 rounded">
             <livewire:edit-project :project="$project" />
             <x-tasks :project="$project" />
