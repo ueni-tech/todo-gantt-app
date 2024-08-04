@@ -1,6 +1,6 @@
 <div>
   <button wire:click="toggleTaskEditModal" class="w-full p-2 bg-neutral-100 rounded flex justify-between items-center gap-1">
-    <div>
+    <div class="flex justify-start items-center gap-1 w-10/12">
       @if(!$completed)
       <span wire:click.stop="toggleCompleted" class="opacity-30 hover:opacity-100">
         <i class="fa-regular fa-square"></i>
