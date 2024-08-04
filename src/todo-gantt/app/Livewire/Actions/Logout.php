@@ -14,11 +14,7 @@ class Logout
     {
         Auth::guard('web')->logout();
 
-        if (session()->isStarted()) {
-            session()->flush();
-            session()->regenerate(true);
-        }
-
-        session()->put('just_logged_out', true);
+        Session::invalidate();
+        Session::regenerateToken();
     }
 }

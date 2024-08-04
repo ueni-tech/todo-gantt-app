@@ -32,6 +32,15 @@
       {{ $slot }}
     </div>
   </div>
+
+  @if(session('just_logged_out'))
+  <script>
+    window.history.pushState(null, '', '/login');
+    window.onpopstate = function() {
+      window.location.href = '/login';
+    };
+  </script>
+  @endif
 </body>
 
 </html>

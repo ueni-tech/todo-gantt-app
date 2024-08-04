@@ -12,6 +12,8 @@ new class extends Component
     {
         $logout();
 
+        session()->flash('just_logged_out', true);
+
         $this->redirect('/login', navigate: true);
     }
 }; ?>
