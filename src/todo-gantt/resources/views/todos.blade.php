@@ -1,5 +1,13 @@
 <x-app-layout>
-  <div x-data="{ activeTab: 'incomplete' }">
+  <div x-data="{ 
+    activeTab: '{{ request()->query('tab', 'incomplete') }}',
+    setActiveTab(tab) {
+      this.activeTab = tab;
+      const url = new URL(window.location);
+      url.searchParams.set('tab', tab);
+      history.pushState({}, '', url);
+    }
+  }">
     <x-sidebar :teams="$teams" />
     <div class="ml-16 h-screen pt-[64px]">
       @if($current_team)
@@ -11,7 +19,7 @@
       <div class="w-[95%] mx-auto py-4 overflow-x-auto hidden-scrollbar hidden-scrollbar::-webkit-scrollbar" x-cloak>
         <div class="flex border-b mb-4">
           @foreach(['incomplete', 'pending', 'completed'] as $status)
-          <button @click="activeTab = '{{ $status }}'" :class="{ 'border-b-2 border-blue-500': activeTab === '{{ $status }}' }" class="px-4 py-2">
+          <button @click="setActiveTab('{{ $status }}')" :class="{ 'border-b-2 border-blue-500': activeTab === '{{ $status }}' }" class="px-4 py-2">
             @if($status === 'incomplete')
             進行中
             @elseif($status === 'pending')
@@ -40,8 +48,6 @@
           @endif
         </div>
         @endforeach
-
-
       </div>
       @endif
     </div>
