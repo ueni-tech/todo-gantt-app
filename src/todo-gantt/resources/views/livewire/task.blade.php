@@ -1,21 +1,40 @@
 <div>
-  <button wire:click="toggleTaskEditModal" class="w-full p-2 bg-neutral-100 rounded flex justify-between items-center gap-1">
-    <div>
-      @if(!$completed)
-      <span wire:click.stop="toggleCompleted" class="opacity-30 hover:opacity-100">
-        <i class="fa-regular fa-square"></i>
+  <button wire:click="toggleTaskEditModal" class="w-full p-2 bg-neutral-100 rounded">
+
+    <div class="flex justify-between items-center gap-1">
+      <div class="flex justify-start items-center gap-2 overflow-x-hidden">
+        @if(!$completed)
+        <span wire:click.stop="toggleCompleted" class="opacity-30 hover:opacity-100">
+          <i class="fa-regular fa-square"></i>
+        </span>
+        <div class="overflow-x-hidden text-start">
+          @if($task->start_date || $task->end_date)
+          <div class="text-xs text-neutral-900 truncate">
+            {{ $task->start_date ? \Carbon\Carbon::parse($task->start_date)->formatLocalized('%-m/%-d') : '' }} ～
+            {{ $task->end_date ? \Carbon\Carbon::parse($task->end_date)->formatLocalized('%-m/%-d') : '' }}
+          </div>
+          @endif
+          <div class="text-sm text-neutral-600 truncate">{{$task->name}}</div>
+        </div>
+        @else
+        <span wire:click.stop="toggleCompleted" class="opacity-30 hover:opacity-100">
+          <i class="fa-regular fa-check-square"></i>
+        </span>
+        <div class="overflow-x-hidden text-start">
+          @if($task->start_date || $task->end_date)
+          <div class="text-xs text-neutral-400 truncate line-through">
+            {{ $task->start_date ? \Carbon\Carbon::parse($task->start_date)->formatLocalized('%-m/%-d') : '' }} ～
+            {{ $task->end_date ? \Carbon\Carbon::parse($task->end_date)->formatLocalized('%-m/%-d') : '' }}
+          </div>
+          @endif
+          <div class="text-sm text-neutral-400 line-through truncate">{{$task->name}}</div>
+        </div>
+        @endif
+      </div>
+      <span wire:click.stop="toggleTaskDeleteModal" class="opacity-30  text-xs hover:opacity-100 hover:text-red-500">
+        <i class="fa-regular fa-trash-can"></i>
       </span>
-      <span class="text-sm text-neutral-600 truncate">{{$task->name}}</span>
-      @else
-      <span wire:click.stop="toggleCompleted" class="opacity-30 hover:opacity-100">
-        <i class="fa-regular fa-square-check"></i>
-      </span>
-      <span class="text-sm text-neutral-900 truncate line-through opacity-50">{{$task->name}}</span>
-      @endif
     </div>
-    <span wire:click.stop="toggleTaskDeleteModal" class="opacity-30  text-xs hover:opacity-100 hover:text-red-500">
-      <i class="fa-regular fa-trash-can"></i>
-    </span>
   </button>
 
   @if($showEditModal)

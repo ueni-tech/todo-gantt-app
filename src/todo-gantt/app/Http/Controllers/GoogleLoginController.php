@@ -13,11 +13,18 @@ class GoogleLoginController extends Controller
 {
     public function redirectToGoogle()
     {
+        if (Auth::check()) {
+            return redirect()->route('index');
+        }
         return Socialite::driver('google')->redirect();
     }
 
-    public function handleGoogleCallback()
+    public function handleGoogleCallback(Request $request)
     {
+        if (Auth::check()) {
+            return redirect()->route('index');
+        }
+
         try {
             $socialiteUser = Socialite::driver('google')->user();
             $email = $socialiteUser->email;
@@ -32,10 +39,13 @@ class GoogleLoginController extends Controller
 
             Auth::login($user);
 
-            return redirect(route('index'));
+            $request->session()->regenerate();
+            $request->session()->put('login_completed', true);
+
+            return redirect()->route('index')->with('login_success', true);
         } catch (Exception $e) {
             Log::error($e);
-            throw $e;
+            return redirect()->route('login')->with('error', 'Google認証に失敗しました。');
         }
     }
 }
