@@ -13,7 +13,7 @@
 
   <!-- Scripts -->
   @vite(['resources/css/app.css', 'resources/js/app.js'])
-  @stack('scripts')
+  @stack('styles')
 
   <!-- Toastr.js -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
@@ -59,6 +59,7 @@
 
   </div>
 
+  @stack('scripts')
   <script src="https://kit.fontawesome.com/891a71c277.js" crossorigin="anonymous"></script>
 
   <!-- Toastr.js -->
@@ -100,9 +101,9 @@
 
   <script>
     window.addEventListener('clearBrowserHistory', event => {
-        window.history.pushState(null, '', '/login');
+      window.history.pushState(null, '', '/login');
     });
-</script>
+  </script>
 </body>
 
 </html>
