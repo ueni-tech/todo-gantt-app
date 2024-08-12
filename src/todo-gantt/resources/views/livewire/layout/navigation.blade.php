@@ -35,7 +35,7 @@ new class extends Component
                     <x-nav-link class="text-neutral-100" :href="route('index')" :active="request()->routeIs('index')">
                         your Todos
                     </x-nav-link>
-                    <x-nav-link class="text-neutral-100" :href="route('ganttcharts.index')" :active="request()->routeIs('ganttchart.index')">
+                    <x-nav-link class="text-neutral-100" :href="route('ganttcharts.index')" :active="request()->routeIs('ganttcharts.index')">
                         team Ganttcharts
                     </x-nav-link>
                 </div>
