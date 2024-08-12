@@ -94,13 +94,16 @@ function generateUserList(groupedTasks) {
   for (const [user, userTasks] of Object.entries(groupedTasks)) {
     const userElement = document.createElement('div');
     userElement.textContent = user;
-    userElement.style.padding = '10px';
     userElement.style.borderBottom = '1px solid #ddd';
     userElement.style.height = `${userTasks.length * 38}px`;
+    userElement.style.paddingLeft = '10px';
     userElement.style.display = 'flex';
     userElement.style.alignItems = 'center';
-    userElement.style.justifyContent = 'center';
+    userElement.style.justifyContent = 'flex-start';
     userElement.style.backgroundColor = '#fff';
+    userElement.style.overflow = 'auto';
+    userElement.style.textWrap = 'nowrap';
+    userElement.classList.add('scroll-box');
     userList.appendChild(userElement);
   }
 }

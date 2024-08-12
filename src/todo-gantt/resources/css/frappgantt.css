@@ -1,5 +1,5 @@
 #gantt {
-  width: 92%;
+  width: 90%;
 }
 
 #gantt-container {
@@ -7,7 +7,7 @@
 }
 
 #task-list {
-  width: 60px;
+  width: 90px;
   flex-shrink: 0;
 }
 
