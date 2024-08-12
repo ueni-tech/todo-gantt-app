@@ -1,6 +1,6 @@
 <x-app-layout>
   <x-sidebar :teams="$teams" />
-  <div class="ml-16 pt-[64px]">
+  <div class="ml-16 pt-[64px] overflow-auto">
     <div id="gantt-container">
       <div id="task-list"></div>
       <div id="gantt"></div>
