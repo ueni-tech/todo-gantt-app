@@ -42,18 +42,10 @@ class GoogleLoginController extends Controller
             $request->session()->regenerate();
             $request->session()->put('login_completed', true);
 
-            // Sanctumトークンを生成
             $token = $user->createToken('auth-token')->plainTextToken;
-
-            // トークンをセッションに保存
             $request->session()->put('sanctum_token', $token);
 
-            // クッキーの設定
-            $cookie = cookie('auth_token', $token, 60 * 24, '/', null, config('app.env') !== 'local', true);
-
-            return redirect()->route('index')
-                ->withCookie($cookie)
-                ->with('login_success', true);
+            return redirect()->route('index')->with('login_success', true);
         } catch (Exception $e) {
             Log::error($e);
             return redirect()->route('login')->with('error', 'Google認証に失敗しました。');

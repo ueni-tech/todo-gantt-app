@@ -8,14 +8,11 @@ const api = axios.create({
 
 async function fetchGanttData() {
   try {
-    // CSRF cookieを取得
-    await axios.get('/sanctum/csrf-cookie');
+    await axios.get('/sanctum/csrf-cookie', { withCredentials: true });
     
-    // セッションからトークンを取得
     const tokenResponse = await axios.get('/get-sanctum-token');
     const token = tokenResponse.data.token;
 
-    // Authorization ヘッダーを設定
     api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
     const response = await api.get('/gantt');
