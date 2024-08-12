@@ -10,9 +10,8 @@ class Gantt extends Model
 {
     use HasFactory;
 
-    public static function getGanttData()
+    public static function getGanttData($user)
     {
-        $user = Auth::user();
         $current_team = $user->selectedTeam;
         $projects = $current_team->projects;
 

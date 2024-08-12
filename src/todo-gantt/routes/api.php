@@ -19,4 +19,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/gantt', [GanttController::class, 'index']);
+Route::middleware('auth:sanctum')->get('/gantt', [GanttController::class, 'index']);

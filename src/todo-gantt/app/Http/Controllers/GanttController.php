@@ -11,7 +11,8 @@ class GanttController extends Controller
 {
     public function index()
     {
-        $data = Gantt::getGanttData();
+        $user = Auth::user();
+        $data = Gantt::getGanttData($user);
 
         return response()->json($data);
     }
