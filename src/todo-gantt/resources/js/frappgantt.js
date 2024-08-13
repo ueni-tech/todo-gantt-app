@@ -16,8 +16,8 @@ async function fetchGanttData() {
     api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
     const response = await api.get('/gantt');
-    const taskDatas = response.data;
-    const tasks = extractTasks(taskDatas);
+    const ganttDatas = response.data;
+    const tasks = extractTasks(ganttDatas);
 
     const gantt = new Gantt("#gantt", tasks);
 
@@ -37,16 +37,27 @@ async function fetchGanttData() {
   }
 }
 
-function extractTasks(taskDatas) {
+function extractTasks(ganttDatas) {
   let tasks = [];
   const today = new Date();
   const tomorrow = new Date(today);
   tomorrow.setDate(tomorrow.getDate() + 1);
 
-  taskDatas.forEach(project => {
+  ganttDatas.forEach(project => {
+    tasks.push({
+      id: `project-${project.id}`,
+      name: project.name,
+      start: project.start,
+      end: project.end,
+      user: project.user_name,
+      user_id: project.user_id,
+      progress: 0,
+      dependencies: null
+    });
+
     project.tasks.forEach(task => {
-      const startDate = task.start_date ? new Date(task.start_date) : today;
-      const endDate = task.end_date ? new Date(task.end_date) : tomorrow;
+      const startDate = task.start ? new Date(task.start) : today;
+      const endDate = task.end ? new Date(task.end) : tomorrow;
 
       if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
         console.warn(`Invalid date for task ${task.id}. Skipping.`);
@@ -61,7 +72,8 @@ function extractTasks(taskDatas) {
         user: project.user_name,
         user_id: project.user_id,
         custom_class: `user-${project.user_id}-task`,
-        progress: 0
+        progress: 0,
+        dependencies: task.dependencies
       });
     });
   });
