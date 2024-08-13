@@ -10,7 +10,7 @@ class Gantt extends Model
 {
     use HasFactory;
 
-    public static function getGanttData($user)
+    public static function getGanttData(User $user): array
     {
         $current_team = $user->selectedTeam;
         $projects = $current_team->projects;
