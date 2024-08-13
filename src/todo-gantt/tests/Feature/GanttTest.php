@@ -59,10 +59,17 @@ class GanttTest extends TestCase
         Task::createTask($project1, 'タスク1', 'メモ1', '2021-01-01', '2021-01-02');
         Task::createTask($project2, 'タスク2', 'メモ2', '2021-02-02', '2021-02-22');
 
-        $gantt = new Gantt();
-        $ganttData = $gantt->getGanttData();
+        $ganttData = Gantt::getGanttData($this->user1);
 
-        dump($ganttData);
+        $this->assertEquals(2, count($ganttData));
+
+        $this->assertEquals('タスク1', $ganttData[0]['tasks'][0]['name']);
+        $this->assertEquals('2021-01-01', $ganttData[0]['tasks'][0]['start_date']);
+        $this->assertEquals('2021-01-02', $ganttData[0]['tasks'][0]['end_date']);
+
+        $this->assertEquals('タスク2', $ganttData[1]['tasks'][0]['name']);
+        $this->assertEquals('2021-02-02', $ganttData[1]['tasks'][0]['start_date']);
+        $this->assertEquals('2021-02-22', $ganttData[1]['tasks'][0]['end_date']);
     }
 
     /**
@@ -85,13 +92,9 @@ class GanttTest extends TestCase
         Task::createTask($project1, 'タスク1', 'メモ1', '2021-01-01', '2021-01-02');
         Task::createTask($project2, 'タスク2', 'メモ2', '2021-02-02', '2021-02-22');
 
-        $gantt = new Gantt();
         $response = $this->get('/api/gantt');
 
-        dump($response->content());
-
-        // ガントデータをファイルに出力
-        $outputPath = storage_path('app/ganttData.json');
-        file_put_contents($outputPath, print_r($response->content(), true));
+        $response->assertStatus(200);
+        $response->assertJsonCount(2);
     }
 }
