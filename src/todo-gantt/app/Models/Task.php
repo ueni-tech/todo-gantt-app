@@ -26,8 +26,8 @@ class Task extends Model
     public function validate()
     {
         $validator = Validator::make($this->attributes, [
-            'start_date' => 'nullable|date',
-            'end_date' => 'nullable|date|after:start_date',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
         ]);
 
         if ($validator->fails()) {
@@ -40,7 +40,7 @@ class Task extends Model
         return $this->belongsTo(Project::class);
     }
 
-    public static function createTask(Project $project, String $name, ?String $note, ?String $start_date, ?String $end_date): Task
+    public static function createTask(Project $project, String $name, ?String $note, String $start_date, String $end_date): Task
     {
         $task = new Task();
         $task->project_id = $project->id;
@@ -53,7 +53,7 @@ class Task extends Model
         return $task;
     }
 
-    public static function updateTask(Task $task, String $name, ?String $note, ?String $start_date, ?String $end_date): Task
+    public static function updateTask(Task $task, String $name, ?String $note, String $start_date, String $end_date): Task
     {
         $task->name = $name;
         $task->note = $note;
