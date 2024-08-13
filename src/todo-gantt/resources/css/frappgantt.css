@@ -18,3 +18,7 @@
 .gantt .grid-row {
   fill: #fff !important;
 }
+
+.project-bar {
+  pointer-events: none;
+}

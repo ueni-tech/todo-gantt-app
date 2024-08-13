@@ -52,7 +52,8 @@ function extractTasks(ganttDatas) {
       user: project.user_name,
       user_id: project.user_id,
       progress: 0,
-      dependencies: null
+      dependencies: null,
+      custom_class: `project-bar`
     });
 
     project.tasks.forEach(task => {
@@ -73,7 +74,6 @@ function extractTasks(ganttDatas) {
         user_id: project.user_id,
         custom_class: `user-${project.user_id}-task`,
         progress: 0,
-        dependencies: task.dependencies
       });
     });
   });

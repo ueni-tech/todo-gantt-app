@@ -68,14 +68,7 @@ class Gantt extends Model
                 'user_id' => $task->user_id,
             ];
 
-            if ($index === 0) {
-                $taskData['dependencies'] = "project-{$project->id}";
-            } else {
-                $taskData['dependencies'] = (string) $previousTaskId;
-            }
-
             $processedTasks->push($taskData);
-            $previousTaskId = $task->id;
         }
 
         return $processedTasks;
