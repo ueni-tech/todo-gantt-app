@@ -19,6 +19,7 @@
   fill: #fff !important;
 }
 
-.project-bar {
+.project-bar,
+.task-bar {
   pointer-events: none;
 }
