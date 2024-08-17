@@ -1,9 +1,9 @@
 <x-app-layout>
   <x-sidebar :teams="$teams" />
-  <div class="ml-16 pt-[64px] overflow-auto">
-    <div id="gantt-container">
-      <div id="task-list"></div>
-      <div id="gantt"></div>
+  <div class="ganttcharts ml-16 pt-[64px] overflow-auto">
+    <div class="ganttcharts_container">
+      <div class="task-list"></div>
+      <div id="gantt" class="gantt"></div>
     </div>
 
     @push('styles')
