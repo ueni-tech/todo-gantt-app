@@ -91,7 +91,7 @@ function groupTasksByUser(tasks) {
 }
 
 function generateUserList(groupedTasks) {
-  const userList = document.getElementById('task-list');
+  const userList = document.querySelector('.task-list');
   userList.innerHTML = '';
 
   const userListHeader = document.createElement('div');
