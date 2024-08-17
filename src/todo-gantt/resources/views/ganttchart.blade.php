@@ -7,7 +7,7 @@
     </div>
 
     @push('styles')
-    @vite(['resources/css/frappgantt.css'])
+    @vite(['resources/sass/frappgantt.scss'])
     @endpush
     
     @push('scripts')
