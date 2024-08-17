@@ -64,12 +64,12 @@ class GanttTest extends TestCase
         $this->assertEquals(2, count($ganttData));
 
         $this->assertEquals('タスク1', $ganttData[0]['tasks'][0]['name']);
-        $this->assertEquals('2021-01-01', $ganttData[0]['tasks'][0]['start_date']);
-        $this->assertEquals('2021-01-02', $ganttData[0]['tasks'][0]['end_date']);
+        $this->assertEquals('2021-01-01', $ganttData[0]['tasks'][0]['start']);
+        $this->assertEquals('2021-01-02', $ganttData[0]['tasks'][0]['end']);
 
         $this->assertEquals('タスク2', $ganttData[1]['tasks'][0]['name']);
-        $this->assertEquals('2021-02-02', $ganttData[1]['tasks'][0]['start_date']);
-        $this->assertEquals('2021-02-22', $ganttData[1]['tasks'][0]['end_date']);
+        $this->assertEquals('2021-02-02', $ganttData[1]['tasks'][0]['start']);
+        $this->assertEquals('2021-02-22', $ganttData[1]['tasks'][0]['end']);
     }
 
     /**
@@ -89,12 +89,18 @@ class GanttTest extends TestCase
             'status_name' => 'incomplete',
         ]);
 
-        Task::createTask($project1, 'タスク1', 'メモ1', '2021-01-01', '2021-01-02');
-        Task::createTask($project2, 'タスク2', 'メモ2', '2021-02-02', '2021-02-22');
+        Task::createTask($project1, 'タスク1-1', 'メモ1-1', '2021-01-01', '2021-01-02');
+        Task::createTask($project1, 'タスク1-2', 'メモ1-2', '2021-02-02', '2021-02-22');
+        Task::createTask($project2, 'タスク2-1', 'メモ2-1', '2021-03-02', '2021-03-22');
+        Task::createTask($project2, 'タスク2-2', 'メモ2-2', '2021-04-02', '2021-04-22');
 
         $response = $this->get('/api/gantt');
 
         $response->assertStatus(200);
         $response->assertJsonCount(2);
+
+        $ganttData = $response->json();
+        $json = json_encode($ganttData, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+        file_put_contents(storage_path('app/ganttData.json'), $json);
     }
 }

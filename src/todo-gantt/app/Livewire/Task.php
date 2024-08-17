@@ -24,8 +24,8 @@ class Task extends Component
     return [
       'task_name' => ['required', 'string', 'max:255'],
       'note' => ['nullable', 'string'],
-      'start_date' => ['nullable', 'date'],
-      'end_date' => ['nullable', 'date', 'after_or_equal:start_date'],
+      'start_date' => ['required', 'date'],
+      'end_date' => ['required', 'date', 'after_or_equal:start_date'],
     ];
   }
 
@@ -34,8 +34,8 @@ class Task extends Component
     $this->task = $task;
     $this->task_name = $task->name;
     $this->note = $task->note;
-    $this->start_date = $task->start_date;
-    $this->end_date = $task->end_date;
+    $this->start_date = $task->start_date ?? now()->format('Y-m-d');
+    $this->end_date = $task->end_date ?? now()->format('Y-m-d');
     $this->completed = $task->completed;
   }
 

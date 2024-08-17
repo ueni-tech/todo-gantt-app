@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Project;
 use Livewire\Component;
+use Carbon\Carbon;
 
 class StoreTask extends Component
 {
@@ -21,8 +22,8 @@ class StoreTask extends Component
     return [
       'task_name' => ['required', 'string', 'max:255'],
       'note' => ['nullable', 'string'],
-      'start_date' => ['nullable', 'date'],
-      'end_date' => ['nullable', 'date', 'after_or_equal:start_date'],
+      'start_date' => ['required', 'date'],
+      'end_date' => ['required', 'date', 'after_or_equal:start_date'],
     ];
   }
 
@@ -55,10 +56,20 @@ class StoreTask extends Component
   public function toggleTaskStoreModal()
   {
     $this->showModal = !$this->showModal;
-    if(!$this->showModal)
+    if($this->showModal)
+    {
+      $this->setToday();
+    }
+    else
     {
       $this->resetModal();
     }
+  }
+
+  private function setToday()
+  {
+    $this->start_date = Carbon::today()->format('Y-m-d');
+    $this->end_date = Carbon::today()->format('Y-m-d');
   }
 
   public function resetModal()
