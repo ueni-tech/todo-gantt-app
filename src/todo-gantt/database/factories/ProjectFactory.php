@@ -20,7 +20,7 @@ class ProjectFactory extends Factory
             'name' => $this->faker->name,
             'team_id' => 1,
             'user_id' => 1,
-            'status_name' => 'inconplete',
+            'status_name' => 'incomplete',
         ];
     }
 }
