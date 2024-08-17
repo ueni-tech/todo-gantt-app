@@ -38,14 +38,13 @@ async function fetchGanttData() {
 }
 
 function extractTasks(ganttDatas) {
-  let tasks = [];
   const today = new Date();
   const tomorrow = new Date(today);
   tomorrow.setDate(tomorrow.getDate() + 1);
 
-  ganttDatas.forEach(project => {
-    tasks.push({
-      id: `project-${project.id}`,
+  return ganttDatas.flatMap(project => {
+    const projectTask = {
+      id: `${project.id}`,
       name: project.name,
       start: project.start,
       end: project.end,
@@ -54,18 +53,18 @@ function extractTasks(ganttDatas) {
       progress: 0,
       dependencies: null,
       custom_class: `project-bar`
-    });
+    };
 
-    project.tasks.forEach(task => {
+    const projectTasks = project.tasks.map(task => {
       const startDate = task.start ? new Date(task.start) : today;
       const endDate = task.end ? new Date(task.end) : tomorrow;
 
       if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
         console.warn(`Invalid date for task ${task.id}. Skipping.`);
-        return;
+        return null;
       }
 
-      tasks.push({
+      return {
         id: task.id.toString(),
         name: task.name,
         start: startDate.toISOString().split('T')[0],
@@ -74,10 +73,11 @@ function extractTasks(ganttDatas) {
         user_id: project.user_id,
         custom_class: `user-${project.user_id}-task task-bar`,
         progress: 0,
-      });
-    });
+      };
+    }).filter(task => task !== null);
+
+    return [projectTask, ...projectTasks];
   });
-  return tasks;
 }
 
 function groupTasksByUser(tasks) {
@@ -152,7 +152,7 @@ function scroll_today(gantt) {
   if (!gantt.options.focus) {
     const oldest = gantt.get_oldest_starting_date().getTime();
     const t = new Date() - oldest;
-    const newDate = new Date(gantt.gantt_start.getTime() - t);
+    const newDate = new Date(gantt.gantt_start.getTime() - t + (24 * 60 * 60 * 1000 * 2));
     gantt.options.focus = newDate;
     gantt.gantt_start = newDate;
     gantt.set_scroll_position();
