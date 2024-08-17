@@ -2,21 +2,26 @@
   #gantt {
     width: 90%;
   }
-  
+
   .ganttcharts_container {
     display: flex;
   }
-  
+
   .task-list {
     width: 90px;
     flex-shrink: 0;
   }
-  
+
   .gantt .today-highlight {
     fill: #f9f4a7;
   }
-  
+
   .gantt .grid-row {
     fill: #fff;
+  }
+
+  .project-bar,
+  .task-bar {
+    pointer-events: none;
   }
 }
