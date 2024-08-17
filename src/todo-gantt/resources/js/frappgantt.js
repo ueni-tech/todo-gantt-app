@@ -8,17 +8,34 @@ const api = axios.create({
 
 async function fetchGanttData() {
   try {
-    await axios.get('/sanctum/csrf-cookie', { withCredentials: true });
+    try {
+      await axios.get('/sanctum/csrf-cookie', { withCredentials: true });
+    } catch (error) {
+      console.error('Error fetching CSRF cookie:', error);
+      throw new Error('Failed to fetch CSRF cookie');
+    }
 
-    const tokenResponse = await axios.get('/get-sanctum-token');
-    const token = tokenResponse.data.token;
+    let token;
+    try {
+      const tokenResponse = await axios.get('/get-sanctum-token');
+      token = tokenResponse.data.token;
+    } catch (error) {
+      console.error('Error fetching Sanctum token:', error);
+      throw new Error('Failed to fetch Sanctum token');
+    }
 
     api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-    const response = await api.get('/gantt');
-    const ganttDatas = response.data;
-    const tasks = extractTasks(ganttDatas);
+    let ganttDatas;
+    try {
+      const response = await api.get('/gantt');
+      ganttDatas = response.data;
+    } catch (error) {
+      console.error('Error fetching gantt data:', error);
+      throw new Error('Failed to fetch gantt data');
+    }
 
+    const tasks = extractTasks(ganttDatas);
     const gantt = new Gantt("#gantt", tasks);
 
     const groupedTasks = groupTasksByUser(tasks);
@@ -27,13 +44,12 @@ async function fetchGanttData() {
     scroll_today(gantt);
 
   } catch (error) {
-    if (error.response) {
-      console.error('Error fetching gantt data:', error.response.status, error.response.data);
-    } else if (error.request) {
-      console.error('No response received:', error.request);
-    } else {
-      console.error('Error setting up request:', error.message);
-    }
+    console.error('Error in fetchGanttData:', error.message);
+    const ganttContainer = document.getElementById('gantt');
+    const errorElement = document.createElement('div');
+    errorElement.textContent = 'データの取得に失敗しました。再読み込みしてください。';
+    errorElement.style.color = 'red';
+    ganttContainer.appendChild(errorElement);
   }
 }
 
