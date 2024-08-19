@@ -111,14 +111,24 @@ class TeamEdit extends Component
 
     if (!empty($this->mailaddress)) {
       $users = User::where('email', 'like', $this->mailaddress . '%')->get();
+      $users = $users->reject(function ($user) {
+        return $this->selectedTeam->users->contains($user);
+      });
     } else {
-      $users = collect(); // 空のコレクションを返す
+      $users = collect();
     }
     $this->users = $users;
   }
 
   public function addUserToTeam($user_id)
   {
+    $invatedUser = User::find($user_id);
+
+    if($invatedUser->teams->contains($this->selectedTeam->id)) {
+      session()->flash('flashWarning', 'ユーザーは既にこのチームに所属しています');
+      return redirect()->route('index');
+    }
+
     $this->selectedTeam->users()->attach($user_id);
     $this->mailaddress = '';
     $this->users = [];
