@@ -35,6 +35,16 @@ async function fetchGanttData() {
       throw new Error('Failed to fetch gantt data');
     }
 
+    if (ganttDatas.length === 0) {
+      const ganttContainer = document.getElementById('gantt');
+      const noTasksElement = document.createElement('div');
+      noTasksElement.textContent = '進行中のタスクはありません';
+      noTasksElement.style.padding = '20px';
+      noTasksElement.style.fontSize = '18px';
+      ganttContainer.appendChild(noTasksElement);
+      return;
+    }
+
     const tasks = extractTasks(ganttDatas);
     const gantt = new Gantt("#gantt", tasks);
 
