@@ -97,7 +97,7 @@ function extractTasks(ganttDatas) {
         end: endDate.toISOString().split('T')[0],
         user: project.user_name,
         user_id: project.user_id,
-        custom_class: `user-${project.user_id}-task task-bar`,
+        custom_class: `user-${project.user_id}-task task-bar ${task.completed ? 'completed-task' : ''}`,
         progress: 0,
       };
     }).filter(task => task !== null);

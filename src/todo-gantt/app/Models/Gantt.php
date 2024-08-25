@@ -66,6 +66,7 @@ class Gantt extends Model
                 'custom_class' => "user-{$task->user_id}-task",
                 'user' => $project->name,
                 'user_id' => $project->user_id,
+                'completed' => $task->completed
             ];
         });
     }
