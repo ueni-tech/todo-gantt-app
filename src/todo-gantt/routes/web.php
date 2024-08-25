@@ -8,7 +8,9 @@ use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\TodoController;
 use App\Http\Controllers\UploadImageController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Laravel\Sanctum\Http\Controllers\CsrfCookieController;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,3 +58,8 @@ Route::get('/test', function () {
 });
 
 Route::resource('upload-image', UploadImageController::class)->only(['edit', 'update']);
+
+Route::get('/get-sanctum-token', function (Request $request) {
+    $token = $request->session()->get('sanctum_token');
+    return response()->json(['token' => $token]);
+})->middleware('auth');

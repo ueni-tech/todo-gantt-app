@@ -1,6 +1,6 @@
 <div class="hidden transition" :class="{'hidden': !projectDeleteModalOpened}">
-  <div @click="toggleProjectDeleteModal()" class="fixed top-0 left-0 w-screen h-screen bg-gray-950 opacity-50"></div>
-  <div class="bg-gray-100 p-4 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+  <div @click="toggleProjectDeleteModal()" class="fixed top-0 left-0 w-screen h-screen bg-gray-950 opacity-50 z-[1]"></div>
+  <div class="bg-gray-100 p-4 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[2]">
     <div class="flex justify-between items-center">
       <h3 class="text-lg font-medium">プロジェクトの削除</h3>
       <button @click="toggleProjectDeleteModal()" class="text-lg">

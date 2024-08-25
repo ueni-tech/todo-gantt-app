@@ -42,6 +42,9 @@ class GoogleLoginController extends Controller
             $request->session()->regenerate();
             $request->session()->put('login_completed', true);
 
+            $token = $user->createToken('auth-token')->plainTextToken;
+            $request->session()->put('sanctum_token', $token);
+
             return redirect()->route('index')->with('login_success', true);
         } catch (Exception $e) {
             Log::error($e);

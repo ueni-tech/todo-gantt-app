@@ -8,6 +8,8 @@ export default defineConfig({
         'resources/css/app.css',
         'resources/js/app.js',
         'resources/js/cropper.js',
+        'resources/sass/frappgantt.scss',
+        'resources/js/frappgantt.js',
       ],
       refresh: true,
     }),

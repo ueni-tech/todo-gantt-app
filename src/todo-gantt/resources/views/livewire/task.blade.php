@@ -38,7 +38,7 @@
   </button>
 
   @if($showEditModal)
-  <div class="fixed top-0 left-0 w-screen h-screen bg-gray-950 opacity-50" wire:click="toggleTaskEditModal"></div>
+  <div class="fixed top-0 left-0 w-screen h-screen bg-gray-950 opacity-50 z-[1]" wire:click="toggleTaskEditModal"></div>
   <div class="bg-gray-100 p-4 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50">
     <div class="flex justify-between items-center">
       <h3 class="text-lg font-medium">タスクの編集</h3>
@@ -92,7 +92,7 @@
     @endif
 
     @if($showDeleteModal)
-    <div class="fixed top-0 left-0 w-screen h-screen bg-gray-950 opacity-50" wire:click="toggleTaskDeleteModal"></div>
+    <div class="fixed top-0 left-0 w-screen h-screen bg-gray-950 opacity-50 z-[1]" wire:click="toggleTaskDeleteModal"></div>
     <div class="bg-gray-100 p-4 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50">
       <div class="flex justify-between items-center">
         <h3 class="text-lg font-medium">タスクの削除</h3>
