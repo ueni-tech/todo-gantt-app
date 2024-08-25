@@ -11,22 +11,23 @@ class Gantt extends Model
 {
     use HasFactory;
 
-    public static function getGanttData(User $user): array
-    {
-        $current_team = $user->selectedTeam;
-        $projects = $current_team->projects()->with(['tasks' => function($query) {
-            $query->orderBy('start_date');
-        }, 'user'])->get();
+  public static function getGanttData(User $user): array
+  {
+    $current_team = $user->selectedTeam;
 
-        $ganttData = [];
+    $projects = $current_team->projects()
+      ->where('status_name', 'incomplete')
+      ->with(['tasks' => function ($query) {
+        $query->orderBy('start_date', 'asc');
+      }, 'user'])
+      ->orderByRaw('CASE WHEN user_id = ? THEN 0 ELSE 1 END', [$user->id])
+      ->orderByRaw('CASE WHEN user_id = ? THEN 0 ELSE user_id END ASC', [$user->id])
+      ->get();
 
-        foreach ($projects as $project) {
-            $projectData = static::processProject($project);
-            $ganttData[] = $projectData;
-        }
-
-        return $ganttData;
-    }
+    return $projects->map(function ($project) {
+      return static::processProject($project);
+    })->toArray();
+  }
 
     private static function processProject($project): array
     {
@@ -55,10 +56,8 @@ class Gantt extends Model
 
     private static function processTasks(Collection $tasks, Project $project): Collection
     {
-        $processedTasks = collect();
-
-        foreach ($tasks as $task) {
-            $taskData = [
+        return $tasks->map(function($task) use ($project) {
+            return [
                 'id' => (string) $task->id,
                 'name' => $task->name,
                 'start' => $task->start_date,
@@ -67,11 +66,8 @@ class Gantt extends Model
                 'custom_class' => "user-{$task->user_id}-task",
                 'user' => $project->name,
                 'user_id' => $project->user_id,
+                'completed' => $task->completed
             ];
-
-            $processedTasks->push($taskData);
-        }
-
-        return $processedTasks;
+        });
     }
 }
