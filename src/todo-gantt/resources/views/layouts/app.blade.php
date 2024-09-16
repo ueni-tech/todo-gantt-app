@@ -5,8 +5,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="csrf-token" content="{{ csrf_token() }}">
-
+  
   <title>{{ config('app.name', 'Laravel') }}</title>
+  <link rel="shortcut icon" href="{{ asset(config('app.favicon')) }}" type="image/x-icon">
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
@@ -68,36 +69,6 @@
   <script src="https://cdn.jsdelivr.net/npm/jdenticon@3.1.1/dist/jdenticon.min.js" integrity="sha384-l0/0sn63N3mskDgRYJZA6Mogihu0VY3CusdLMiwpJ9LFPklOARUcOiWEIGGmFELx" crossorigin="anonymous"></script>
   <script src="{{asset('/js/main.js')}}"></script>
   @include('layouts.flash-message')
-  {{--
-  <script>
-    const teamStoreModal = () => {
-      return {
-        teamStoreModalOpened: false,
-        toggleTeamStoreModal() {
-          this.teamStoreModalOpened = !this.teamStoreModalOpened
-        },
-      }
-    }
-
-    const teamEditModal = () => {
-      return {
-        teamEditModalOpened: false,
-        toggleTeamEditModal() {
-          this.teamEditModalOpened = !this.teamEditModalOpened
-        },
-      }
-    }
-
-    const projectStoreModal = () => {
-      return {
-        projectStoreModalOpened: false,
-        toggleProjectStoreModal() {
-          this.projectStoreModalOpened = !this.projectStoreModalOpened
-        },
-      }
-    }
-  </script>
-  --}}
 
   <script>
     window.addEventListener('clearBrowserHistory', event => {
