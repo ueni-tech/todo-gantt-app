@@ -11,23 +11,37 @@ class Gantt extends Model
 {
     use HasFactory;
 
-  public static function getGanttData(User $user): array
-  {
-    $current_team = $user->selectedTeam;
+    public static function getGanttData(User $user): array
+    {
+        $current_team = $user->selectedTeam;
 
-    $projects = $current_team->projects()
-      ->where('status_name', 'incomplete')
-      ->with(['tasks' => function ($query) {
-        $query->orderBy('start_date', 'asc');
-      }, 'user'])
-      ->orderByRaw('CASE WHEN user_id = ? THEN 0 ELSE 1 END', [$user->id])
-      ->orderByRaw('CASE WHEN user_id = ? THEN 0 ELSE user_id END ASC', [$user->id])
-      ->get();
+        $projects = $current_team->projects()
+            ->where('status_name', 'incomplete')
+            ->with(['tasks' => function ($query) {
+                $query->orderBy('start_date', 'asc');
+            }, 'user'])
+            ->get();
 
-    return $projects->map(function ($project) {
-      return static::processProject($project);
-    })->toArray();
-  }
+        $processedProjects = $projects->map(function ($project) {
+            return static::processProject($project);
+        });
+
+        $sortedProjects = $processedProjects->sortBy(function ($project) {
+            return $project['start'] ?? PHP_INT_MAX;
+        });
+
+        $sortedProjects = $sortedProjects->sort(function ($a, $b) use ($user) {
+            if ($a['user_id'] == $user->id && $b['user_id'] != $user->id) {
+                return -1;
+            }
+            if ($a['user_id'] != $user->id && $b['user_id'] == $user->id) {
+                return 1;
+            }
+            return $a['user_id'] <=> $b['user_id'];
+        });
+
+        return $sortedProjects->values()->toArray();
+    }
 
     private static function processProject($project): array
     {
