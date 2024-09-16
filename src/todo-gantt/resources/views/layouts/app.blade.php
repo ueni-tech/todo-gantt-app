@@ -68,36 +68,6 @@
   <script src="https://cdn.jsdelivr.net/npm/jdenticon@3.1.1/dist/jdenticon.min.js" integrity="sha384-l0/0sn63N3mskDgRYJZA6Mogihu0VY3CusdLMiwpJ9LFPklOARUcOiWEIGGmFELx" crossorigin="anonymous"></script>
   <script src="{{asset('/js/main.js')}}"></script>
   @include('layouts.flash-message')
-  {{--
-  <script>
-    const teamStoreModal = () => {
-      return {
-        teamStoreModalOpened: false,
-        toggleTeamStoreModal() {
-          this.teamStoreModalOpened = !this.teamStoreModalOpened
-        },
-      }
-    }
-
-    const teamEditModal = () => {
-      return {
-        teamEditModalOpened: false,
-        toggleTeamEditModal() {
-          this.teamEditModalOpened = !this.teamEditModalOpened
-        },
-      }
-    }
-
-    const projectStoreModal = () => {
-      return {
-        projectStoreModalOpened: false,
-        toggleProjectStoreModal() {
-          this.projectStoreModalOpened = !this.projectStoreModalOpened
-        },
-      }
-    }
-  </script>
-  --}}
 
   <script>
     window.addEventListener('clearBrowserHistory', event => {
