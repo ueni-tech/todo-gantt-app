@@ -61,10 +61,4 @@ class Project extends Model
 
         return $project;
     }
-
-    // public function getStatusAttribute()
-    // {
-    //     $status_id = $this->status_id;
-    //     return ProjectStatus::where('id', $status_id)->first()->name;
-    // }
 }
