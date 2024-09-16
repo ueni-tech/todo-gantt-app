@@ -27,7 +27,6 @@ class GuestUserSeeder extends Seeder
             'name' => 'ゲストチーム',
         ]);
 
-        // ゲストユーザーをゲストチームに所属させる
         $guestUser = User::where('name', 'guestuser')->first();
         $guestTeam = Team::where('name', 'ゲストチーム')->first();
         $guestUser->teams()->attach($guestTeam->id);
