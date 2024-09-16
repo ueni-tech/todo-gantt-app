@@ -31,6 +31,10 @@
     <div class="mt-8">
       {{ $slot }}
     </div>
+
+    <div class="mt-8">
+      <x-guestLogin />
+    </div>
   </div>
 
   @if(session('just_logged_out'))

@@ -3,6 +3,7 @@
 use App\Http\Controllers\GanttchartController;
 use App\Http\Controllers\GoogleLoginController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LoginAsGuestController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TeamController;
@@ -49,6 +50,9 @@ Route::middleware(['guest'])->group(function () {
 
     Route::get('/auth/google/callback', [GoogleLoginController::class, 'handleGoogleCallback'])
         ->name('login.google.callback');
+
+    Route::post('/login-as-guest', [LoginAsGuestController::class, 'loginAsGuest'])
+        ->name('login-as-guest');
 });
 
 Route::get('/test', function () {
