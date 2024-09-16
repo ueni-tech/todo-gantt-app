@@ -26,7 +26,7 @@ new class extends Component
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('index') }}">
-                        <h1 class="text-lg font-bold text-emerald-900 bg-neutral-100 py-1 px-2">Todo-Gannt</h1>
+                        <h1 class="text-lg font-bold text-emerald-900 bg-neutral-100 py-1 px-2">Todo-Gantt</h1>
                     </a>
                 </div>
 
