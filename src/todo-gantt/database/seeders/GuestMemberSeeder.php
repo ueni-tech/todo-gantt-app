@@ -18,6 +18,10 @@ class GuestMemberSeeder extends Seeder
      */
     public function run(): void
     {
+        $currentDate = Carbon::now();
+        $guestTeam = Team::where('name', 'ゲストチーム')->first();
+
+        // Aさんの作成
         User::updateOrCreate(
             ['email' => 'guestmember@example.com'],
             [
@@ -28,30 +32,71 @@ class GuestMemberSeeder extends Seeder
             ]
         );
 
-        $memberUser = User::where('name', 'Aさん')->first();
-        $memberTeam = Team::where('name', 'ゲストチーム')->first();
-        $memberUser->teams()->attach($memberTeam->id);
-        $memberUser->selected_team_id = $memberTeam->id;
-        $memberUser->save();
+        $memberUserA = User::where('name', 'Aさん')->first();
+        
+        // 既存の関連付けを確認してから追加
+        if (!$memberUserA->teams->contains($guestTeam->id)) {
+            $memberUserA->teams()->attach($guestTeam->id);
+        }
+        $memberUserA->selected_team_id = $guestTeam->id;
+        $memberUserA->save();
 
-
-        // 現在の現在の日付を起点して、1つのプロジェクトとそれに紐づく3つのタスクを作成
-        $currentDate = Carbon::now();
-
-        $project = Project::create([
-            'name' => ' Aさんのプロジェクト',
-            'team_id' => 1,
-            'user_id' => $memberUser->id,
+        // Aさんのプロジェクトとタスクを作成
+        $projectA = Project::create([
+            'name' => 'Aさんのプロジェクト',
+            'team_id' => $guestTeam->id,
+            'user_id' => $memberUserA->id,
             'status_name' => 'incomplete',
         ]);
 
         for ($i = 1; $i <= 3; $i++) {
-            $startDate = $currentDate->copy()->addDays(($i + 2) * 4);
+            $startDate = $currentDate->copy()->addDays(($i - 1) * 4);
             $endDate = $startDate->copy()->addDays(3);
 
             Task::create([
                 'name' => "Aさんのタスク{$i}",
-                'project_id' => $project->id,
+                'project_id' => $projectA->id,
+                'start_date' => $startDate->format('Y-m-d'),
+                'end_date' => $endDate->format('Y-m-d'),
+                'completed' => 0,
+            ]);
+        }
+
+        // Bさんの作成
+        User::updateOrCreate(
+            ['email' => 'guestmemberb@example.com'],
+            [
+                'name' => 'Bさん',
+                'password' => Hash::make('guestmember'),
+                'provider' => 'guest',
+                'provider_id' => 'guest'
+            ]
+        );
+
+        $memberUserB = User::where('name', 'Bさん')->first();
+        
+        // 既存の関連付けを確認してから追加
+        if (!$memberUserB->teams->contains($guestTeam->id)) {
+            $memberUserB->teams()->attach($guestTeam->id);
+        }
+        $memberUserB->selected_team_id = $guestTeam->id;
+        $memberUserB->save();
+
+        // Bさんのプロジェクトとタスクを作成
+        $projectB = Project::create([
+            'name' => 'Bさんのプロジェクト',
+            'team_id' => $guestTeam->id,
+            'user_id' => $memberUserB->id,
+            'status_name' => 'incomplete',
+        ]);
+
+        for ($i = 1; $i <= 3; $i++) {
+            $startDate = $currentDate->copy()->addDays(($i - 1) * 4 + 12); // Aさんのタスクの後に配置
+            $endDate = $startDate->copy()->addDays(3);
+
+            Task::create([
+                'name' => "Bさんのタスク{$i}",
+                'project_id' => $projectB->id,
                 'start_date' => $startDate->format('Y-m-d'),
                 'end_date' => $endDate->format('Y-m-d'),
                 'completed' => 0,

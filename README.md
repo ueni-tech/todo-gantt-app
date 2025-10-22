@@ -73,4 +73,31 @@
 - **ビルドツール:** Vite
 - **スタイリング:**
   - Sass: ^1.77.8
- 
+
+## ダミーデータの自動リセット
+
+ポートフォリオとして採用担当者様にアプリを触ってもらう際、タスクの日付が古くならないように、**毎日すべてのデータをリセット**して最新の日付でダミーデータを再作成する仕組みを導入しています。
+
+> **注意**: このコマンドはすべてのユーザーデータを削除します。ポートフォリオ用途専用です。
+
+### セットアップ
+
+1. **初回シード実行**
+   ```bash
+   cd /home/uenishi/dev/portfolio
+   docker compose exec php bash -c "cd todo-gantt && php artisan db:seed"
+   ```
+
+2. **cronジョブ設定（毎日午前3時に自動リセット）**
+   ```bash
+   crontab -e
+   ```
+   以下の行を追加:
+   ```
+   0 3 * * * /home/uenishi/dev/portfolio/refresh-guest-data.sh
+   ```
+
+3. **手動でのテスト実行**
+   ```bash
+   /home/uenishi/dev/portfolio/refresh-guest-data.sh
+   ```

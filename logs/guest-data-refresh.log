@@ -1,0 +1,44 @@
+========================================
+開始時刻: 2025-10-22 22:15:57
+time="2025-10-22T22:15:58+09:00" level=warning msg="/home/uenishi/dev/portfolio/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+
+Deprecated: PHP Startup: Use of mbstring.internal_encoding is deprecated in Unknown on line 0
+ゲストデータのリフレッシュを開始します...
+古いタスクとプロジェクトを削除しています...
+新しいダミーデータを作成しています...
+
+   INFO  Seeding database.  
+
+   INFO  Seeding database.  
+
+ゲストデータのリフレッシュが完了しました！
+ステータス: 成功
+終了時刻: 2025-10-22 22:15:59
+
+========================================
+開始時刻: 2025-10-22 22:39:05
+time="2025-10-22T22:39:05+09:00" level=warning msg="/home/uenishi/dev/portfolio/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+
+Deprecated: PHP Startup: Use of mbstring.internal_encoding is deprecated in Unknown on line 0
+データベースのリセットを開始します...
+すべてのデータを削除しています...
+新しいダミーデータを作成しています...
+
+   INFO  Seeding database.  
+
+  Database\Seeders\ProjectStatusSeeder ............................... RUNNING  
+  Database\Seeders\ProjectStatusSeeder ............................. 4 ms DONE  
+
+  Database\Seeders\GuestUserSeeder ................................... RUNNING  
+  Database\Seeders\GuestUserSeeder ............................... 483 ms DONE  
+
+  Database\Seeders\GuestMemberSeeder ................................. RUNNING  
+  Database\Seeders\GuestMemberSeeder ............................. 342 ms DONE  
+
+すべてのデータがリセットされました！
+ゲストユーザーでログイン可能です:
+  Email: guest@example.com
+  Password: guestpass0406
+ステータス: 成功
+終了時刻: 2025-10-22 22:39:07
+

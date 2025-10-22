@@ -13,8 +13,17 @@ class ProjectStatusSeeder extends Seeder
    */
   public function run(): void
   {
-    ProjectStatus::create(['name' => 'incomplete', 'description' => 'Project is not yet completed']);
-    ProjectStatus::create(['name' => 'completed', 'description' => 'Project is completed']);
-    ProjectStatus::create(['name' => 'pending', 'description' => 'Project is on hold']);
+    ProjectStatus::firstOrCreate(
+      ['name' => 'incomplete'],
+      ['description' => 'Project is not yet completed']
+    );
+    ProjectStatus::firstOrCreate(
+      ['name' => 'completed'],
+      ['description' => 'Project is completed']
+    );
+    ProjectStatus::firstOrCreate(
+      ['name' => 'pending'],
+      ['description' => 'Project is on hold']
+    );
   }
 }
