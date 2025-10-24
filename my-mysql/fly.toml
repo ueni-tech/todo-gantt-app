@@ -1,4 +1,4 @@
-# fly.toml app configuration file generated for todo-gantt-db on 2024-07-20T10:50:23+09:00
+# fly.toml app configuration file generated for todo-gantt-db on 2025-10-24T14:41:07+09:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
@@ -9,19 +9,25 @@ primary_region = 'nrt'
 [build]
   image = 'mysql:8.1'
 
+[env]
+  MYSQL_DATABASE = 'todo-gantt-db'
+  MYSQL_USER = 'todo-gantt-admin'
+
+[processes]
+  app = '--datadir /data/mysql --default-authentication-plugin mysql_native_password'
+
+[[mounts]]
+  source = 'mysqldata'
+  destination = '/data'
+
+[http_service]
+  internal_port = 3306
+  auto_stop_machines = false
+  auto_start_machines = true
+  min_machines_running = 1
+  processes = ['app']
+
 [[vm]]
   memory = '2gb'
   cpu_kind = 'shared'
   cpus = 1
-
-[processes]
-  app = """--datadir /data/mysql \
-    --default-authentication-plugin mysql_native_password"""
-
-[mounts]
-  source = "mysqldata"
-  destination = "/data"
-
-[env]
-  MYSQL_DATABASE = "todo-gantt-db"
-  MYSQL_USER = "todo-gantt-admin"
