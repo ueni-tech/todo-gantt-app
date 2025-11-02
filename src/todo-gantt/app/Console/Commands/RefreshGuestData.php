@@ -7,6 +7,7 @@ use App\Models\Task;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 
 class RefreshGuestData extends Command
@@ -50,8 +51,8 @@ class RefreshGuestData extends Command
 
             $this->info('新しいダミーデータを作成しています...');
 
-            // シーダーを実行
-            $this->call('db:seed');
+            // シーダーを実行（本番環境でも確認なしで実行）
+            Artisan::call('db:seed', ['--force' => true]);
 
             $this->info('すべてのデータがリセットされました！');
             $this->info('ゲストユーザーでログイン可能です:');

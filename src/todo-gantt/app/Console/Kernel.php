@@ -12,7 +12,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // 毎日午前3時（UTC）にゲストデータをリフレッシュ
+        // 毎日午前3時（JST = UTC 18:00）にゲストデータをリフレッシュ
         $schedule->command('guest:refresh')->dailyAt('18:00');
     }
 

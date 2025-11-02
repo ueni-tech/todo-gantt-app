@@ -33,6 +33,13 @@ console_command = 'php /var/www/html/artisan tinker'
   min_machines_running = 1
   processes = ['app']
 
+[[processes]]
+  name = "app"
+
+[[processes]]
+  name = "scheduler"
+  command = "php /var/www/html/artisan schedule:work"
+
 [[vm]]
   memory = '256mb'
   cpu_kind = 'shared'
