@@ -11,7 +11,13 @@ class GanttController extends Controller
 {
     public function index()
     {
-        $user = Auth::user();
+        // ユーザーとselectedTeamをeager loadingしてクエリを最適化
+        $user = User::with('selectedTeam')->find(Auth::id());
+        
+        if (!$user) {
+            return response()->json([], 401);
+        }
+        
         $data = Gantt::getGanttData($user);
 
         return response()->json($data);

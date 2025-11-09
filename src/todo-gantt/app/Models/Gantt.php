@@ -13,7 +13,13 @@ class Gantt extends Model
 
     public static function getGanttData(User $user): array
     {
+        // selectedTeamをeager loadingしてクエリを最適化
+        $user->load('selectedTeam');
         $current_team = $user->selectedTeam;
+
+        if (!$current_team) {
+            return [];
+        }
 
         $projects = $current_team->projects()
             ->where('status_name', 'incomplete')

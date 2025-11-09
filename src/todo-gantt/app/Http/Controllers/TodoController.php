@@ -10,7 +10,17 @@ class TodoController extends Controller
 {
     public function index()
     {
-        $user = User::with('teams')->find(auth()->id());
+        $userId = auth()->id();
+        
+        // selectedTeamとprojectsをeager loadingしてクエリを最適化
+        $user = User::with(['teams', 'selectedTeam.projects' => function($query) use ($userId) {
+            $query->where('user_id', $userId);
+        }])->find($userId);
+        
+        if (!$user) {
+            return redirect()->route('login');
+        }
+        
         $teams = $user->teams;
         $current_team = $user->selectedTeam;
     
@@ -22,11 +32,8 @@ class TodoController extends Controller
                 'projects' => []
             ]);
         }
-    
-        $current_team->load(['projects' => function($query) use ($user) {
-            $query->forUser($user);
-        }]);
         
+        // 既にeager loadingされているので、直接アクセス可能
         $projects = $current_team->projects;
     
         return view('todos', compact('user', 'teams', 'current_team', 'projects'));
